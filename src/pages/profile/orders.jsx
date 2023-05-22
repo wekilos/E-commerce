@@ -1,5 +1,5 @@
 import { ArrowForwardIos } from "@mui/icons-material";
-import React from "react";
+import React, { useContext } from "react";
 import Sidebar from "../../components/SideBar";
 import card from "../../images/card.png";
 import timer1 from "../../images/timer1.svg";
@@ -14,524 +14,491 @@ import img8 from "../../images/Image8.svg";
 import img14 from "../../images/Image14.svg";
 import img15 from "../../images/Image15.svg";
 
+import { Context } from "../../context/context";
+import tm from "../../lang/tm/home.json";
+import en from "../../lang/en/home.json";
+import ru from "../../lang/ru/home.json";
+
 const Orders = () => {
-    const history = useHistory();
-    return (
-        <div className="w-full pb-10">
-            <div className="w-full flex items-center">
-                <p className="text-[16px] font-regular text-black-secondary mr-2">
-                    Baş sahypa
-                </p>
-                <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
-                <p className="text-[16px] font-regular text-black-secondary mr-2">
-                    Sargytlarym
-                </p>
-            </div>
-            <div className="w-full my-4 flex justify-between  items-center">
-                <div className="flex justify-start">
-                    <p className="text-[28px] font-bold text-neutral-900 mr-2">
-                        Sargytlarym
-                    </p>
-                </div>
-            </div>
-            <div className="w-full flex justify-between">
-                <div className="min-w-[246px] w-[246px] h-fit">
-                    <Sidebar />
-                </div>
-                <div className="w-full px-6">
-                    <div className="w-full mb-4 ">
-                        <h1 className="w-full mb-1 text-[20px] font-semi text-neutral-900 text-left">
-                            Fewral
-                        </h1>
-                        <div className="w-full flex flex-wrap justify-between">
-                            <div
-                                onClick={() =>
-                                    history.push({
-                                        pathname: "/mrt/profile/orders/8",
-                                    })
-                                }
-                                className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch"
-                            >
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer1}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-semi ">
-                                            Garaşylýar
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer3}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-semi ">
-                                            Eltip berildi
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer2}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-semi ">
-                                            Taýýarlanylýar
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer4}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-bold ">
-                                            Inkär edilen
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer4}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-bold ">
-                                            Inkär edilen
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="w-full mb-4 ">
-                        <h1 className="w-full mb-1 text-[20px] font-semi text-neutral-900 text-left">
-                            Ýanwar
-                        </h1>
-                        <div className="w-full flex flex-wrap justify-between">
-                            <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer1}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-semi ">
-                                            Garaşylýar
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer3}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-semi ">
-                                            Eltip berildi
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer2}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-semi ">
-                                            Taýýarlanylýar
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
-                                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tl-[4px] object-contain "
-                                            src={card}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-tr-[4px] object-contain "
-                                            src={img6}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-bl-[4px] object-contain "
-                                            src={img7}
-                                            alt=""
-                                        />
-                                    </div>
-                                    <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
-                                        <img
-                                            className=" h-[40px] rounded-br-[4px] object-contain "
-                                            src={img8}
-                                            alt=""
-                                        />
-                                    </div>
-                                </div>
-                                <div className="w-fit ">
-                                    <div className="w-full flex mb-8">
-                                        <img
-                                            src={timer4}
-                                            className="mr-2"
-                                            alt=""
-                                        />
-                                        <p className="text-[16px] text-neutral-900 font-bold ">
-                                            Inkär edilen
-                                        </p>
-                                    </div>
-                                    <div className="w-fit flex">
-                                        <p className="mr-6 "> 250 TMT</p>
-                                        <ul>
-                                            <li className="list-disc">
-                                                22.12.2022
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+  const history = useHistory();
+  const { dil } = useContext(Context);
+  return (
+    <div className="w-full pb-10">
+      <div className="w-full flex items-center">
+        <p
+          onClick={() => history.push({ pathname: "/mrt/home" })}
+          className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
+        >
+          {dil === "TM"
+            ? tm["Baş sahypa"]
+            : dil === "RU"
+            ? ru["Baş sahypa"]
+            : en["Baş sahypa"]}
+        </p>
+        <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
+        <p className="text-[16px] font-regular text-black-secondary mr-2">
+          {dil === "TM"
+            ? tm.Sargytlarym
+            : dil === "RU"
+            ? ru.Sargytlarym
+            : en.Sargytlarym}
+        </p>
+      </div>
+      <div className="w-full my-4 flex justify-between  items-center">
+        <div className="flex justify-start">
+          <p className="text-[28px] font-bold text-neutral-900 mr-2">
+            {dil === "TM"
+              ? tm.Sargytlarym
+              : dil === "RU"
+              ? ru.Sargytlarym
+              : en.Sargytlarym}
+          </p>
         </div>
-    );
+      </div>
+      <div className="w-full flex justify-between">
+        <div className="min-w-[246px] w-[246px] h-fit">
+          <Sidebar />
+        </div>
+        <div className="w-full px-6">
+          <div className="w-full mb-4 ">
+            <h1 className="w-full mb-1 text-[20px] font-semi text-neutral-900 text-left">
+              Fewral
+            </h1>
+            <div className="w-full flex flex-wrap justify-between">
+              <div
+                onClick={() =>
+                  history.push({
+                    pathname: "/mrt/profile/orders/8",
+                  })
+                }
+                className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch"
+              >
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer1} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-semi ">
+                      Garaşylýar
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer3} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-semi ">
+                      Eltip berildi
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer2} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-semi ">
+                      Taýýarlanylýar
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer4} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-bold ">
+                      Inkär edilen
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[48%]   mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer4} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-bold ">
+                      Inkär edilen
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="w-full mb-4 ">
+            <h1 className="w-full mb-1 text-[20px] font-semi text-neutral-900 text-left">
+              Ýanwar
+            </h1>
+            <div className="w-full flex flex-wrap justify-between">
+              <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer1} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-semi ">
+                      Garaşylýar
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer3} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-semi ">
+                      Eltip berildi
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer2} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-semi ">
+                      Taýýarlanylýar
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch">
+                <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
+                  <div className="bg-white h-[40px] w-[40px] rounded-tl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tl-[4px] object-contain "
+                      src={card}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-tr-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-tr-[4px] object-contain "
+                      src={img6}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-bl-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-bl-[4px] object-contain "
+                      src={img7}
+                      alt=""
+                    />
+                  </div>
+                  <div className="bg-white h-[40px] w-[40px] rounded-br-[4px] mb-[2px]">
+                    <img
+                      className=" h-[40px] rounded-br-[4px] object-contain "
+                      src={img8}
+                      alt=""
+                    />
+                  </div>
+                </div>
+                <div className="w-fit ">
+                  <div className="w-full flex mb-8">
+                    <img src={timer4} className="mr-2" alt="" />
+                    <p className="text-[16px] text-neutral-900 font-bold ">
+                      Inkär edilen
+                    </p>
+                  </div>
+                  <div className="w-fit flex">
+                    <p className="mr-6 "> 250 TMT</p>
+                    <ul>
+                      <li className="list-disc">22.12.2022</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default Orders;
