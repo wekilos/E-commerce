@@ -45,7 +45,9 @@ const Info = () => {
       </div>
       <div className="w-full my-4 flex justify-between  items-center">
         <div className="flex justify-start">
-          <p className="text-[28px] font-bold text-neutral-900 mr-2">Hasabym</p>
+          <p className="text-[28px] font-bold text-neutral-900 mr-2">
+            {dil === "TM" ? tm.Hasabym : dil === "RU" ? ru.Hasabym : en.Hasabym}
+          </p>
         </div>
       </div>
       <div className="w-full flex justify-between">

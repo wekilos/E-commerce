@@ -68,10 +68,10 @@ const Sargyt = () => {
           <div className="flex justify-start">
             <p className="text-[28px] font-bold text-neutral-900 mr-2">
               {dil === "TM"
-                ? tm["Sargydy taýýarlamak"]
+                ? tm["Sargydy tassyklamak"]
                 : dil === "RU"
-                ? ru["Sargydy taýýarlamak"]
-                : en["Sargydy taýýarlamak"]}
+                ? ru["Sargydy tassyklamak"]
+                : en["Sargydy tassyklamak"]}
             </p>
           </div>
         </div>

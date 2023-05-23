@@ -26,7 +26,10 @@ const Basket = () => {
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="w-full">
         <div className="w-full flex items-center">
-          <p className="text-[16px] font-regular text-black-secondary mr-2">
+          <p
+            onClick={() => history.push({ pathname: "/mrt/home" })}
+            className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
+          >
             {dil === "TM"
               ? tm["Baş sahypa"]
               : dil === "RU"

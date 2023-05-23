@@ -349,7 +349,7 @@ const Market = () => {
                   ? tm["Baha bermek"]
                   : dil === "RU"
                   ? ru["Baha bermek"]
-                  : en["Baha bermek"]}{" "}
+                  : en["Baha bermek"]}
                 4.0
               </h1>
               <p className="text-[16px] text-neutral-700 font-medium">

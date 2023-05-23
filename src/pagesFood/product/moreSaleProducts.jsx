@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
 import {
   FormControl,
@@ -22,8 +22,14 @@ import restoran3 from "../../images/restoran3.jpg";
 import restoran4 from "../../images/restoran4.jpg";
 import restoran5 from "../../images/restoran5.jpg";
 
+import { Context } from "../../context/context";
+import tm from "../../lang/tm/home.json";
+import en from "../../lang/en/home.json";
+import ru from "../../lang/ru/home.json";
+
 const MoreSaleProducts = () => {
   const history = useHistory();
+  const { dil } = useContext(Context);
   const [starOpen, setStarOpen] = useState(false);
   const [liked, setLiked] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 1000]);
@@ -117,7 +123,11 @@ const MoreSaleProducts = () => {
         footer={false}
       >
         <h1 className="text-[28px] mb-4 font-bold text-neutral-900 text-left ">
-          Feedback
+          {dil === "TM"
+            ? tm["Baha bermek"]
+            : dil === "RU"
+            ? ru["Baha bermek"]
+            : en["Baha bermek"]}
         </h1>
 
         <div className="w-full overflow-y-auto max-h-[470px]">
@@ -178,7 +188,11 @@ const MoreSaleProducts = () => {
       <div className="min-w-[245px] w-[245px]">
         <div className="w-full px-4 mt-0 rounded-[8px] border-[1px] border-neutral-300">
           <h1 className="py-3 text-[20px] text-neutral-900 font-semi text-left">
-            Nahar kategoriýalar
+            {dil === "TM"
+              ? tm["Nahar kategoriýalary"]
+              : dil === "RU"
+              ? ru["Nahar kategoriýalary"]
+              : en["Nahar kategoriýalary"]}
           </h1>
           <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
             Ertirlikler
@@ -196,7 +210,7 @@ const MoreSaleProducts = () => {
 
         <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
           <h1 className="py-3 text-[20px] border-b-[1px] border-b-neutral-300 text-neutral-900 font-semi text-left">
-            Baha
+            {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}
           </h1>
           <div className="flex justify-between">
             <input
@@ -247,17 +261,29 @@ const MoreSaleProducts = () => {
       <div className="w-full pl-8">
         <div className="w-full flex items-center">
           <p className="text-[16px] font-regular text-black-secondary mr-2">
-            Baş sahypa
+            {dil === "TM"
+              ? tm["Baş sahypa"]
+              : dil === "RU"
+              ? ru["Baş sahypa"]
+              : en["Baş sahypa"]}
           </p>
           <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
           <p className="text-[16px] font-regular text-black-secondary mr-2">
-            Köp satanlar
+            {dil === "TM"
+              ? tm["Köp satylanlar"]
+              : dil == "RU"
+              ? ru["Köp satylanlar"]
+              : en["Köp satylanlar"]}
           </p>
         </div>
 
         <div className="w-full mt-6 flex justify-between  items-center">
           <p className="text-[32px] font-semi text-neutral-900 mr-2">
-            Köp satanlar
+            {dil === "TM"
+              ? tm["Köp satylanlar"]
+              : dil == "RU"
+              ? ru["Köp satylanlar"]
+              : en["Köp satylanlar"]}
           </p>
           <div className="w-[200px]">
             <FormControl size="small" fullWidth>
@@ -265,7 +291,11 @@ const MoreSaleProducts = () => {
                 style={{ color: "#32BB78" }}
                 id="demo-simple-select-label"
               >
-                Saýhallamak
+                {dil === "TM"
+                  ? tm.Saýhallamak
+                  : dil === "RU"
+                  ? ru.Saýhallamak
+                  : en.Saýhallamak}
               </InputLabel>
               <Select
                 labelStyle={{ color: "#32BB78" }}
@@ -292,12 +322,26 @@ const MoreSaleProducts = () => {
                 label="Saýhallamak"
                 // onChange={handleChange}
               >
-                <MenuItem value={"Default"}>Meşhurlygyna görä</MenuItem>
+                <MenuItem value={"Default"}>
+                  {dil === "TM"
+                    ? tm["Meşhurlygyna görä"]
+                    : dil === "RU"
+                    ? ru["Meşhurlygyna görä"]
+                    : en["Meşhurlygyna görä"]}
+                </MenuItem>
                 <MenuItem value={"Cheep to Expensive"}>
-                  Arzanda gymmada
+                  {dil === "TM"
+                    ? tm["Arzandan gymmada"]
+                    : dil === "RU"
+                    ? ru["Arzandan gymmada"]
+                    : en["Arzandan gymmada"]}
                 </MenuItem>
                 <MenuItem value={"Expensive to Cheep"}>
-                  Gymmatdan arzana
+                  {dil === "TM"
+                    ? tm["Gymmatdan arzana"]
+                    : dil === "RU"
+                    ? ru["Gymmatdan arzana"]
+                    : en["Gymmatdan arzana"]}
                 </MenuItem>
               </Select>
             </FormControl>
@@ -306,20 +350,31 @@ const MoreSaleProducts = () => {
 
         <div className="w-full  mt-5 flex justify-start items-center">
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
-            <p className="mr-2">Baha: 20 - 120 TMT</p>
+            <p className="mr-2">
+              {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
+              20 - 120 TMT
+            </p>
             <Cancel className="cursor-pointer" />
           </div>
           <div className="flex cursor-pointer items-center rounded-[32px] h-[30px] p-[5px] px-[10px] bg-neutral-300 text-black-secondary text-[16px] font-medium">
-            Filteri arassalamak
+            {dil === "TM"
+              ? tm["Filtrleri arassalamak"]
+              : dil === "RU"
+              ? ru["Filtrleri arassalamak"]
+              : en["Filtrleri arassalamak"]}
           </div>
         </div>
 
         <div className="w-full">
           <div className="w-full flex items-center justify-start mt-8">
             <h1 className="font-bold text-[20px] text-neutral-900 mr-2">
-              Köp satan restoranlar
+              {dil === "TM"
+                ? tm["Köp satan restoranlar"]
+                : dil === "RU"
+                ? ru["Köp satan restoranlar"]
+                : en["Köp satan restoranlar"]}
             </h1>
-            <p className="font-medium text-[16px] text-neutral-600">(sany 8)</p>
+            <p className="font-medium text-[16px] text-neutral-600"></p>
           </div>
           <div className="w-full pl-2 mt-8 grid gap-8 place-items-center lg:grid-cols-1 xl:grid-cols-2   5xl:grid-cols-3  6xl2:grid-cols-3  ">
             {marketsimg.map((item, index) => {

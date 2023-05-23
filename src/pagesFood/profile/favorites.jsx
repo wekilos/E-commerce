@@ -1,5 +1,5 @@
 import { ArrowForwardIos } from "@mui/icons-material";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Sidebar from "../../componentsFood/SideBar";
 import card from "../../images/card.png";
 import timer1 from "../../images/timer1.svg";
@@ -34,7 +34,15 @@ import nahar10 from "../../images/nahar10.jpg";
 import nahar11 from "../../images/nahar11.jpg";
 import nahar12 from "../../images/nahar12.jpg";
 
+import { Context } from "../../context/context";
+import tm from "../../lang/tm/home.json";
+import en from "../../lang/en/home.json";
+import ru from "../../lang/ru/home.json";
+import { useHistory } from "react-router-dom";
+
 const Favorites = () => {
+  const { dil } = useContext(Context);
+  const history = useHistory();
   const [wich, setWich] = useState(true);
 
   const markets = [
@@ -123,18 +131,33 @@ const Favorites = () => {
   return (
     <div className="w-full pb-10">
       <div className="w-full flex items-center">
-        <p className="text-[16px] font-regular text-black-secondary mr-2">
-          Baş sahypa
+        <p
+          onClick={() => history.push({ pathname: "/rtn/home" })}
+          className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
+        >
+          {dil === "TM"
+            ? tm["Baş sahypa"]
+            : dil === "RU"
+            ? ru["Baş sahypa"]
+            : en["Baş sahypa"]}
         </p>
         <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
         <p className="text-[16px] font-regular text-black-secondary mr-2">
-          Halanlarym
+          {dil === "TM"
+            ? tm.Halanlarym
+            : dil === "RU"
+            ? ru.Halanlarym
+            : en.Halanlarym}
         </p>
       </div>
       <div className="w-full my-4 flex justify-between  items-center">
         <div className="flex justify-start">
           <p className="text-[28px] font-bold text-neutral-900 mr-2">
-            Halanlarym
+            {dil === "TM"
+              ? tm.Halanlarym
+              : dil === "RU"
+              ? ru.Halanlarym
+              : en.Halanlarym}
           </p>
         </div>
       </div>
@@ -149,14 +172,22 @@ const Favorites = () => {
                 onClick={() => setWich(true)}
                 className="w-[49%] rounded-[8px] py-2 text-neutral-900 font-semi bg-white "
               >
-                Harytlar
+                {dil === "TM"
+                  ? tm.Harytlar
+                  : dil === "RU"
+                  ? ru.Harytlar
+                  : en.Harytlar}
               </button>
             ) : (
               <button
                 onClick={() => setWich(true)}
                 className="w-[49%] rounded-[8px] py-2 bg-neutral-200 font-semi text-neutral-700 "
               >
-                Harytlar
+                {dil === "TM"
+                  ? tm.Harytlar
+                  : dil === "RU"
+                  ? ru.Harytlar
+                  : en.Harytlar}
               </button>
             )}
             {wich ? (
@@ -164,14 +195,22 @@ const Favorites = () => {
                 onClick={() => setWich(false)}
                 className="w-[49%] rounded-[8px] py-2 bg-neutral-200 font-semi text-neutral-700 "
               >
-                Restoranlar
+                {dil === "TM"
+                  ? tm.Restoranlar
+                  : dil === "RU"
+                  ? ru.Restoranlar
+                  : en.Restoranlar}
               </button>
             ) : (
               <button
                 onClick={() => setWich(false)}
                 className="w-[49%] rounded-[8px] py-2 text-neutral-900 font-semi bg-white "
               >
-                Restoranlar
+                {dil === "TM"
+                  ? tm.Restoranlar
+                  : dil === "RU"
+                  ? ru.Restoranlar
+                  : en.Restoranlar}
               </button>
             )}
           </div>

@@ -3,8 +3,8 @@ import "./firstPage.css";
 import { useHistory } from "react-router-dom";
 import { EyeOutlined, EyeInvisibleOutlined } from "@ant-design/icons";
 import Header from "./header/header";
-import nahar from "../../images/nahar.svg";
-import gro from "../../images/gro.svg";
+import nahar from "../../images/2.svg";
+import gro from "../../images/1.svg";
 
 import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
