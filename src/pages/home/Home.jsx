@@ -45,6 +45,10 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 
+import dukan from "../../images/dukan.png";
+import halanlarym from "../../images/halanlarym.png";
+import kategoriya from "../../images/kategoriya.png";
+
 function Home(props) {
   const history = useHistory();
   const { dil } = useContext(Context);
@@ -65,8 +69,11 @@ function Home(props) {
     dots: true,
     infinite: true,
     speed: 2000,
-    initialSlide: 0.8,
-    slidesToShow: 1.2,
+    // initialSlide: 0.8,
+    // slidesToShow: 1.2,
+    // slidesToScroll: 1,
+    // initialSlide: 0.2,
+    slidesToShow: 1,
     slidesToScroll: 1,
     beforeChange: (prev, next) => {
       setCurrent({ currentSlide: next });
@@ -394,16 +401,18 @@ function Home(props) {
     "https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Z3JvY2VyeSUyMHNob3BwaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
   ];
 
+  // const images = [longBanner, longBanner, longBanner];
+
   return (
     <div className="w-full pb-10   select-none">
-      <div className="w-full h-[320px] relative rounded-[20px] mt-[25px] mb-[50px]">
+      <div className="w-full h-[160px] md2:h-[320px] relative rounded-[20px] md2:mt-[25px] mt-[16px] mb-[50px]">
         <Slider ref={slider} {...settings}>
-          {images.map((item) => {
+          {images.map((item, i) => {
             return (
-              <div className="w-full px-2   outline-none">
+              <div key={"img" + i} className="w-full px-2   outline-none">
                 <img
-                  className=" w-full h-[320px] mb-3  object-cover rounded-[20px]"
-                  src={"http://localhost:8080/uploads/491249399693cardAdd2.jpg"}
+                  className=" w-full h-[160px] md2:h-[320px] mb-3  object-cover rounded-[20px]"
+                  src={item}
                   alt="slide"
                 />
               </div>
@@ -413,19 +422,20 @@ function Home(props) {
         <div>
           <div
             onClick={() => slider.current.slickPrev(1)}
-            className="w-[40px] absolute -left-[15px] cursor-pointer top-[150px] text-right pr-1 shadow-sm leading-[35px] rounded-[100%] h-[40px] bg-white"
+            className="w-[40px] absolute -left-[15px] cursor-pointer top-[65px] md2:top-[150px] text-right pr-1 shadow-sm leading-[35px] rounded-[100%] h-[40px] bg-white"
           >
             <ArrowBackIos />
           </div>
           <div
             onClick={() => slider.current.slickNext(1)}
-            className="w-[40px] absolute -right-[25px] cursor-pointer top-[150px] shadow-sm text-center leading-[35px] rounded-[100%] h-[40px] bg-white"
+            className="w-[40px] absolute -right-[25px] cursor-pointer top-[65px] md2:top-[150px] shadow-sm text-center leading-[35px] rounded-[100%] h-[40px] bg-white"
           >
             <ArrowForwardIos />
           </div>
         </div>
       </div>
-      <div className="w-full mt-14 select-none ">
+
+      <div className="w-full md2:block hidden mt-14 select-none ">
         <div className="flex items-center justify-between">
           <h2 className="text-[28px] font-bold text-[#2F313F]">
             {dil === "TM"
@@ -487,9 +497,40 @@ function Home(props) {
         </div>
       </div>
 
-      <div className=" mt-10">
+      <div className="w-full md2:hidden flex justify-between mt-14 select-none ">
+        <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
+          <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
+            Dükanlar
+          </h1>
+          <img className="absolute bottom-0 right-0" src={dukan} alt="dukan" />
+        </div>
+
+        <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
+          <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
+            Kategoriýa
+          </h1>
+          <img
+            className="absolute bottom-0 right-0"
+            src={kategoriya}
+            alt="dukan"
+          />
+        </div>
+
+        <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
+          <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
+            Halanlarym
+          </h1>
+          <img
+            className="absolute bottom-0 right-0"
+            src={halanlarym}
+            alt="dukan"
+          />
+        </div>
+      </div>
+
+      <div className=" md2:mt-10 mt-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-[28px] font-bold text-[#2F313F]">
+          <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
             {dil === "TM"
               ? tm.Arzanladyşlar
               : dil === "RU"
@@ -498,7 +539,7 @@ function Home(props) {
           </h2>
           <div
             onClick={() => history.push({ pathname: "/mrt/discount" })}
-            className="border-[1px] hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+            className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
           >
             {dil === "TM"
               ? tm["Hemmesini görkez"]
@@ -507,7 +548,16 @@ function Home(props) {
               : en["Hemmesini görkez"]}
           </div>
         </div>
-        <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
+        <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+          {products.arzan.map((item, i) => {
+            return (
+              <div key={item.name + i} className="mr-6">
+                <ProductCard text={item.name} img={item.img} key={"index"} />
+              </div>
+            );
+          })}
+        </div>
+        {/* <div className="w-full md2:hidden md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
           {products.arzan.map((item) => {
             return (
               <div key={item.name} className="mr-6">
@@ -515,30 +565,41 @@ function Home(props) {
               </div>
             );
           })}
+        </div> */}
+        <div
+          onClick={() => history.push({ pathname: "/mrt/discount" })}
+          className="border-[1px] w-full text-center mt-[24px] md2:hidden block hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
+        >
+          {dil === "TM"
+            ? tm["Hemmesini görkez"]
+            : dil === "RU"
+            ? ru["Hemmesini görkez"]
+            : en["Hemmesini görkez"]}
         </div>
       </div>
 
-      <div className="inline-flex mt-12 w-full justify-between overflow-y-auto">
+      <div className="inline-flex md2:mt-12 mt-8 w-full justify-between scrollbar-hide overflow-y-auto">
         <img
-          className="rounded-[32px] w-[400px] h-[220px] object-cover mr-2"
+          className="rounded-[32px] md2:w-[400px] w-[370px] md2:h-[220px] h-[160px] object-cover mr-2"
           src={add1}
           alt="slide"
         />
         <img
-          className="rounded-[32px] w-[400px]  h-[220px] object-cover mr-2"
+          className="rounded-[32px] md2:w-[400px] w-[370px] md2:h-[220px] h-[160px] object-cover mr-2"
           src={add2}
           alt="slide"
         />
         <img
-          className="rounded-[32px] w-[400px]  h-[220px] object-cover mr-2"
+          className="rounded-[32px] md2:w-[400px] w-[370px] md2:h-[220px] h-[160px] object-cover mr-2"
           src={add3}
           alt="slide"
         />
       </div>
       {/* <ProductGroup name={"Maýonez,üwmeçler we souslar"} /> */}
-      <div className=" mt-10">
+
+      <div className=" md2:mt-10 mt-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-[28px] font-bold text-[#2F313F]">
+          <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
             {dil === "TM"
               ? tm["Köp satylanlar"]
               : dil === "RU"
@@ -547,7 +608,7 @@ function Home(props) {
           </h2>
           <div
             onClick={() => history.push({ pathname: "/mrt/moreSale" })}
-            className="border-[1px] hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+            className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
           >
             {dil === "TM"
               ? tm["Hemmesini görkez"]
@@ -556,7 +617,16 @@ function Home(props) {
               : en["Hemmesini görkez"]}
           </div>
         </div>
-        <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
+        <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+          {products.kop.map((item, i) => {
+            return (
+              <div key={item.name + i} className="mr-6">
+                <ProductCard text={item.name} img={item.img} key={"index"} />
+              </div>
+            );
+          })}
+        </div>
+        {/* <div className="w-full md2:hidden mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
           {products.kop.map((item) => {
             return (
               <div key={item.name} className="mr-6">
@@ -564,20 +634,30 @@ function Home(props) {
               </div>
             );
           })}
+        </div> */}
+        <div
+          onClick={() => history.push({ pathname: "/mrt/moreSale" })}
+          className="border-[1px] w-full text-center mt-[24px] md2:hidden block hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
+        >
+          {dil === "TM"
+            ? tm["Hemmesini görkez"]
+            : dil === "RU"
+            ? ru["Hemmesini görkez"]
+            : en["Hemmesini görkez"]}
         </div>
       </div>
 
-      <div className="w-full mt-10 ">
+      <div className="w-full md2:mt-10 mt-6 ">
         <img
-          className="w-full h-[200px] rounded-[24px] object-cover my-[35px]"
+          className="w-full h-[200px] rounded-[24px] object-cover "
           src={longBanner}
           alt="banner"
         />
       </div>
 
-      <div className="mt-10">
+      <div className="md2:mt-10 mt-6">
         <div className="w-full flex items-center justify-between">
-          <h2 className="text-[28px] font-bold text-[#2F313F]">
+          <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
             {dil === "TM"
               ? tm.Brendler
               : dil === "RU"
@@ -586,7 +666,7 @@ function Home(props) {
           </h2>
           <div
             onClick={() => history.push({ pathname: "/mrt/brends" })}
-            className="border-[1px] hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+            className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
           >
             {dil === "TM"
               ? tm["Hemmesini görkez"]
@@ -595,25 +675,44 @@ function Home(props) {
               : en["Hemmesini görkez"]}
           </div>
         </div>
-        <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {brends.map((item) => {
+        <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+          {brends.map((item, i) => {
             return (
-              <div key={item.name} className="mr-6">
+              <div key={item.name + i} className="mr-6">
                 <BrandCard text={item.name} img={item?.img} key={"index"} />
               </div>
             );
           })}
         </div>
+        {/* <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+          {brends.map((item) => {
+            return (
+              <div key={item.name + "n"} className="mr-6">
+                <BrandCard text={item.name} img={item?.img} key={"index"} />
+              </div>
+            );
+          })}
+        </div> */}
+        <div
+          onClick={() => history.push({ pathname: "/mrt/brends" })}
+          className="border-[1px] w-full text-center mt-[24px] md2:hidden block hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
+        >
+          {dil === "TM"
+            ? tm["Hemmesini görkez"]
+            : dil === "RU"
+            ? ru["Hemmesini görkez"]
+            : en["Hemmesini görkez"]}
+        </div>
       </div>
 
-      <div className="my-10">
+      <div className="md2:my-10 my-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-[28px] font-bold text-[#2F313F]">
+          <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
             Şokolad we süýji önümleri
           </h2>
           <div
             onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
-            className="border-[1px] hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+            className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
           >
             {dil === "TM"
               ? tm["Hemmesini görkez"]
@@ -623,6 +722,15 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
+          {products.cake.map((item, i) => {
+            return (
+              <div key={item.name + i} className="mr-6">
+                <ProductCard text={item.name} img={item.img} key={"index"} />
+              </div>
+            );
+          })}
+        </div>
+        {/* <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
           {products.cake.map((item) => {
             return (
               <div key={item.name} className="mr-6">
@@ -630,17 +738,27 @@ function Home(props) {
               </div>
             );
           })}
+        </div> */}
+        <div
+          onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
+          className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
+        >
+          {dil === "TM"
+            ? tm["Hemmesini görkez"]
+            : dil === "RU"
+            ? ru["Hemmesini görkez"]
+            : en["Hemmesini görkez"]}
         </div>
       </div>
 
-      <div className="mt-10">
+      <div className="md2:mt-10 mt-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-[28px] font-bold text-[#2F313F]">
+          <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
             Unaş, däneler we unlar
           </h2>
           <div
             onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
-            className="border-[1px] hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+            className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
           >
             {dil === "TM"
               ? tm["Hemmesini görkez"]
@@ -649,7 +767,16 @@ function Home(props) {
               : en["Hemmesini görkez"]}
           </div>
         </div>
-        <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
+        <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+          {products.un.map((item, i) => {
+            return (
+              <div key={item.name + "un" + i} className="mr-6">
+                <ProductCard text={item.name} img={item.img} key={"index"} />
+              </div>
+            );
+          })}
+        </div>
+        {/* <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
           {products.un.map((item) => {
             return (
               <div key={item.name} className="mr-6">
@@ -657,6 +784,16 @@ function Home(props) {
               </div>
             );
           })}
+        </div> */}
+        <div
+          onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
+          className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
+        >
+          {dil === "TM"
+            ? tm["Hemmesini görkez"]
+            : dil === "RU"
+            ? ru["Hemmesini görkez"]
+            : en["Hemmesini görkez"]}
         </div>
       </div>
     </div>

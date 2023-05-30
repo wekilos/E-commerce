@@ -14,7 +14,7 @@ import home from "../images/home.png";
 import shoppingCart from "../images/shopping-cart.svg";
 import { East } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
-import { Modal } from "antd";
+import { Drawer, Modal } from "antd";
 
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
 import { Context } from "../context/context";
@@ -22,10 +22,21 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 
+import menu from "../images/menu.svg";
+import mainMenu from "../images/mainMenu.svg";
+import orderBox from "../images/orderBox.svg";
+import location from "../images/location-tick.svg";
+import heartMenu from "../images/heartMenu.svg";
+import global from "../images/global.svg";
+import logout from "../images/logout.svg";
+import { axiosInstance } from "../utils/axiosIntance";
+import axios from "axios";
+
 function Navbar(props) {
   const history = useHistory();
   const { dil, ChangeDil } = useContext(Context);
   const [open, setOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [feedBack, setFeedBack] = useState(false);
   const [kategory, setKategory] = useState(false);
   function useOutsideAlerter(ref) {
@@ -68,6 +79,20 @@ function Navbar(props) {
   const kategoryRef = useRef(null);
   useOutsideAlerter(wrapperRef);
   useOutsideAlerterKategory(kategoryRef);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+  const getCategories = () => {
+    axiosInstance
+      .get("/api/f-carousel/all")
+      .then((data) => {
+        console.log("Category", data);
+      })
+      .catch((err) => {
+        console.log("category", err);
+      });
+  };
 
   return (
     <div className="w-[95%] mx-auto mb-10">
@@ -141,7 +166,93 @@ function Navbar(props) {
             : en.Ugratmak}
         </button>
       </Modal>
-      <div className="w-[95%] mx-auto  text-[#2F313F] pt-4">
+
+      <Drawer
+        open={menuOpen}
+        onClose={() => setMenuOpen(false)}
+        placement="left"
+        width={350}
+        closable={false}
+      >
+        <div className="pt-[100px] w-full">
+          <div className="w-full">
+            <h1 className="w-full text-neutral-900 font-bold text-[24px]">
+              Aman Amonow
+            </h1>
+            <p className="w-full text-neutral-700 font-semi text-[16px]">
+              +993 64 75 48 46
+            </p>
+          </div>
+          <div className="w-full mt-[70px]">
+            <div className="w-full flex mb-6">
+              <img className="mr-2" src={mainMenu} alt="" />
+              <h1 className="text-[18px] text-neutral-800 font-regular">
+                {dil === "TM"
+                  ? tm["Baş sahypa"]
+                  : dil === "RU"
+                  ? ru["Baş sahypa"]
+                  : en["Baş sahypa"]}
+              </h1>
+            </div>
+
+            <div className="w-full flex mb-6">
+              <img className="mr-2" src={orderBox} alt="" />
+              <h1 className="text-[18px] text-neutral-800 font-regular">
+                {dil === "TM"
+                  ? tm.Sargytlar
+                  : dil === "RU"
+                  ? ru.Sargytlar
+                  : en.Sargytlar}
+              </h1>
+            </div>
+
+            <div className="w-full flex mb-6">
+              <img className="mr-2" src={location} alt="" />
+              <h1 className="text-[18px] text-neutral-800 font-regular">
+                {dil === "TM"
+                  ? tm.Salgylarym
+                  : dil === "RU"
+                  ? ru.Salgylarym
+                  : en.Salgylarym}
+              </h1>
+            </div>
+
+            <div className="w-full flex mb-6">
+              <img className="mr-2" src={heartMenu} alt="" />
+              <h1 className="text-[18px] text-neutral-800 font-regular">
+                {dil === "TM"
+                  ? tm.Halanlarym
+                  : dil === "RU"
+                  ? ru.Halanlarym
+                  : en.Halanlarym}
+              </h1>
+            </div>
+
+            <div className="w-full flex mb-6">
+              <img className="mr-2" src={global} alt="" />
+              <h1 className="text-[18px] text-neutral-800 font-regular">
+                {dil === "TM"
+                  ? "Türkmen"
+                  : dil === "RU"
+                  ? "Русский"
+                  : "English"}
+              </h1>
+            </div>
+          </div>
+
+          <div className="w-full flex mb-6 mt-16">
+            <img className="mr-2" src={logout} alt="" />
+            <h1 className="text-[18px] text-neutral-800 font-regular">
+              {dil === "TM"
+                ? tm["Ulgamdan çykmak"]
+                : dil === "RU"
+                ? ru["Ulgamdan çykmak"]
+                : en["Ulgamdan çykmak"]}
+            </h1>
+          </div>
+        </div>
+      </Drawer>
+      <div className="w-[95%] mx-auto xl:block hidden text-[#2F313F] pt-4">
         <div className="flex items-center justify-between pb-[16px] border-b-[1px] border-b-[#E9EAEE]">
           <div className="flex">
             <div
@@ -154,7 +265,7 @@ function Navbar(props) {
                 alt="home_icon"
               />
             </div>
-            <div className="min-w-[800px] flex justify-between items-center gap-[14px] pt-2 ml-5">
+            <div className=" flex justify-between items-center gap-[14px] pt-2 ml-5">
               <div className="min-w-[320px] justify-between flex items-center">
                 {/* <div className="w-[2px] h-[28px] bg-[#E9EAEE]"></div> */}
                 <div className="flex gap-[10px] cursor-pointer">
@@ -185,7 +296,7 @@ function Navbar(props) {
                 onClick={() => setFeedBack(true)}
                 className="flex gap-[8px] cursor-pointer"
               >
-                <p className="text-[16px] font-medium">
+                <p className="text-[16px] whitespace-nowrap font-medium">
                   {dil === "TM"
                     ? tm["Teklipler üçin"]
                     : dil === "RU"
@@ -196,14 +307,14 @@ function Navbar(props) {
               {/* </div> */}
 
               <div className="w-[2px] h-[28px] bg-[#E9EAEE]"></div>
-              <div className="min-w-[300px] justify-between flex items-center">
+              <div className="min-w-[250px] xl:min-w-[300px] justify-between mr-2 flex items-center">
                 <div
                   onClick={() =>
                     history.push({
                       pathname: "/mrt/markets",
                     })
                   }
-                  className="flex gap-[8px] cursor-pointer"
+                  className="flex cursor-pointer"
                 >
                   <p className="text-[16px] font-medium">
                     {dil === "TM"
@@ -219,7 +330,7 @@ function Navbar(props) {
                       pathname: "/mrt/brends",
                     })
                   }
-                  className="flex gap-[8px] cursor-pointer"
+                  className="flex  cursor-pointer"
                 >
                   <p className="text-[16px] font-medium">
                     {dil === "TM"
@@ -235,7 +346,7 @@ function Navbar(props) {
                       pathname: "/mrt/discount",
                     })
                   }
-                  className="flex gap-[8px] cursor-pointer"
+                  className="flex cursor-pointer"
                 >
                   <p className="text-[16px] font-medium">
                     {dil === "TM"
@@ -248,7 +359,7 @@ function Navbar(props) {
               </div>
             </div>
           </div>
-          <div className="flex gap-[16px] select-none">
+          <div className="flex gap-[16px] w-fit ml-4 select-none">
             <div
               onClick={() => setOpen(!open)}
               ref={wrapperRef}
@@ -317,7 +428,7 @@ function Navbar(props) {
                 src={user}
                 alt="Turkmenistan"
               />
-              <p className="text-[16px] font-semi m-0">
+              <p className="text-[16px] whitespace-nowrap font-semi m-0">
                 {dil === "TM"
                   ? tm["Ulgama girmek"]
                   : dil === "RU"
@@ -450,8 +561,31 @@ function Navbar(props) {
                 src={shoppingCart}
                 alt="shoppingCart"
               />
-              <p className="text-[16px] font-semi m-0">5215.00 TMT</p>
+              <p className="text-[16px] whitespace-nowrap font-semi m-0">
+                5215.00 TMT
+              </p>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <div className="w-[95%] mx-auto  xl:hidden block text-[#2F313F] pt-4">
+        <div className="w-full flex justify-between">
+          <div
+            onClick={() => setMenuOpen(true)}
+            className="h-[56px] w-[58px] rounded-[9px] flex justify-center items-center bg-neutral-200"
+          >
+            <img src={menu} alt="menu" />
+          </div>
+          <div className="h-[56px] w-full ml-2 pl-3 rounded-[9px] flex justify-start items-center bg-neutral-200 ">
+            <img src={search} alt="search" />
+            <input
+              className="h-full w-full leading-[25px] ml-[10px] bg-neutral-200 rounded-[9px] outline-none font-[20px] text-neutral-800 font-semi"
+              type="text"
+              placeholder={
+                dil === "TM" ? tm.Gözleg : dil === "RU" ? ru.Gözleg : en.Gözleg
+              }
+            />
           </div>
         </div>
       </div>
