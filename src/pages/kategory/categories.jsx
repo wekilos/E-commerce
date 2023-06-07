@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
 import CategoryCard from "../home/categoryCard";
@@ -6,10 +6,33 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Categories = () => {
   const history = useHistory();
   const { dil } = useContext(Context);
+
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    getCategories();
+  }, [dil]);
+
+  const getCategories = () => {
+    axiosInstance
+      .get("/api/grocery_categories", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setCategories(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
@@ -48,42 +71,13 @@ const Categories = () => {
         </div>
 
         <div className="w-full grid place-items-center gap-6 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 md2:grid-cols-4 lg:grid-cols-5  xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 6xl:grid-cols-9">
-          <div className="pr-5">
-            <CategoryCard title="Süýt, ýumurtga peýnir" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Çörek we konditer önümleri" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Gök önümler we miweler" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Et we balyk önümleri" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Şokolad we süýji önümleri" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Gazly suw we içgiler" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Süýt, ýumurtga peýnir" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Çörek we konditer önümleri" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Gök önümler we miweler" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Et we balyk önümleri" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Şokolad we süýji önümleri" />
-          </div>
-          <div className="pr-5">
-            <CategoryCard title="Gazly suw we içgiler" />
-          </div>
+          {categories?.map((item, i) => {
+            return (
+              <div key={"cats" + i} className="pr-5">
+                <CategoryCard data={item} title={item.name} />
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

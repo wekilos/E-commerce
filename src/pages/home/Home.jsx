@@ -1,4 +1,4 @@
-import React, { useContext, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import Slider from "react-slick";
 import add1 from "../../images/cardAdd.jpeg";
 import add2 from "../../images/cardAdd2.jpg";
@@ -48,12 +48,17 @@ import ru from "../../lang/ru/home.json";
 import dukan from "../../images/dukan.png";
 import halanlarym from "../../images/halanlarym.png";
 import kategoriya from "../../images/kategoriya.png";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 function Home(props) {
   const history = useHistory();
   const { dil } = useContext(Context);
   const slider = useRef(null);
   const [current, setCurrent] = useState({ currentSlide: 0 });
+  const [categories, setCategories] = useState([]);
+  const [brands, setBrands] = useState([]);
+  const [discountPro, setDiscountPro] = useState([]);
+  const [moreSalePro, setMoreSalePro] = useState([]);
   const testSettings = {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     outline: "0",
@@ -403,6 +408,82 @@ function Home(props) {
 
   // const images = [longBanner, longBanner, longBanner];
 
+  useEffect(() => {
+    getcategories();
+    getdiscounts();
+    getmoreSale();
+    getbrands();
+  }, [dil]);
+
+  const getcategories = async () => {
+    axiosInstance
+      .get("/api/grocery_categories", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        setCategories(data.data.body);
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getbrands = async () => {
+    axiosInstance
+      .get("/api/grocery_brands", {
+        params: {
+          page: 0,
+          limit: 10,
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        setBrands(data.data.body);
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getdiscounts = async () => {
+    axiosInstance
+      .get("/api/grocery_discount_products", {
+        params: {
+          page: 0,
+          limit: 10,
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        setDiscountPro(data.data.body);
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getmoreSale = async () => {
+    axiosInstance
+      .get("/api/grocery_more_sale_products", {
+        params: {
+          page: 0,
+          limit: 10,
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        setMoreSalePro(data.data.body);
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full pb-10   select-none">
       <div className="w-full h-[160px] md2:h-[320px] relative rounded-[20px] md2:mt-[25px] mt-[16px] mb-[50px]">
@@ -457,42 +538,13 @@ function Home(props) {
         </div>
         <div className="w-full mt-6">
           <Slider {...settingsCategory}>
-            <div className="pr-5">
-              <CategoryCard title="Süýt, ýumurtga peýnir" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Çörek we konditer önümleri" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Gök önümler we miweler" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Et we balyk önümleri" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Şokolad we süýji önümleri" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Gazly suw we içgiler" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Süýt, ýumurtga peýnir" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Çörek we konditer önümleri" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Gök önümler we miweler" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Et we balyk önümleri" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Şokolad we süýji önümleri" />
-            </div>
-            <div className="pr-5">
-              <CategoryCard title="Gazly suw we içgiler" />
-            </div>
+            {categories?.map((item, i) => {
+              return (
+                <div key={"kat" + i} className="pr-5">
+                  <CategoryCard data={item} title={item.name} />
+                </div>
+              );
+            })}
           </Slider>
         </div>
       </div>
@@ -500,14 +552,22 @@ function Home(props) {
       <div className="w-full md2:hidden flex justify-between mt-14 select-none ">
         <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
-            Dükanlar
+            {dil === "TM"
+              ? tm.Dükanlar
+              : dil === "RU"
+              ? ru.Dükanlar
+              : en.Dükanlar}
           </h1>
           <img className="absolute bottom-0 right-0" src={dukan} alt="dukan" />
         </div>
 
         <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
-            Kategoriýa
+            {dil === "TM"
+              ? tm.Kategoriýa
+              : dil === "RU"
+              ? ru.Kategoriýa
+              : en.Kategoriýa}
           </h1>
           <img
             className="absolute bottom-0 right-0"
@@ -518,7 +578,11 @@ function Home(props) {
 
         <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
-            Halanlarym
+            {dil === "TM"
+              ? tm.Halanlarym
+              : dil === "RU"
+              ? ru.Halanlarym
+              : en.Halanlarym}
           </h1>
           <img
             className="absolute bottom-0 right-0"
@@ -549,10 +613,15 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {products.arzan.map((item, i) => {
+          {discountPro.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
-                <ProductCard text={item.name} img={item.img} key={"index"} />
+                <ProductCard
+                  data={item}
+                  text={item.name}
+                  img={item.img}
+                  key={"index"}
+                />
               </div>
             );
           })}
@@ -618,10 +687,15 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {products.kop.map((item, i) => {
+          {moreSalePro.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
-                <ProductCard text={item.name} img={item.img} key={"index"} />
+                <ProductCard
+                  data={item}
+                  text={item.name}
+                  img={item.img}
+                  key={"index"}
+                />
               </div>
             );
           })}
@@ -676,10 +750,15 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {brends.map((item, i) => {
+          {brands.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
-                <BrandCard text={item.name} img={item?.img} key={"index"} />
+                <BrandCard
+                  data={item}
+                  text={item.name}
+                  img={item?.img}
+                  key={"index"}
+                />
               </div>
             );
           })}

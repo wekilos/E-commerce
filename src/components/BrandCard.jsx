@@ -13,13 +13,13 @@ function BrandCard(props) {
 
   return (
     <div
-      onClick={() => history.push({ pathname: "/mrt/brend/1" })}
+      onClick={() => history.push({ pathname: "/mrt/brend/" + props.data.id })}
       className="border cursor-pointer border-[#E9EBED] w-[196px] h-[196px] rounded-[8px]"
     >
       <div className="flex w-full py-[12px] px-[15px] ">
         <img
           className="w-full object-contain border-b-[1px] border-b-neutral-300"
-          src={props.img ? props.img : brand}
+          src={props?.img ? props?.img : brand}
           alt="brand"
         />
       </div>

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
 import {
   FormControl,
@@ -23,9 +23,13 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Product = () => {
   const { dil } = useContext(Context);
+  const { id } = useParams();
+  const [sameproduct, setSameProduct] = useState([]);
   const history = useHistory();
   const kop = [
     {
@@ -70,6 +74,25 @@ const Product = () => {
     },
   ];
 
+  useEffect(() => {
+    getSamePro();
+  }, [id, dil]);
+  const getSamePro = () => {
+    axiosInstance
+      .get("/api/grocery_same_products", {
+        params: {
+          lang: dil,
+          product_id: id,
+        },
+      })
+      .then((data) => {
+        console.log(data.data.body);
+        setSameProduct(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="w-full ">
@@ -124,10 +147,10 @@ const Product = () => {
         </div>
 
         <div className="w-full inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {kop.map((item) => {
+          {sameproduct?.map((item, i) => {
             return (
-              <div key={item.name} className="mr-4">
-                <ProductCard text={item.name} img={item.img} />
+              <div key={item.name + i} className="mr-4">
+                <ProductCard data={item} text={item.name} img={item.img} />
               </div>
             );
           })}

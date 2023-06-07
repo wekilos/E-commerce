@@ -1,5 +1,5 @@
 import { ArrowForwardIos } from "@mui/icons-material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/SideBar";
 import card from "../../images/card.png";
 import timer1 from "../../images/timer1.svg";
@@ -32,12 +32,14 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
 
 const Favorites = () => {
   const [wich, setWich] = useState(true);
   const { dil } = useContext(Context);
   const history = useHistory();
-
+  const [favPro, setFavPro] = useState([]);
+  const [favMar, setFavMar] = useState([]);
   const markets = [img1, img2, img3, img4, img5, img1, img2, img3, img4, img5];
 
   const kop = [
@@ -83,6 +85,44 @@ const Favorites = () => {
     },
   ];
 
+  useEffect(() => {
+    getFavPro();
+    getFavMar();
+  }, [dil]);
+
+  const getFavPro = () => {
+    axiosInstance
+      .get("/api/grocery_favourite_products", {
+        params: {
+          lang: dil,
+          user_id: 1,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setFavPro(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getFavMar = () => {
+    axiosInstance
+      .get("/api/grocery_favourite_markets", {
+        params: {
+          lang: dil,
+          user_id: 1,
+        },
+      })
+      .then((data) => {
+        console.log("search", data.data.body);
+        setFavMar(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full pb-10">
       <div className="w-full flex items-center">
@@ -172,16 +212,22 @@ const Favorites = () => {
 
           {wich ? (
             <div className="w-full mt-6 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
-              {kop.map((item) => {
-                return <ProductCard text={item.name} img={item.img} />;
+              {favPro?.map((item) => {
+                return (
+                  <ProductCard
+                    data={item}
+                    text={item.name}
+                    img={BASE_URL + item.img}
+                  />
+                );
               })}
             </div>
           ) : (
             <div className="w-full mt-6 grid gap-4 place-items-center lg:grid-cols-2  2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 6xl:grid-cols-5 ">
-              {markets.map((item) => {
+              {favMar?.map((item) => {
                 return (
                   <div className="   ">
-                    <MarketCard img={item} />
+                    <MarketCard data={item} img={BASE_URL + item} />
                   </div>
                 );
               })}

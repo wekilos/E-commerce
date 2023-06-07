@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   West,
   ArrowForwardIos,
@@ -31,24 +31,17 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { useParams } from "react-router-dom";
+import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
 
 const Market = () => {
   const history = useHistory();
+  const { id } = useParams();
   const { dil } = useContext(Context);
   const [liked, setLiked] = useState(false);
   const [starOpen, setStarOpen] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [brends, setBrends] = useState([
-    { id: 1, name: "Mars" },
-    { id: 1, name: "Pepsi" },
-    { id: 1, name: "Colo" },
-    { id: 1, name: "Snicers" },
-    { id: 1, name: "Turan" },
-    { id: 1, name: "Apple" },
-    { id: 1, name: "Fanta" },
-    { id: 1, name: "Sprite" },
-  ]);
-  const [filterBrends, setFilterBrends] = useState(brends);
+  const [market, setMarket] = useState({});
 
   const [markets, setMarkets] = useState([
     { id: 1, name: "Mars" },
@@ -61,30 +54,6 @@ const Market = () => {
     { id: 1, name: "Sprite" },
   ]);
   const [filterMarkets, setFilterMarkets] = useState(markets);
-
-  const SearchBrends = (value) => {
-    let filter = value.toUpperCase();
-    let newArray = brends.filter((item) => {
-      return item.name.toUpperCase().indexOf(filter) > -1;
-    });
-    if (value.length === 0) {
-      setFilterBrends([...brends]);
-    } else {
-      setFilterBrends([...newArray]);
-    }
-  };
-
-  const SearchMarkets = (value) => {
-    let filter = value.toUpperCase();
-    let newArray = markets.filter((item) => {
-      return item.name.toUpperCase().indexOf(filter) > -1;
-    });
-    if (value.length === 0) {
-      setFilterMarkets([...markets]);
-    } else {
-      setFilterMarkets([...newArray]);
-    }
-  };
 
   const cake = [
     {
@@ -129,6 +98,41 @@ const Market = () => {
     },
   ];
 
+  useEffect(() => {
+    getmarket();
+  }, [dil]);
+
+  const getmarket = async () => {
+    axiosInstance
+      .get("/api/grocery_market", {
+        params: {
+          market_id: id,
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log("market:", data.data.body);
+        setMarket(data.data.body[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addToFav = () => {
+    axiosInstance
+      .post("/api/grocery_favourite_market", {
+        user_id: 1,
+        market_id: id,
+      })
+      .then((data) => {
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="w-full inline-flex pb-10 justify-between select-none">
       <Modal
@@ -147,58 +151,56 @@ const Market = () => {
         </h1>
 
         <div className="w-full overflow-y-auto max-h-[470px]">
-          <div className="w-full mb-2 py-2 border-b-[1px] border-b-neutral-300">
-            <h1 className="w-full text-left text-[18px] text-neutral-900 font-semi">
-              Худайдурды Хожайев
-            </h1>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-medium">
-              12.10.2023 - 13:23
-            </p>
-            <div className="flex my-2">
-              <p className="w-fit mr-2 text-left text-[16px] text-neutral-900 font-semi">
-                4.0
-              </p>
-              <div className="flex">
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-neutral-400" />
+          {market?.rating?.feedback?.map((item, i) => {
+            return (
+              <div className="w-full mb-2 py-2 border-b-[1px] border-b-neutral-300">
+                <h1 className="w-full text-left text-[18px] text-neutral-900 font-semi">
+                  {item?.name}
+                </h1>
+                <p className="w-full text-left text-[14px] text-neutral-700 font-medium">
+                  {item?.date.slice(0, 10) +
+                    " (" +
+                    item?.date.slice(11, 16) +
+                    ")"}
+                </p>
+                <div className="flex my-2">
+                  <p className="w-fit mr-2 text-left text-[16px] text-neutral-900 font-semi">
+                    {item?.rating.toFixed(1)}
+                  </p>
+                  <div className="flex">
+                    {item?.rating > 0 ? (
+                      <StarOutlined className="text-yellow" />
+                    ) : (
+                      <StarOutlined className="text-neutral-400" />
+                    )}
+                    {item?.rating > 1 ? (
+                      <StarOutlined className="text-yellow" />
+                    ) : (
+                      <StarOutlined className="text-neutral-400" />
+                    )}
+                    {item?.rating > 2 ? (
+                      <StarOutlined className="text-yellow" />
+                    ) : (
+                      <StarOutlined className="text-neutral-400" />
+                    )}
+                    {item?.rating > 3 ? (
+                      <StarOutlined className="text-yellow" />
+                    ) : (
+                      <StarOutlined className="text-neutral-400" />
+                    )}
+                    {item?.rating > 4 ? (
+                      <StarOutlined className="text-yellow" />
+                    ) : (
+                      <StarOutlined className="text-neutral-400" />
+                    )}
+                  </div>
+                </div>
+                <p className="w-full text-left text-[14px] text-neutral-700 font-regular">
+                  {item?.text}
+                </p>
               </div>
-            </div>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-regular">
-              Этот уютный ресторан оставил самые лучшие впечатления!
-              Гостеприимные хозяева, вкусные блюда, красивая подача, широкая
-              винная карта и прекрасный десерт. Рекомендую всем! Хочется
-              возвращаться сюда снова и снова.
-            </p>
-          </div>
-          <div className="w-full mb-2 py-2 border-b-[1px] border-b-neutral-300">
-            <h1 className="w-full text-left text-[18px] text-neutral-900 font-semi">
-              Худайдурды Хожайев
-            </h1>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-medium">
-              12.10.2023 - 13:23
-            </p>
-            <div className="flex my-2">
-              <p className="w-fit mr-2 text-left text-[16px] text-neutral-900 font-semi">
-                4.0
-              </p>
-              <div className="flex">
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-neutral-400" />
-              </div>
-            </div>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-regular">
-              Этот уютный ресторан оставил самые лучшие впечатления!
-              Гостеприимные хозяева, вкусные блюда, красивая подача, широкая
-              винная карта и прекрасный десерт. Рекомендую всем! Хочется
-              возвращаться сюда снова и снова.
-            </p>
-          </div>
+            );
+          })}
         </div>
       </Modal>
       <div className="min-w-[245px] w-[245px]">
@@ -221,18 +223,17 @@ const Market = () => {
               ? ru.Kategoriýalar
               : en.Kategoriýalar}
           </h1>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Maýonez we souslar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Unaş, däneler we unlar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Şokolad we süýji önümleri
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Süýt önümleri
-          </p>
+
+          {market?.categories?.map((item, i) => {
+            return (
+              <p
+                key={"cat" + i}
+                className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300"
+              >
+                {item.name}
+              </p>
+            );
+          })}
         </div>
 
         <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
@@ -310,7 +311,7 @@ const Market = () => {
           </p>
           <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
           <p className="text-[16px] font-regular text-black-secondary mr-2">
-            Ruhubelent market
+            {market?.name}
           </p>
         </div>
 
@@ -326,7 +327,10 @@ const Market = () => {
               />
             ) : (
               <img
-                onClick={() => setLiked(!liked)}
+                onClick={() => {
+                  setLiked(!liked);
+                  addToFav();
+                }}
                 className="text-white"
                 src={heart}
                 alt=""
@@ -350,10 +354,11 @@ const Market = () => {
                   : dil === "RU"
                   ? ru["Baha bermek"]
                   : en["Baha bermek"]}
-                4.0
+                {" " + market?.rating?.count.toFixed(2)}
               </h1>
               <p className="text-[16px] text-neutral-700 font-medium">
-                124 ses
+                {market?.rating?.feedback.length + " "}
+                {dil === "TM" ? "Reýting" : dil === "RU" ? "Оценки" : "Ratings"}
               </p>
             </div>
           </div>
@@ -361,7 +366,7 @@ const Market = () => {
 
         <div className="w-full mt-6 flex justify-between  items-center">
           <p className="text-[32px] font-semi text-neutral-900 mr-2">
-            Ruhubelent market
+            {market?.name}
           </p>
           <div className="w-[200px]">
             <FormControl size="small" fullWidth>
@@ -429,7 +434,7 @@ const Market = () => {
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
-              20 - 120 TMT
+              {priceRange[0]} - {priceRange[1]} TMT
             </p>
             <Cancel className="cursor-pointer" />
           </div>
@@ -442,17 +447,29 @@ const Market = () => {
           </div>
         </div>
 
-        <div className="w-full flex items-center justify-start mt-8">
-          <h1 className="font-bold text-[20px] text-neutral-900 mr-2">
-            Şokolad we süýji önümleri
-          </h1>
-          <p className="font-medium text-[16px] text-neutral-600"></p>
-        </div>
-        <div className="w-full mt-4 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
-          {cake.map((item) => {
-            return <ProductCard text={item.name} img={item.img} />;
-          })}
-        </div>
+        {market?.categories?.map((item) => {
+          return (
+            <div>
+              <div className="w-full flex items-center justify-start mt-8">
+                <h1 className="font-bold text-[20px] text-neutral-900 mr-2">
+                  {item?.name}
+                </h1>
+                <p className="font-medium text-[16px] text-neutral-600"></p>
+              </div>
+              <div className="w-full mt-4 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
+                {item?.products.map((pro) => {
+                  return (
+                    <ProductCard
+                      data={pro}
+                      text={pro.name}
+                      img={BASE_URL + pro.img}
+                    />
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

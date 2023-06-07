@@ -39,6 +39,16 @@ function Navbar(props) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedBack, setFeedBack] = useState(false);
   const [kategory, setKategory] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [selected, setSelected] = useState({});
+  const [productName, setProductName] = useState("");
+  // const [rating, setRating] = useState({
+  //   user_id: 1,
+  //   market_id: 2,
+  //   username: "Wekil",
+  //   text: "gowy",
+  //   star_count: 5,
+  // });
   function useOutsideAlerter(ref) {
     useEffect(() => {
       /**
@@ -85,9 +95,13 @@ function Navbar(props) {
   }, []);
   const getCategories = () => {
     axiosInstance
-      .get("/api/f-carousel/all")
+      .get("/api/grocery_categories")
       .then((data) => {
-        console.log("Category", data);
+        console.log("Category", data.data);
+        setCategories(data.data.body);
+        data?.data?.body.length > 0
+          ? setSelected(data.data.body[0])
+          : setSelected({});
       })
       .catch((err) => {
         console.log("category", err);
@@ -257,10 +271,10 @@ function Navbar(props) {
           <div className="flex">
             <div
               onClick={() => history.push({ pathname: "/first" })}
-              className="flex gap-[8px] cursor-pointer"
+              className="flex !w-[40px] h-[40px]   cursor-pointer"
             >
               <img
-                className="w-[40px] h-[40px] m-0"
+                className="!w-[40px] h-[40px] m-0"
                 src={home}
                 alt="home_icon"
               />
@@ -448,12 +462,16 @@ function Navbar(props) {
           </div>
 
           <div
-            onClick={() => setKategory(!kategory)}
             ref={kategoryRef}
             className="relative custom-button text-white rounded-[32px] h-[50px] px-[24px]  "
           >
-            <img className="w-[24px] h-[24px]" src={catalog} alt="catalog" />
-            <p className="m-0 font-semi">
+            <img
+              onClick={() => setKategory(true)}
+              className="w-[24px] h-[24px]"
+              src={catalog}
+              alt="catalog"
+            />
+            <p onClick={() => setKategory(true)} className="m-0 font-semi">
               {dil === "TM"
                 ? tm.Görnüşler
                 : dil === "RU"
@@ -461,47 +479,56 @@ function Navbar(props) {
                 : en.Görnüşler}
             </p>
             {kategory && (
-              <div className="absolute min-w-[500px] shadow-sm left-0 z-50 top-[65px] text-black bg-white rounded-[24px] inline-flex p-5">
-                <div className="w-[250px] border-r-[1px] border-r-neutral-300 pr-2 ">
-                  <p
-                    onClick={() =>
-                      history.push({
-                        pathname: "/mrt/kategory/1",
-                      })
-                    }
-                    className="w-full mb-2 hover:text-green hover:bg-neutral-200 rounded-[8px] p-2 flex justify-between font-medium "
-                  >
-                    Süýt, ýumurtga peýnir
-                    <East className="text-white hover:text-green mr-2" />
-                  </p>
-                  <p className="w-full mb-2 hover:text-green hover:bg-neutral-200 rounded-[8px] p-2 flex justify-between font-medium ">
-                    Gök önümler we miweler
-                    <East className="text-white hover:text-green mr-2" />
-                  </p>
-                  <p className="w-full mb-2 hover:text-green hover:bg-neutral-200 rounded-[8px] p-2 flex justify-between font-medium ">
-                    Süýt, ýumurtga peýnir
-                    <East className="text-white hover:text-green mr-2" />
-                  </p>
-                  <p className="w-full mb-2 hover:text-green hover:bg-neutral-200 rounded-[8px] p-2 flex justify-between font-medium ">
-                    Gök önümler we miweler
-                    <East className="text-white hover:text-green mr-2" />
-                  </p>
-                  <p className="w-full mb-2 hover:text-green hover:bg-neutral-200 rounded-[8px] p-2 flex justify-between font-medium ">
-                    Süýt, ýumurtga peýnir
-                    <East className="text-white hover:text-green mr-2" />
-                  </p>
-                  <p className="w-full mb-2 hover:text-green hover:bg-neutral-200 rounded-[8px] p-2 flex justify-between font-medium ">
-                    Gök önümler we miweler
-                    <East className="text-white hover:text-green mr-2" />
-                  </p>
+              <div className="absolute min-w-[1000px] shadow-sm left-0 z-50 top-[65px] text-black bg-white rounded-[24px] inline-flex p-5">
+                <div className="min-w-[250px] border-r-[1px] border-r-neutral-300 pr-2 ">
+                  {categories?.map((item) => {
+                    return (
+                      <p
+                        key={item.name}
+                        onMouseEnter={() => setSelected(item)}
+                        onClick={() => {
+                          setKategory(false);
+                          history.push({
+                            pathname: "/mrt/kategory/" + item.id,
+                          });
+                        }}
+                        className="w-full mb-2 hover:text-green hover:bg-neutral-200 rounded-[8px] p-2 flex justify-between font-medium "
+                      >
+                        {item.name}
+                        <East className="text-white hover:text-green mr-2" />
+                      </p>
+                    );
+                  })}
                 </div>
                 <div className="px-4 min-w-[500px]">
-                  <h1 className="text-[20px] w-full font-semi">
-                    Gök önümler we miweler
+                  <h1
+                    onClick={() => {
+                      setKategory(false);
+                      history.push({
+                        pathname: "/mrt/kategory/" + selected.id,
+                      });
+                    }}
+                    className="text-[20px] w-full font-semi"
+                  >
+                    {selected?.name}
                   </h1>
-                  <div>
-                    <p>Miweler</p>
-                    <p>Gök otlar</p>
+                  <div className="flex justify-between flex-wrap">
+                    {selected?.subcategories?.map((item) => {
+                      return (
+                        <p
+                          onClick={() => {
+                            setKategory(false);
+                            history.push({
+                              pathname: "/mrt/kategory/" + item.id,
+                            });
+                          }}
+                          className="w-[30%] mt-2"
+                          key={item?.name}
+                        >
+                          {item.name}
+                        </p>
+                      );
+                    })}
                   </div>
                 </div>
               </div>
@@ -514,6 +541,7 @@ function Navbar(props) {
               alt="search"
             />
             <input
+              onChange={(e) => setProductName(e.target.value)}
               className="outline-none font-medium w-full h-[32px]"
               placeholder={
                 dil === "TM"
@@ -524,7 +552,9 @@ function Navbar(props) {
               }
             />
             <div
-              onClick={() => history.push({ pathname: "/mrt/search" })}
+              onClick={() =>
+                history.push({ pathname: "/mrt/search/" + productName })
+              }
               className="custom-button font-semi text-white rounded-[32px] h-[40px] px-[24px] py-[10px]"
             >
               {dil === "TM" ? tm.Gözleg : dil === "RU" ? ru.Gözleg : en.Gözleg}

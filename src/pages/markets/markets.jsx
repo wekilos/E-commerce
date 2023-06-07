@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { West, ArrowForwardIos } from "@mui/icons-material";
 import {
   FormControl,
@@ -22,22 +22,20 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import {
+  BASE_URL,
+  BASE_URL_IMG,
+  axiosInstance,
+} from "../../utils/axiosIntance";
 
 const Markets = () => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const { dil } = useContext(Context);
   const history = useHistory();
-  const [brends, setBrends] = useState([
-    { id: 1, name: "Mars" },
-    { id: 1, name: "Pepsi" },
-    { id: 1, name: "Colo" },
-    { id: 1, name: "Snicers" },
-    { id: 1, name: "Turan" },
-    { id: 1, name: "Apple" },
-    { id: 1, name: "Fanta" },
-    { id: 1, name: "Sprite" },
-  ]);
-  const [filterBrends, setFilterBrends] = useState(brends);
+  const [categories, setCategories] = useState([]);
+  const [brends, setBrends] = useState([]);
+  const [markets, setMarkets] = useState([]);
+  const [filterBrends, setFilterBrends] = useState();
 
   const SearchBrends = (value) => {
     let filter = value.toUpperCase();
@@ -51,7 +49,63 @@ const Markets = () => {
     }
   };
 
-  const markets = [img1, img2, img3, img4, img5, img1, img2, img3, img4, img5];
+  // const markets = [img1, img2, img3, img4, img5, img1, img2, img3, img4, img5];
+
+  useEffect(() => {
+    getcategories();
+    getbrands();
+    getmarkets();
+  }, [dil]);
+
+  const getcategories = async () => {
+    axiosInstance
+      .get("/api/grocery_categories", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        setCategories(data.data.body);
+        console.log(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getbrands = async () => {
+    axiosInstance
+      .get("/api/grocery_brands", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        setBrends(data.data.body);
+        setFilterBrends(data.data.body);
+        console.log("brends:", data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getmarkets = async () => {
+    axiosInstance
+      .get("/api/grocery_markets", {
+        params: {
+          lang: dil,
+          user_id: 1,
+        },
+      })
+      .then((data) => {
+        setMarkets(data.data.body);
+        console.log("setMarkets:", data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   return (
     <div className="w-full pb-10 inline-flex justify-between select-none">
@@ -67,18 +121,17 @@ const Markets = () => {
               ? ru.Kategoriýalar
               : en.Kategoriýalar}
           </h1>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Maýonez we souslar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Unaş, däneler we unlar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Şokolad we süýji önümleri
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Süýt önümleri
-          </p>
+
+          {categories?.map((item, i) => {
+            return (
+              <p
+                key={item.name + i}
+                className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300"
+              >
+                {item?.name}
+              </p>
+            );
+          })}
         </div>
 
         <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
@@ -99,10 +152,10 @@ const Markets = () => {
             style={{ scrollbarColor: "#32BB78" }}
             className="max-h-[250px] overflow-auto"
           >
-            {filterBrends.map((item, index) => {
+            {filterBrends?.map((item, index) => {
               return (
                 <div
-                  key={index}
+                  key={item.name + index}
                   className={
                     "flex items-center py-3 text-left   border-t-[1px] border-t-neutral-300"
                   }
@@ -116,7 +169,7 @@ const Markets = () => {
                     htmlFor="brend1"
                     className="text-[16px] cursor-pointer text-neutral-900 font-[300] "
                   >
-                    {item.name}
+                    {item?.name}
                   </label>
                 </div>
               );
@@ -168,7 +221,7 @@ const Markets = () => {
                 setPriceRange(e.target.value);
               }}
               valueLabelDisplay="auto"
-              getAriaValueText={(e) => console.log("value text", e)}
+              // getAriaValueText={(e) => console.log("value text", e)}
               disableSwap
             />
           </div>
@@ -285,7 +338,11 @@ const Markets = () => {
           {markets.map((item) => {
             return (
               <div className="   ">
-                <MarketCard img={item} />
+                <MarketCard
+                  data={item}
+                  img={BASE_URL_IMG + "/" + item.img}
+                  is_liked={item?.is_liked}
+                />
               </div>
             );
           })}

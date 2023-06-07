@@ -73,3 +73,9 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 500 medium
 600 semi bold
 700 bold
+
+ssh wekil@119.235.116.228
+Salam123
+
+// 955914 mahri telekom
+// 481504 muhamet telekom

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect, useState } from "react";
-import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
+import React, { useContext, useState } from "react";
+import { West, ArrowForwardIos } from "@mui/icons-material";
 import {
   FormControl,
   InputLabel,
@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import { Cancel } from "@mui/icons-material";
 import ProductCard from "../../components/ProductCard";
-import brendimg from "../../images/brand.png";
 
 import img14 from "../../images/Image14.svg";
 import img15 from "../../images/Image15.svg";
@@ -22,16 +21,58 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
-import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
-import { useParams } from "react-router-dom";
 
-const Brend = () => {
-  const { dil } = useContext(Context);
-  const { id } = useParams();
-  const history = useHistory();
+const SubKategory = () => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [brend, setBrend] = useState([]);
-  const [categories, setCategories] = useState([]);
+  const { dil } = useContext(Context);
+  const history = useHistory();
+  const [brends, setBrends] = useState([
+    { id: 1, name: "Mars" },
+    { id: 1, name: "Pepsi" },
+    { id: 1, name: "Colo" },
+    { id: 1, name: "Snicers" },
+    { id: 1, name: "Turan" },
+    { id: 1, name: "Apple" },
+    { id: 1, name: "Fanta" },
+    { id: 1, name: "Sprite" },
+  ]);
+  const [filterBrends, setFilterBrends] = useState(brends);
+
+  const [markets, setMarkets] = useState([
+    { id: 1, name: "Mars" },
+    { id: 1, name: "Pepsi" },
+    { id: 1, name: "Colo" },
+    { id: 1, name: "Snicers" },
+    { id: 1, name: "Turan" },
+    { id: 1, name: "Apple" },
+    { id: 1, name: "Fanta" },
+    { id: 1, name: "Sprite" },
+  ]);
+  const [filterMarkets, setFilterMarkets] = useState(markets);
+
+  const SearchBrends = (value) => {
+    let filter = value.toUpperCase();
+    let newArray = brends.filter((item) => {
+      return item.name.toUpperCase().indexOf(filter) > -1;
+    });
+    if (value.length === 0) {
+      setFilterBrends([...brends]);
+    } else {
+      setFilterBrends([...newArray]);
+    }
+  };
+
+  const SearchMarkets = (value) => {
+    let filter = value.toUpperCase();
+    let newArray = markets.filter((item) => {
+      return item.name.toUpperCase().indexOf(filter) > -1;
+    });
+    if (value.length === 0) {
+      setFilterMarkets([...markets]);
+    } else {
+      setFilterMarkets([...newArray]);
+    }
+  };
 
   const cake = [
     {
@@ -76,50 +117,13 @@ const Brend = () => {
     },
   ];
 
-  useEffect(() => {
-    getBrend();
-    getCategories();
-  }, [dil]);
-  const getBrend = () => {
-    axiosInstance
-      .get("/api/grocery_brand_products", {
-        params: {
-          lang: dil,
-          brand_id: id,
-        },
-      })
-      .then((data) => {
-        console.log("brend:", data.data.body);
-        setBrend(data.data.body);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const getCategories = () => {
-    axiosInstance
-      .get("/api/grocery_categories", {
-        params: {
-          lang: dil,
-        },
-      })
-      .then((data) => {
-        console.log("brend:", data.data.body);
-        setCategories(data.data.body);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="min-w-[245px] w-[245px]">
         {/* <button className="w-full h-[50px]  bg-green-100 text-green text-[18px] font-semi rounded-[8px]">
                     <West /> Ähli dükanlar
                 </button> */}
-        <div className="w-full px-4 rounded-[8px] border-[1px] border-neutral-300">
+        <div className="w-full px-4   rounded-[8px] border-[1px] border-neutral-300">
           <h1 className="py-3 text-[20px] text-neutral-900 font-semi text-left">
             {dil === "TM"
               ? tm.Kategoriýalar
@@ -127,17 +131,104 @@ const Brend = () => {
               ? ru.Kategoriýalar
               : en.Kategoriýalar}
           </h1>
+          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
+            Maýonez we souslar
+          </p>
+          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
+            Unaş, däneler we unlar
+          </p>
+          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
+            Şokolad we süýji önümleri
+          </p>
+          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
+            Süýt önümleri
+          </p>
+        </div>
 
-          {categories?.map((item, i) => {
-            return (
-              <p
-                key={"catb" + i}
-                className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300"
-              >
-                {item.name}
-              </p>
-            );
-          })}
+        <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
+          <h1 className="py-3 text-[20px] border-b-[1px] border-b-neutral-300 text-neutral-900 font-semi text-left">
+            {dil === "TM"
+              ? tm.Brendler
+              : dil === "RU"
+              ? ru.Brendler
+              : en.Brendler}
+          </h1>
+          <input
+            onKeyUp={(e) => SearchBrends(e.target.value)}
+            className="w-full h-[50px] mt-2 outline-none p-4 rounded-[8px] border-[1px] border-neutral-300"
+            type="text"
+            placeholder="Search"
+          />
+          <div
+            style={{ scrollbarColor: "#32BB78" }}
+            className="max-h-[250px] overflow-auto"
+          >
+            {filterBrends.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={
+                    "flex items-center py-3 text-left   border-t-[1px] border-t-neutral-300"
+                  }
+                >
+                  <input
+                    className="mr-3 bg-neutral-300 text-neutral-300 border-neutral-300 w-[16px] h-[16px] "
+                    type="checkbox"
+                    id="brend1"
+                  />
+                  <label
+                    htmlFor="brend1"
+                    className="text-[16px] cursor-pointer text-neutral-900 font-[300] "
+                  >
+                    {item.name}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
+          <h1 className="py-3 text-[20px] border-b-[1px] border-b-neutral-300 text-neutral-900 font-semi text-left">
+            {dil === "TM"
+              ? tm.Dükanlar
+              : dil === "RU"
+              ? ru.Dükanlar
+              : en.Dükanlar}
+          </h1>
+          <input
+            onKeyUp={(e) => SearchMarkets(e.target.value)}
+            className="w-full h-[50px] mt-2 outline-none p-4 rounded-[8px] border-[1px] border-neutral-300"
+            type="text"
+            placeholder="Search"
+          />
+          <div
+            style={{ scrollbarColor: "#32BB78" }}
+            className="max-h-[250px] overflow-auto"
+          >
+            {filterMarkets.map((item, index) => {
+              return (
+                <div
+                  key={index}
+                  className={
+                    "flex items-center py-3 text-left   border-t-[1px] border-t-neutral-300"
+                  }
+                >
+                  <input
+                    className="mr-3 bg-neutral-300 text-neutral-300 border-neutral-300 w-[16px] h-[16px] "
+                    type="checkbox"
+                    id="brend1"
+                  />
+                  <label
+                    htmlFor="brend1"
+                    className="text-[16px] cursor-pointer text-neutral-900 font-[300] "
+                  >
+                    {item.name}
+                  </label>
+                </div>
+              );
+            })}
+          </div>
         </div>
 
         <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
@@ -203,22 +294,26 @@ const Brend = () => {
               : en["Baş sahypa"]}
           </p>
           <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
+          <p
+            onClick={() => history.push({ pathname: "/mrt/kategories" })}
+            className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
+          >
+            {dil === "TM"
+              ? tm.Kategoriýalar
+              : dil === "RU"
+              ? ru.Kategoriýalar
+              : en.Kategoriýalar}
+          </p>
+          <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
           <p className="text-[16px] font-regular text-black-secondary mr-2">
-            {brend.length > 0 && brend[0].brands?.name}
+            Şokolad we süýji önümleri
           </p>
         </div>
 
         <div className="w-full mt-5 flex justify-between  items-center">
-          <div className="flex justify-start">
-            <img
-              src={brend.length > 0 && BASE_URL + brend[0].brands?.img}
-              className="h-[48px] object-contain rounded-[8px] shadow-sm mr-4"
-              alt=""
-            />
-            <p className="text-[32px] font-semi text-neutral-900 mr-2">
-              {brend.length > 0 && brend[0].brands?.name}
-            </p>
-          </div>
+          <p className="text-[32px] font-semi text-neutral-900 mr-2">
+            Şokolad we süýji önümleri
+          </p>
           <div className="w-[200px]">
             <FormControl size="small" fullWidth>
               <InputLabel
@@ -280,11 +375,11 @@ const Brend = () => {
             </FormControl>
           </div>
         </div>
-        <div className="w-full  mt-6 flex justify-start items-center">
+        <div className="w-full  mt-5 flex justify-start items-center">
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
-              {" " + priceRange[0]} - {priceRange[1]} TMT
+              20 - 120 TMT
             </p>
             <Cancel className="cursor-pointer" />
           </div>
@@ -296,17 +391,9 @@ const Brend = () => {
               : en["Filtrleri arassalamak"]}
           </div>
         </div>
-        {/* <div className="w-full flex items-center justify-start mt-4">
-                    <h1 className="font-[700] text-[20px] text-neutral-900 mr-2">
-                        Şokolad we süýji önümleri
-                    </h1>
-                    <p className="font-medium text-[16px] text-neutral-600">
-                        (sany 8)
-                    </p>
-                </div> */}
         <div className="w-full mt-7 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
-          {brend?.map((item, i) => {
-            return <ProductCard data={item} text={item.name} img={item.img} />;
+          {cake.map((item) => {
+            return <ProductCard text={item.name} img={item.img} />;
           })}
         </div>
       </div>
@@ -314,4 +401,4 @@ const Brend = () => {
   );
 };
 
-export default Brend;
+export default SubKategory;

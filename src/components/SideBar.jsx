@@ -10,19 +10,41 @@ import profileCirclegreen from "../images/profile-circlegreen.svg";
 import logoutimg from "../images/logout.svg";
 import trash from "../images/trash.svg";
 import { useHistory, useLocation } from "react-router-dom";
-import { Modal } from "antd";
+import { Modal, message } from "antd";
 
 import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
+import { axiosInstance } from "../utils/axiosIntance";
 
 const Sidebar = (props) => {
   const history = useHistory();
   const path = useLocation();
   const [open, setOpen] = useState(false);
+  const [inp, setInp] = useState("");
   const [deleteAc, setDeleteAc] = useState(false);
   const { dil } = useContext(Context);
+
+  const DeletUser = () => {
+    inp == tm.Öçürmek || inp == ru.Öçürmek || inp == en.Öçürmek
+      ? axiosInstance
+          .patch("/api/user/disActive/" + 1)
+          .then((data) => {
+            console.log(data.data);
+            history.push({ pathname: "/mrt/home" });
+          })
+          .catch((err) => {
+            console.log(err);
+          })
+      : message.warning(
+          dil === "TM"
+            ? tm.Öçürmek
+            : dil === "RU"
+            ? ru.Öçürmek
+            : en.Öçürmek + inp
+        );
+  };
   return (
     <div className="w-full  ">
       <Modal
@@ -90,6 +112,8 @@ const Sidebar = (props) => {
             : en["diýip ýazyn we tassyklaň"]}
         </p>
         <input
+          onChange={(e) => setInp(e.target.value)}
+          value={inp}
           placeholder={
             dil === "TM"
               ? tm["Şu ýere ýazyň"]
@@ -111,7 +135,10 @@ const Sidebar = (props) => {
               ? ru["Yza gaýt"]
               : en["Yza gaýt"]}
           </button>
-          <button className="h-[50px] mb-4 w-[49%] bg-red rounded-[8px] text-white text-[16px] font-semi">
+          <button
+            onClick={() => DeletUser()}
+            className="h-[50px] mb-4 w-[49%] bg-red rounded-[8px] text-white text-[16px] font-semi"
+          >
             {dil === "TM"
               ? tm["Hasaby Öçürmek"]
               : dil === "RU"

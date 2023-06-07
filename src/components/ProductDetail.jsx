@@ -14,11 +14,17 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
+import { useParams } from "react-router-dom";
+import { BASE_URL, axiosInstance } from "../utils/axiosIntance";
 
 function ProductCard(props) {
   const history = useHistory();
   const [animation, setAnimation] = useState(false);
   const [count, setCount] = useState(1);
+
+  const [product, setProduct] = useState({});
+  const { id } = useParams();
+
   const { dil } = useContext(Context);
 
   useEffect(() => {
@@ -90,25 +96,58 @@ function ProductCard(props) {
     // },
   };
 
+  useEffect(() => {
+    getProduct();
+  }, [id, dil]);
+
+  const getProduct = () => {
+    axiosInstance
+      .get("/api/grocery_product", {
+        params: {
+          lang: dil,
+          product_id: id,
+        },
+      })
+      .then((data) => {
+        console.log(data.data.body[0]);
+        setProduct(data.data.body.length > 0 ? data.data.body[0] : {});
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const addToFav = () => {
+    axiosInstance
+      .post("/api/grocery_favourite_product", {
+        user_id: 1,
+        product_id: id,
+      })
+      .then((data) => {
+        console.log(data.data);
+        getProduct();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="w-full flex justify-between rounded-[24px] border-[1px] border-neutral-300 shadow-sm p-6">
       <div className="w-1/3 border-r-[1px] border-r-neutral-300 p-8">
         <div className="w-full h-[320px] relative rounded-[20px] my-[25px] mb-[50px]">
           <Slider ref={slider} {...settings}>
-            <div className="w-full px-2   outline-none">
-              <img
-                className=" w-full h-[320px]  object-cover rounded-[20px]"
-                src={card}
-                alt="slide"
-              />
-            </div>
-            <div className="w-full px-2  outline-none">
-              <img
-                className=" w-full h-[320px]  object-cover rounded-[20px]"
-                src={card}
-                alt="slide"
-              />
-            </div>
+            {product?.img?.map((item, i) => {
+              return (
+                <div key={item.img + i} className="w-full px-2   outline-none">
+                  <img
+                    className=" w-full h-[320px]  object-cover rounded-[20px]"
+                    src={BASE_URL + item.img}
+                    alt="slide"
+                  />
+                </div>
+              );
+            })}
           </Slider>
           <div>
             <div
@@ -125,42 +164,33 @@ function ProductCard(props) {
             </div>
           </div>
           <div className="w-full mt-[10px] flex justify-center">
-            <img
-              className="h-[72px] cursor-pointer object-contain mr-3"
-              src={card}
-              alt="card"
-            />
-            <img
-              className="h-[72px] cursor-pointer object-contain mr-3"
-              src={card}
-              alt="card"
-            />
-            <img
-              className="h-[72px] cursor-pointer object-contain mr-3"
-              src={card}
-              alt="card"
-            />
-            <img
-              className="h-[72px] cursor-pointer object-contain mr-3"
-              src={card}
-              alt="card"
-            />
+            {product?.img?.map((item) => {
+              return (
+                <img
+                  key={"mini" + item.img}
+                  className="h-[72px] cursor-pointer object-contain mr-3"
+                  src={BASE_URL + item.img}
+                  alt="card"
+                />
+              );
+            })}
           </div>
         </div>
       </div>
       <div className="w-2/3 px-8 flex flex-wrap justify-between flex-row">
         <div className="w-full">
-          <div className="h-[41px] mb-4 w-fit rounded-[32px] px-4 py-2 bg-red text-white font-semi text[20px]">
-            -30%{" "}
-            {dil === "TM"
-              ? tm.Arzanladyş
-              : dil === "RU"
-              ? ru.Arzanladyş
-              : en.Arzanladyş}
-          </div>
+          {product?.is_discount && (
+            <div className="h-[41px] mb-4 w-fit rounded-[32px] px-4 py-2 bg-red text-white font-semi text[20px]">
+              -{product?.discount_percentage}%
+              {dil === "TM"
+                ? tm.Arzanladyş
+                : dil === "RU"
+                ? ru.Arzanladyş
+                : en.Arzanladyş}
+            </div>
+          )}
           <div className="text-[24px] font-medium text-black-secondary ">
-            Köke Milka Piegski şokoladly we maňyzly 135 g Choco Cookie Nut
-            süýtli we maňyzly
+            {product?.name}
           </div>
         </div>
         <div className="w-full mt-4">
@@ -183,7 +213,7 @@ function ProductCard(props) {
                 :
               </p>
               <p className="text-[16px] font-medium text-neutral-900">
-                RYТQ214421
+                {product?.code}
               </p>
             </div>
             <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
@@ -191,11 +221,15 @@ function ProductCard(props) {
                 {dil === "TM" ? tm.Brend : dil === "RU" ? ru.Brend : en.Brend}:
               </p>
               <div
-                onClick={() => history.push({ pathname: "/mrt/brend/1" })}
+                onClick={() =>
+                  history.push({
+                    pathname: "/mrt/brend/" + product?.brands?.id,
+                  })
+                }
                 className="flex cursor-pointer items-center"
               >
                 <p className="text-[16px] mr-2 font-medium text-green">
-                  Ter önümler
+                  {product?.brands?.name}
                 </p>
                 <p className="!text-[12px] h-[20px] w-[20px] pl-1 flex items-center rounded-[4px] text-green border-[1px] border-green">
                   <ArrowForwardIos className="!text-[12px]" />
@@ -214,13 +248,13 @@ function ProductCard(props) {
               <div
                 onClick={() =>
                   history.push({
-                    pathname: "/mrt/kategory/1",
+                    pathname: "/mrt/kategory/" + product?.categories?.id,
                   })
                 }
                 className="flex cursor-pointer items-center"
               >
                 <p className="text-[16px] mr-2 font-medium text-green">
-                  Şokolad we süýji önümleri
+                  {product?.categories?.name}
                 </p>
                 <p className="!text-[12px] h-[20px] w-[20px] pl-1 flex items-center rounded-[4px] text-green border-[1px] border-green">
                   <ArrowForwardIos className="!text-[12px]" />
@@ -229,15 +263,18 @@ function ProductCard(props) {
             </div>
             <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
               <p className="text-[16px] font-medium text-neutral-800">
-                {" "}
                 {dil === "TM" ? tm.Dükan : dil === "RU" ? ru.Dükan : en.Dükan}:
               </p>
               <div
-                onClick={() => history.push({ pathname: "/mrt/market/1" })}
+                onClick={() =>
+                  history.push({
+                    pathname: "/mrt/market/" + product?.market?.id,
+                  })
+                }
                 className="flex cursor-pointer items-center"
               >
                 <p className="text-[16px] mr-2 font-medium text-green">
-                  Dükan ady
+                  {product?.market?.name}
                 </p>
                 <p className="!text-[12px] h-[20px] w-[20px] pl-1 flex items-center rounded-[4px] text-green border-[1px] border-green">
                   <ArrowForwardIos className="!text-[12px]" />
@@ -248,16 +285,19 @@ function ProductCard(props) {
         </div>
         <div className="w-full">
           <h1 className="w-full text-left text-[24px] font-bold text-neutral-900">
-            22.80 TMT
+            {product?.is_discount ? product?.discount_price : product?.price}
+            TMT
           </h1>
-          <div className="flex items-center">
-            <p className="mr-2 text-white bg-red h-[22px] px-[3px] text-[14px] font-semi rounded-[8px]">
-              -30%
-            </p>
-            <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
-              26.20 TMT
-            </p>
-          </div>
+          {product?.is_discount && (
+            <div className="flex items-center">
+              <p className="mr-2 text-white bg-red h-[22px] px-[3px] text-[14px] font-semi rounded-[8px]">
+                -{product?.discount_percentage}%
+              </p>
+              <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
+                {product?.price} TMT
+              </p>
+            </div>
+          )}
         </div>
 
         <div className="w-full mt-4 flex justify-between">
@@ -300,12 +340,18 @@ function ProductCard(props) {
                 </button>
               </div>
             )}
-            {false ? (
-              <div className="h-[50px] cursor-pointer w-[50px] flex items-center justify-center rounded-[16px] bg-neutral-300 ml-4">
+            {product?.is_liked ? (
+              <div
+                onClick={() => addToFav()}
+                className="h-[50px] cursor-pointer w-[50px] flex items-center justify-center rounded-[16px] bg-neutral-300 ml-4"
+              >
                 <FavoriteBorder className="text-neutral-900" />
               </div>
             ) : (
-              <div className="h-[50px] cursor-pointer w-[50px] flex items-center justify-center rounded-[16px] bg-neutral-300 ml-4">
+              <div
+                onClick={() => addToFav()}
+                className="h-[50px] cursor-pointer w-[50px] flex items-center justify-center rounded-[16px] bg-neutral-300 ml-4"
+              >
                 <Favorite className=" text-red" />
               </div>
             )}

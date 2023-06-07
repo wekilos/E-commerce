@@ -13,7 +13,7 @@ const CategoryCard = (props) => {
     <div
       onClick={() =>
         history.push({
-          pathname: "/mrt/kategory/1",
+          pathname: "/mrt/kategory/" + props.data.id,
         })
       }
       className="p-[20px] hover:bg-green-200  mr-2 text-[18px] min-w-[200px] h-[120px] bg-[#F4F4F6] rounded-[24px]"

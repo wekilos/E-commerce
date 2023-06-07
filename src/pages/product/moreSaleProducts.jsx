@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
 import {
   FormControl,
@@ -26,176 +26,56 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const MoreSaleProducts = () => {
   const history = useHistory();
   const { dil } = useContext(Context);
-  const [starOpen, setStarOpen] = useState(false);
-  const [liked, setLiked] = useState(false);
+  const [categories, setCategories] = useState([]);
+  const [moreSale, setMoreSale] = useState([]);
   const [priceRange, setPriceRange] = useState([0, 1000]);
-  const [brends, setBrends] = useState([
-    { id: 1, name: "Mars" },
-    { id: 1, name: "Pepsi" },
-    { id: 1, name: "Colo" },
-    { id: 1, name: "Snicers" },
-    { id: 1, name: "Turan" },
-    { id: 1, name: "Apple" },
-    { id: 1, name: "Fanta" },
-    { id: 1, name: "Sprite" },
-  ]);
-  const [filterBrends, setFilterBrends] = useState(brends);
 
-  const [markets, setMarkets] = useState([
-    { id: 1, name: "Mars" },
-    { id: 1, name: "Pepsi" },
-    { id: 1, name: "Colo" },
-    { id: 1, name: "Snicers" },
-    { id: 1, name: "Turan" },
-    { id: 1, name: "Apple" },
-    { id: 1, name: "Fanta" },
-    { id: 1, name: "Sprite" },
-  ]);
-  const [filterMarkets, setFilterMarkets] = useState(markets);
+  const kop = [];
 
-  const SearchBrends = (value) => {
-    let filter = value.toUpperCase();
-    let newArray = brends.filter((item) => {
-      return item.name.toUpperCase().indexOf(filter) > -1;
-    });
-    if (value.length === 0) {
-      setFilterBrends([...brends]);
-    } else {
-      setFilterBrends([...newArray]);
-    }
+  useEffect(() => {
+    getCategories();
+    getDiscount();
+  }, [dil]);
+
+  const getCategories = () => {
+    axiosInstance
+      .get("/api/grocery_categories", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setCategories(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
-  const SearchMarkets = (value) => {
-    let filter = value.toUpperCase();
-    let newArray = markets.filter((item) => {
-      return item.name.toUpperCase().indexOf(filter) > -1;
-    });
-    if (value.length === 0) {
-      setFilterMarkets([...markets]);
-    } else {
-      setFilterMarkets([...newArray]);
-    }
+  const getDiscount = () => {
+    axiosInstance
+      .get("/api/grocery_more_sale_products", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setMoreSale(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
-
-  const kop = [
-    {
-      name: "Maýonez Nur Näzli 30% 800 g",
-      img: img6,
-    },
-    {
-      name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-      img: img7,
-    },
-    {
-      name: "Limon sousy Arslan Küpü 500 ml",
-      img: img8,
-    },
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-    {
-      name: "Maýonez Nur Näzli 30% 800 g",
-      img: img6,
-    },
-    {
-      name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-      img: img7,
-    },
-    {
-      name: "Limon sousy Arslan Küpü 500 ml",
-      img: img8,
-    },
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-  ];
 
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
-      <Modal
-        className="font-roboto p-8 "
-        width={650}
-        open={starOpen}
-        onCancel={() => setStarOpen(false)}
-        footer={false}
-      >
-        <h1 className="text-[28px] mb-4 font-bold text-neutral-900 text-left ">
-          {dil === "TM"
-            ? tm["Baha bermek"]
-            : dil === "RU"
-            ? ru["Baha bermek"]
-            : en["Baha bermek"]}
-        </h1>
-
-        <div className="w-full overflow-y-auto max-h-[470px]">
-          <div className="w-full mb-2 py-2 border-b-[1px] border-b-neutral-300">
-            <h1 className="w-full text-left text-[18px] text-neutral-900 font-semi">
-              Худайдурды Хожайев
-            </h1>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-medium">
-              12.10.2023 - 13:23
-            </p>
-            <div className="flex my-2">
-              <p className="w-fit mr-2 text-left text-[16px] text-neutral-900 font-semi">
-                4.0
-              </p>
-              <div className="flex">
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-neutral-400" />
-              </div>
-            </div>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-regular">
-              Этот уютный ресторан оставил самые лучшие впечатления!
-              Гостеприимные хозяева, вкусные блюда, красивая подача, широкая
-              винная карта и прекрасный десерт. Рекомендую всем! Хочется
-              возвращаться сюда снова и снова.
-            </p>
-          </div>
-          <div className="w-full mb-2 py-2 border-b-[1px] border-b-neutral-300">
-            <h1 className="w-full text-left text-[18px] text-neutral-900 font-semi">
-              Худайдурды Хожайев
-            </h1>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-medium">
-              12.10.2023 - 13:23
-            </p>
-            <div className="flex my-2">
-              <p className="w-fit mr-2 text-left text-[16px] text-neutral-900 font-semi">
-                4.0
-              </p>
-              <div className="flex">
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-yellow" />
-                <StarOutlined className="text-neutral-400" />
-              </div>
-            </div>
-            <p className="w-full text-left text-[14px] text-neutral-700 font-regular">
-              Этот уютный ресторан оставил самые лучшие впечатления!
-              Гостеприимные хозяева, вкусные блюда, красивая подача, широкая
-              винная карта и прекрасный десерт. Рекомендую всем! Хочется
-              возвращаться сюда снова и снова.
-            </p>
-          </div>
-        </div>
-      </Modal>
       <div className="min-w-[245px] w-[245px]">
         <div className="w-full px-4 mt-0 rounded-[8px] border-[1px] border-neutral-300">
           <h1 className="py-3 text-[20px] text-neutral-900 font-semi text-left">
@@ -205,18 +85,20 @@ const MoreSaleProducts = () => {
               ? ru.Kategoriýalar
               : en.Kategoriýalar}
           </h1>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Maýonez we souslar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Unaş, däneler we unlar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Şokolad we süýji önümleri
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Süýt önümleri
-          </p>
+
+          {categories?.map((item, i) => {
+            return (
+              <p
+                key={"catmore" + i}
+                onClick={() =>
+                  history.push({ pathname: "/mrt/kategory/" + item.id })
+                }
+                className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300"
+              >
+                {item?.name}
+              </p>
+            );
+          })}
         </div>
 
         <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
@@ -365,7 +247,7 @@ const MoreSaleProducts = () => {
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
-              20 - 120 TMT
+              {" " + priceRange[0]} - {priceRange[1]} TMT
             </p>
             <Cancel className="cursor-pointer" />
           </div>
@@ -390,8 +272,10 @@ const MoreSaleProducts = () => {
             <p className="font-medium text-[16px] text-neutral-600"></p>
           </div>
           <div className="w-full mt-4 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
-            {kop.map((item) => {
-              return <ProductCard text={item.name} img={item.img} />;
+            {moreSale?.map((item) => {
+              return (
+                <ProductCard data={item} text={item.name} img={item.img} />
+              );
             })}
           </div>
         </div>

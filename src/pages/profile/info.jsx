@@ -1,5 +1,5 @@
 import { ArrowForwardIos } from "@mui/icons-material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/SideBar";
 import card from "../../images/card.png";
 import timer1 from "../../images/timer1.svg";
@@ -20,11 +20,40 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Info = () => {
   const [wich, setWich] = useState(true);
   const { dil } = useContext(Context);
+  const [user, setUser] = useState({});
   const history = useHistory();
+
+  useEffect(() => {
+    getData();
+  }, []);
+  const getData = () => {
+    axiosInstance
+      .get("/api/user/" + 1)
+      .then((data) => {
+        console.log(data.data);
+        setUser(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const updateUserInfo = () => {
+    axiosInstance
+      .patch("/api/user/update", user)
+      .then((data) => {
+        console.log(data.data);
+        getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full pb-10">
       <div className="w-full flex items-center">
@@ -66,26 +95,31 @@ const Info = () => {
           <div className="w-full mt-4 flex justify-between flex-wrap">
             <input
               className="h-[48px] text-[16px] font-semi text-neutral-900 select-none outline-none w-[49%] px-4 rounded-[8px] bg-neutral-200 mb-4"
-              value="Islam"
+              value={user?.name}
+              onChange={(e) => setUser({ ...user, name: e.target.value })}
             />
             <input
               className="h-[48px] text-[16px] font-semi text-neutral-900 select-none outline-none w-[49%] px-4 rounded-[8px] bg-neutral-200 mb-4"
-              value="Yuldashev"
+              value={user?.lastname}
+              onChange={(e) => setUser({ ...user, lastname: e.target.value })}
             />
             <input
               readOnly
               className="h-[48px] text-[16px] font-medium text-neutral-600 select-none outline-none w-[49%] px-4 rounded-[8px] bg-neutral-200 mb-4"
               type="text"
-              defaultValue="10.04.1999"
+              defaultValue={user?.birthday?.slice(0, 10)}
             />
             <input
               readOnly
               className="h-[48px] text-[16px] font-medium text-neutral-600 select-none w-[49%] outline-none px-4 rounded-[8px] bg-neutral-200 mb-4"
-              value="+993 64 75 48 46"
+              value={user?.phone_number}
             />
           </div>
           <div className="w-full mt-4 flex justify-start">
-            <button className="h-[48px] text-[16px] mr-4 font-semi text-white select-none  w-[175px] px-4 rounded-[16px] bg-green mb-4">
+            <button
+              onClick={() => updateUserInfo()}
+              className="h-[48px] text-[16px] mr-4 font-semi text-white select-none  w-[175px] px-4 rounded-[16px] bg-green mb-4"
+            >
               {dil === "TM"
                 ? tm["Ýatda saklamak"]
                 : dil === "RU"

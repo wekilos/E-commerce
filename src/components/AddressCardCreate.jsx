@@ -14,11 +14,29 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
+import { axiosInstance } from "../utils/axiosIntance";
 
 const AddressCardCreate = (props) => {
   const [add, setAdd] = useState(false);
   const { dil } = useContext(Context);
+  const [address, setAddress] = useState({ title: "", address: "" });
 
+  const createUserAddress = () => {
+    axiosInstance
+      .post("/api/address/create", {
+        address: address.address,
+        title: address.title,
+        UserId: 1,
+      })
+      .then((data) => {
+        console.log(data.data);
+        setAdd(false);
+        props.getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-[49%]">
       <Modal
@@ -38,6 +56,8 @@ const AddressCardCreate = (props) => {
 
         <div className="w-full flex justify-between flex-wrap">
           <input
+            onChange={(e) => setAddress({ ...address, title: e.target.value })}
+            value={address.title}
             className="w-full text-[16px] mb-4 p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
             placeholder={
               dil === "TM"
@@ -52,6 +72,10 @@ const AddressCardCreate = (props) => {
             <img src={carta} alt="carta" />
           </div> */}
           <input
+            onChange={(e) =>
+              setAddress({ ...address, address: e.target.value })
+            }
+            value={address.address}
             className="w-full text-[16px] mb-4 p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
             placeholder={
               dil === "TM" ? tm.Salgy : dil === "RU" ? ru.Salgy : en.Salgy
@@ -60,7 +84,7 @@ const AddressCardCreate = (props) => {
           />
         </div>
         <button
-          onClick={() => setAdd(false)}
+          onClick={() => createUserAddress()}
           className="h-[50px] w-full bg-green rounded-[9px] text-white text-[16px] font-semi"
         >
           {dil === "TM"

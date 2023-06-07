@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
 import {
   FormControl,
@@ -23,58 +23,30 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
 
 const Brends = () => {
   const { dil } = useContext(Context);
-  const brends = [
-    {
-      name: "Nescafe",
-    },
-    {
-      name: "Her gün",
-      img: brend1,
-    },
-    {
-      name: "Elwan",
-      img: brend2,
-    },
-    {
-      name: "Şuwat",
-      img: brend3,
-    },
-    {
-      name: "7 gün",
-      img: brend4,
-    },
-    {
-      name: "Eçil",
-      img: brend5,
-    },
-    {
-      name: "Eçil",
-      img: brend5,
-    },
-    {
-      name: "7 gün",
-      img: brend4,
-    },
-    {
-      name: "Nescafe",
-    },
-    {
-      name: "Her gün",
-      img: brend1,
-    },
-    {
-      name: "Elwan",
-      img: brend2,
-    },
-    {
-      name: "Şuwat",
-      img: brend3,
-    },
-  ];
+  const [brends, setBrends] = useState([]);
 
+  useEffect(() => {
+    getBrends();
+  }, [dil]);
+  const getBrends = () => {
+    axiosInstance
+      .get("/api/grocery_brands", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log("brands:", data.data.body);
+        setBrends(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="w-full">
@@ -110,7 +82,13 @@ const Brends = () => {
 
         <div className="w-full grid place-items-center gap-6 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 md2:grid-cols-4 lg:grid-cols-5  xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 6xl:grid-cols-9">
           {brends.map((item) => {
-            return <BrandCard text={item.name} img={item.img} />;
+            return (
+              <BrandCard
+                data={item}
+                text={item.name}
+                img={BASE_URL + item.img}
+              />
+            );
           })}
         </div>
       </div>

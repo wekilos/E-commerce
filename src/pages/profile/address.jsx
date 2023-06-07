@@ -1,5 +1,5 @@
 import { ArrowForwardIos } from "@mui/icons-material";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/SideBar";
 import carta from "../../images/carta.svg";
 import timer1 from "../../images/timer1.svg";
@@ -26,12 +26,31 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Address = () => {
   const [wich, setWich] = useState(true);
   const { dil } = useContext(Context);
   const history = useHistory();
   const [add, setAdd] = useState(false);
+  const [addresses, setAddresses] = useState([]);
+
+  useEffect(() => {
+    getAddress();
+  }, []);
+  const getAddress = () => {
+    axiosInstance
+      .get("/api/address/all", {
+        params: { UserId: 1 },
+      })
+      .then((data) => {
+        console.log("adddress", data.data);
+        setAddresses(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full pb-10">
       <Modal
@@ -119,15 +138,13 @@ const Address = () => {
           <Sidebar />
         </div>
         <div className="w-full flex justify-between flex-wrap h-fit px-6">
-          <div className="w-[49%]">
-            <AddressCard />
-          </div>
-          <div className="w-[49%]">
-            <AddressCard />
-          </div>
-          <div className="w-[49%]">
-            <AddressCard />
-          </div>
+          {addresses?.map((item, i) => {
+            return (
+              <div key={"add" + i} className="w-[49%]">
+                <AddressCard getData={getAddress} data={item} />
+              </div>
+            );
+          })}
           {/* <div
                         onClick={() => setAdd(true)}
                         className="w-[49%] mb-4 cursor-pointer bg-green-100 rounded-[8px] h-[65px] flex items-center justify-center text-green text-[16px] font-bold"
@@ -135,7 +152,7 @@ const Address = () => {
                         <AddOutlined className="mr-2 rounded-[8px] bg-green-200 text-[14px]" />
                         Täze adres goşmak
                     </div> */}
-          <AddressCardCreate />
+          <AddressCardCreate getData={getAddress} />
         </div>
       </div>
     </div>

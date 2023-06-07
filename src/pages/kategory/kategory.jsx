@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { West, ArrowForwardIos } from "@mui/icons-material";
 import {
   FormControl,
@@ -21,11 +21,18 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import { axiosInstance } from "../../utils/axiosIntance";
+import { useParams } from "react-router-dom";
 
 const Kategory = () => {
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const { dil } = useContext(Context);
+  const { id } = useParams();
   const history = useHistory();
+
+  const [categories, setCategories] = useState([]);
+  const [category, setCategory] = useState([]);
+
   const [brends, setBrends] = useState([
     { id: 1, name: "Mars" },
     { id: 1, name: "Pepsi" },
@@ -117,6 +124,79 @@ const Kategory = () => {
     },
   ];
 
+  useEffect(() => {
+    getCategory();
+    getCategories();
+    getBrands();
+    getMarkets();
+  }, [dil, id]);
+
+  const getCategories = () => {
+    axiosInstance
+      .get("/api/grocery_categories", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setCategories(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getCategory = () => {
+    axiosInstance
+      .get("/api/grocery_category_products", {
+        params: {
+          lang: dil,
+          category_id: id,
+        },
+      })
+      .then((data) => {
+        console.log("category page:" + data.data);
+        setCategory(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getBrands = () => {
+    axiosInstance
+      .get("/api/grocery_brands", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setFilterBrends(data.data.body);
+        setBrends(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getMarkets = () => {
+    axiosInstance
+      .get("/api/grocery_markets", {
+        params: {
+          lang: dil,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setFilterMarkets(data.data.body);
+        setMarkets(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="min-w-[245px] w-[245px]">
@@ -131,18 +211,20 @@ const Kategory = () => {
               ? ru.Kategoriýalar
               : en.Kategoriýalar}
           </h1>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Maýonez we souslar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Unaş, däneler we unlar
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Şokolad we süýji önümleri
-          </p>
-          <p className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300">
-            Süýt önümleri
-          </p>
+
+          {categories?.map((item, i) => {
+            return (
+              <p
+                onClick={() =>
+                  history.push({ pathname: "/mrt/kategory/" + item.id })
+                }
+                key={"catcats" + i}
+                className="py-3 text-[16px] text-neutral-900 font-[300] text-left border-t-[1px] border-t-neutral-300"
+              >
+                {item?.name}
+              </p>
+            );
+          })}
         </div>
 
         <div className="w-full px-4 mt-4 rounded-[8px] border-[1px] border-neutral-300">
@@ -166,7 +248,7 @@ const Kategory = () => {
             {filterBrends.map((item, index) => {
               return (
                 <div
-                  key={index}
+                  key={"brends" + index}
                   className={
                     "flex items-center py-3 text-left   border-t-[1px] border-t-neutral-300"
                   }
@@ -306,13 +388,13 @@ const Kategory = () => {
           </p>
           <ArrowForwardIos className="!text-[16px]  font-regular text-black-secondary mr-2" />
           <p className="text-[16px] font-regular text-black-secondary mr-2">
-            Şokolad we süýji önümleri
+            {category[0]?.categories?.name}
           </p>
         </div>
 
         <div className="w-full mt-5 flex justify-between  items-center">
           <p className="text-[32px] font-semi text-neutral-900 mr-2">
-            Şokolad we süýji önümleri
+            {category[0]?.categories?.name}
           </p>
           <div className="w-[200px]">
             <FormControl size="small" fullWidth>
@@ -379,7 +461,7 @@ const Kategory = () => {
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
-              20 - 120 TMT
+              {" " + priceRange[0]} - {priceRange[1]} TMT
             </p>
             <Cancel className="cursor-pointer" />
           </div>
@@ -392,8 +474,8 @@ const Kategory = () => {
           </div>
         </div>
         <div className="w-full mt-7 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
-          {cake.map((item) => {
-            return <ProductCard text={item.name} img={item.img} />;
+          {category?.map((item) => {
+            return <ProductCard data={item} text={item.name} img={item.img} />;
           })}
         </div>
       </div>

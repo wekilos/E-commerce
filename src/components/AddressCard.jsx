@@ -15,10 +15,29 @@ import { Context } from "../context/context";
 import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
+import { axiosInstance } from "../utils/axiosIntance";
 
 const AddressCard = (props) => {
   const [add, setAdd] = useState(false);
   const { dil } = useContext(Context);
+  const [address, setAddress] = useState(props.data ? props.data : {});
+
+  const updateAddress = () => {
+    setAdd(false);
+    axiosInstance
+      .patch("/api/address/update", {
+        title: address.title,
+        address: address.address,
+        id: address.id,
+      })
+      .then((data) => {
+        console.log(data.data);
+        props.getData();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full select-none">
       <Modal
@@ -40,6 +59,8 @@ const AddressCard = (props) => {
 
         <div className="w-full flex justify-between flex-wrap">
           <input
+            value={address?.title}
+            onChange={(e) => setAddress({ ...address, title: e.target.value })}
             className="w-full text-[16px] mb-4 p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
             placeholder={
               dil === "TM"
@@ -54,6 +75,10 @@ const AddressCard = (props) => {
             <img src={carta} alt="carta" />
           </div> */}
           <input
+            value={address?.address}
+            onChange={(e) =>
+              setAddress({ ...address, address: e.target.value })
+            }
             className="w-full text-[16px] mb-4 p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
             placeholder={
               dil === "TM" ? tm.Salgy : dil === "RU" ? ru.Salgy : en.Salgy
@@ -62,7 +87,7 @@ const AddressCard = (props) => {
           />
         </div>
         <button
-          onClick={() => setAdd(false)}
+          onClick={() => updateAddress()}
           className="h-[50px] w-full bg-green rounded-[9px] text-white text-[16px] font-semi"
         >
           {dil === "TM"
@@ -85,12 +110,12 @@ const AddressCard = (props) => {
           <h1
             className={`${props.text}  text-[18px] text-neutral-900 font-semi`}
           >
-            Ejemiň öýi
+            {props?.data?.title}
           </h1>
           <p
             className={`${props.text} text-[16px] text-neutral-700 font-medium`}
           >
-            Nurmuhammet andalyp köçe, Jaý 88, Kwartira 16
+            {props?.data?.address}
           </p>
         </div>
         {props.arrow !== false && (
