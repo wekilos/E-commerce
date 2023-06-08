@@ -10,7 +10,7 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
-import { axiosInstance } from "../utils/axiosIntance";
+import { BASE_URL, BASE_URL_IMG, axiosInstance } from "../utils/axiosIntance";
 
 function MarketCard(props) {
   const history = useHistory();
@@ -61,8 +61,9 @@ function MarketCard(props) {
         onClick={() =>
           history.push({ pathname: "/mrt/market/" + props.data.id })
         }
-        className=" w-full object-contain   "
-        src={props?.img}
+        className=" w-full object-cover h-[160px] rounded-[12px]  "
+        src={BASE_URL_IMG + props.img}
+        // src={"http://119.235.118.211:8181/itda/surat.jpg"}
         alt="brand"
       />
     </div>

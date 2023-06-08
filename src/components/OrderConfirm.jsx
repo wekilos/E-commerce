@@ -35,7 +35,9 @@ const OrderConfirm = (props) => {
             ]}
       </p>
       <button
-        onClick={() => history.push({ pathname: "/mrt/profile/orders/1" })}
+        onClick={() =>
+          history.push({ pathname: "/mrt/profile/orders/" + props?.orderId })
+        }
         className="w-full h-[58px] mt-8 bg-green rounded-[9px] text-[18px] text-white font-semi"
       >
         {dil === "TM"

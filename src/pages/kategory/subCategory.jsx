@@ -393,7 +393,7 @@ const SubKategory = () => {
         </div>
         <div className="w-full mt-7 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
           {cake.map((item) => {
-            return <ProductCard text={item.name} img={item.img} />;
+            return <ProductCard text={item.name} img={item?.img[0]?.img} />;
           })}
         </div>
       </div>

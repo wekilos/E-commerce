@@ -126,5 +126,20 @@
   "Gök bakja önümlerini": "Blueberry delivery ",
   "eltip bermek hyzmaty": "service",
   "Nahar eltip bermek": "Food delivery ",
-  "hyzmaty": "service"
+  "hyzmaty": "service",
+  "Yanwar": "January",
+  "Fewral": "February",
+  "Mart": "March",
+  "Aprel": "April",
+  "May": "May",
+  "Iyun": "June",
+  "Iyul": "July",
+  "Awgust": "August",
+  "Sentyabr": "September",
+  "Oktayabr": "October",
+  "Noyabr": "November",
+  "Dekabr": "December",
+  "Yatyryldy": "Canceled",
+  "Gowshuryldy": "Delivered",
+  "Sargydy ýatyrmak": "Cancellation of order"
 }

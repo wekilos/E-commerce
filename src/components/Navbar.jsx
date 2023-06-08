@@ -34,7 +34,7 @@ import axios from "axios";
 
 function Navbar(props) {
   const history = useHistory();
-  const { dil, ChangeDil } = useContext(Context);
+  const { dil, ChangeDil, basket } = useContext(Context);
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedBack, setFeedBack] = useState(false);
@@ -42,6 +42,19 @@ function Navbar(props) {
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState({});
   const [productName, setProductName] = useState("");
+
+  let umumy = 0;
+  let discount = 0;
+  basket.map((item) => {
+    item?.products?.map((pro) => {
+      umumy = umumy + pro.quantity * pro.pro.price;
+      if (pro.pro.is_discount) {
+        discount =
+          discount + (pro.pro.price - pro.pro.discount_price) * pro.quantity;
+      }
+    });
+  });
+
   // const [rating, setRating] = useState({
   //   user_id: 1,
   //   market_id: 2,
@@ -592,7 +605,7 @@ function Navbar(props) {
                 alt="shoppingCart"
               />
               <p className="text-[16px] whitespace-nowrap font-semi m-0">
-                5215.00 TMT
+                {umumy - discount} TMT
               </p>
             </div>
           </div>

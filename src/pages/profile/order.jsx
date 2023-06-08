@@ -1,5 +1,5 @@
 import { ArrowForwardIos } from "@mui/icons-material";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../../components/SideBar";
 import timer1 from "../../images/timer1.svg";
 import timer2 from "../../images/timer2.svg";
@@ -17,11 +17,33 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { useParams } from "react-router-dom";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Order = () => {
   const history = useHistory();
   const { dil } = useContext(Context);
+  const { id } = useParams();
+  const [order, setOrder] = useState([]);
 
+  useEffect(() => {
+    getOrder();
+  }, [dil, id]);
+  const getOrder = () => {
+    axiosInstance
+      .get("/api/grocery_order", {
+        params: {
+          order_id: id,
+        },
+      })
+      .then((data) => {
+        console.log(data.data.body[0]);
+        setOrder(data.data.body[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full pb-10">
       <div className="w-full flex items-center">
@@ -71,39 +93,60 @@ const Order = () => {
           <Sidebar />
         </div>
         <div className="w-full px-6">
-          {false && (
+          {order?.status === 1 && (
             <div className="w-full flex justify-between rounded-[16px] p-6 border-[1px] border-neutral-300">
               <div className="w-full flex items-center">
                 <img
-                  src={timer1}
+                  src={
+                    (order?.status === 1 && timer1) ||
+                    (order?.status === 2 && timer2) ||
+                    (order?.status === 3 && timer3) ||
+                    (order?.status === 4 && timer4)
+                  }
                   className="mr-2 h-[48px] object-contain"
                   alt=""
                 />
                 <p className="text-[18px] text-neutral-900 font-semi ">
-                  Garaşylýar
+                  {order?.status === 1 &&
+                    (dil === "TM"
+                      ? tm.Garaşylyar
+                      : dil === "RU"
+                      ? ru.Garaşylyar
+                      : en.Garaşylyar)}
                 </p>
               </div>
               <div className="w-fit flex">
                 <button className="text-white h-[42px] rounded-[9px] whitespace-nowrap px-6 bg-red text-[16px] font-semi ">
-                  <DoNotDisturbOnOutlined /> Sargydy ýatyrmak
+                  <DoNotDisturbOnOutlined />{" "}
+                  {dil === "TM"
+                    ? tm["Sargydy ýatyrmak"]
+                    : dil === "RU"
+                    ? ru["Sargydy ýatyrmak"]
+                    : en["Sargydy ýatyrmak"]}
                 </button>
               </div>
             </div>
           )}
-          {true && (
+          {order?.status === 3 && (
             <div className="w-full flex justify-between rounded-[16px] p-6 border-[1px] border-neutral-300">
               <div className="w-full flex items-center">
                 <img
-                  src={timer3}
+                  src={
+                    (order?.status === 1 && timer1) ||
+                    (order?.status === 2 && timer2) ||
+                    (order?.status === 3 && timer3) ||
+                    (order?.status === 4 && timer4)
+                  }
                   className="mr-2 h-[48px] object-contain"
                   alt=""
                 />
                 <p className="text-[18px] text-neutral-900 font-semi ">
-                  {dil === "TM"
-                    ? tm["Eltip berildi"]
-                    : dil === "RU"
-                    ? ru["Eltip berildi"]
-                    : en["Eltip berildi"]}
+                  {order?.status === 3 &&
+                    (dil === "TM"
+                      ? tm.Gowshuryldy
+                      : dil === "RU"
+                      ? ru.Gowshuryldy
+                      : en.Gowshuryldy)}
                 </p>
               </div>
               <div className="w-fit flex">
@@ -125,16 +168,26 @@ const Order = () => {
               </div>
             </div>
           )}
-          {false && (
+          {order?.status === 2 && (
             <div className="w-full flex justify-between rounded-[16px] p-6 border-[1px] border-neutral-300">
               <div className="w-full flex items-center">
                 <img
-                  src={timer2}
+                  src={
+                    (order?.status === 1 && timer1) ||
+                    (order?.status === 2 && timer2) ||
+                    (order?.status === 3 && timer3) ||
+                    (order?.status === 4 && timer4)
+                  }
                   className="mr-2 h-[48px] object-contain"
                   alt=""
                 />
                 <p className="text-[18px] text-neutral-900 font-semi ">
-                  Taýýarlanylýar
+                  {order?.status === 2 &&
+                    (dil === "TM"
+                      ? tm.Taýýarlanylýar
+                      : dil === "RU"
+                      ? ru.Taýýarlanylýar
+                      : en.Taýýarlanylýar)}
                 </p>
               </div>
               {/* <div className="w-fit flex">
@@ -144,16 +197,26 @@ const Order = () => {
                             </div> */}
             </div>
           )}
-          {false && (
+          {order?.status === 4 && (
             <div className="w-full flex justify-between rounded-[16px] p-6 border-[1px] border-neutral-300">
               <div className="w-full flex items-center">
                 <img
-                  src={timer4}
+                  src={
+                    (order?.status === 1 && timer1) ||
+                    (order?.status === 2 && timer2) ||
+                    (order?.status === 3 && timer3) ||
+                    (order?.status === 4 && timer4)
+                  }
                   className="mr-2 h-[48px] object-contain"
                   alt=""
                 />
                 <p className="text-[18px] text-neutral-900 font-semi ">
-                  Inkär edilen
+                  {order?.status === 4 &&
+                    (dil === "TM"
+                      ? tm.Yatyryldy
+                      : dil === "RU"
+                      ? ru.Yatyryldy
+                      : en.Yatyryldy)}
                 </p>
               </div>
               {/* <div className="w-fit flex">
@@ -171,7 +234,9 @@ const Order = () => {
               : en["Sargyt edilen önümler"]}
           </h1>
           <div className="w-full mt-4">
-            <ProductOrderCard />
+            {order?.order?.map((item) => {
+              return <ProductOrderCard data={item} />;
+            })}
           </div>
           <div className="w-full flex justify-between mt-4">
             <div className="w-[49%]">
@@ -194,7 +259,8 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-medium">
-                    260.00 TMT
+                    {order?.price}
+                    TMT
                   </p>
                 </div>
                 <div className="flex pb-2 justify-between">
@@ -207,7 +273,7 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-medium">
-                    +5.00 TMT
+                    +{order?.service_price} TMT
                   </p>
                 </div>
                 <div className="flex pb-2 justify-between">
@@ -217,9 +283,15 @@ const Order = () => {
                       : dil === "RU"
                       ? ru.Arzanladyş
                       : en.Arzanladyş}
-                    (-30%)
+                    (-
+                    {100 -
+                      +((order?.price - order?.discount_price) * 100) /
+                        +order?.price}
+                    %)
                   </p>
-                  <p className="text-[16px] text-red font-medium">-78.00 TMT</p>
+                  <p className="text-[16px] text-red font-medium">
+                    -{order?.discount_price} TMT
+                  </p>
                 </div>
                 <div className="flex pb-2 border-b-[1px] border-b-neutral-300 justify-between">
                   <p className="text-[16px] text-neutral-900 font-medium">
@@ -231,7 +303,7 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-medium">
-                    +25.00 TMT
+                    +{order.delivery_price} TMT
                   </p>
                 </div>
                 <div className="flex pt-4 justify-between">
@@ -239,7 +311,11 @@ const Order = () => {
                     {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
                   </p>
                   <p className="text-[16px] text-neutral-900 font-semi">
-                    207.00 TMT
+                    {+order.price +
+                      +order.service_price +
+                      +order.delivery_price -
+                      +order.discount_price}{" "}
+                    TMT
                   </p>
                 </div>
               </div>
@@ -263,7 +339,7 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-semi">
-                    521582
+                    {order?.code}
                   </p>
                 </div>
                 <div className="flex h-[48px] mb-2 bg-neutral-200 rounded-[8px] px-4 items-center justify-between">
@@ -275,7 +351,8 @@ const Order = () => {
                       : en["Sargyt berlen wagty"]}
                   </p>
                   <p className="text-[16px] text-neutral-900 font-semi">
-                    12.10.2023 - 13:23
+                    {order?.ordered_time?.slice(0, 10)} -{" "}
+                    {order?.ordered_time?.slice(11, 16)}
                   </p>
                 </div>
                 <div className="flex h-[48px] mb-2 bg-neutral-200 rounded-[8px] px-4 items-center justify-between">
@@ -288,7 +365,8 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-semi">
-                    12.10.2023 - 13:51
+                    {order?.delivered_time?.slice(0, 10)} -{" "}
+                    {order?.delivered_time?.slice(11, 16)}
                   </p>
                 </div>
                 <div className="flex h-[48px] bg-neutral-200 rounded-[8px] px-4 items-center justify-between">
@@ -300,7 +378,7 @@ const Order = () => {
                       : en["Eltip berlen yeri"]}
                   </p>
                   <p className="text-[16px] text-neutral-900 font-semi">
-                    Ataturk street 80
+                    {order?.address}
                   </p>
                 </div>
               </div>

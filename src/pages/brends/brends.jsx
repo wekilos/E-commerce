@@ -23,7 +23,11 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
-import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
+import {
+  BASE_URL,
+  BASE_URL_IMG,
+  axiosInstance,
+} from "../../utils/axiosIntance";
 
 const Brends = () => {
   const { dil } = useContext(Context);
@@ -82,13 +86,7 @@ const Brends = () => {
 
         <div className="w-full grid place-items-center gap-6 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 md2:grid-cols-4 lg:grid-cols-5  xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 6xl:grid-cols-9">
           {brends.map((item) => {
-            return (
-              <BrandCard
-                data={item}
-                text={item.name}
-                img={BASE_URL + item.img}
-              />
-            );
+            return <BrandCard data={item} text={item.name} img={item?.img} />;
           })}
         </div>
       </div>

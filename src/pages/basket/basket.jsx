@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
 import {
   FormControl,
@@ -18,10 +18,38 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Basket = () => {
   const history = useHistory();
-  const { dil } = useContext(Context);
+  const { dil, basket } = useContext(Context);
+
+  // useEffect(() => {
+  //   getconfig();
+  // });
+  // const getconfig = () => {
+  //   axiosInstance
+  //     .get("/api/config/all")
+  //     .then((data) => {
+  //       console.log("configggg:", data.data);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  let delivery = 20;
+  let umumy = 0;
+  let discount = 0;
+  basket.map((item) => {
+    item?.products?.map((pro) => {
+      umumy = umumy + pro.quantity * pro.pro.price;
+      if (pro.pro.is_discount) {
+        discount =
+          discount + (pro.pro.price - pro.pro.discount_price) * pro.quantity;
+      }
+    });
+  });
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="w-full">
@@ -52,9 +80,9 @@ const Basket = () => {
 
         <div className="w-full mt-6 inline-flex justify-between flex-wrap">
           <div className="w-[75%]">
-            <ProductBasketCard text="Ynamdar" />
-            <ProductBasketCard text="Halk market" />
-            <ProductBasketCard text="Milli market" />
+            {basket?.map((item) => {
+              return <ProductBasketCard data={item} text="Ynamdar" />;
+            })}
           </div>
           <div className="w-[20%] h-fit rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">
             <h1 className="w-full text-[20px] font-semi text-black-secondary border-b-[1px] border-b-neutral-300 py-2">
@@ -71,7 +99,7 @@ const Basket = () => {
                   :
                 </p>
                 <p className="text-[16px] font-medium text-black-secondary">
-                  232351 TMT
+                  {umumy} TMT
                 </p>
               </div>
               <div className="w-full flex justify-between py-2">
@@ -84,7 +112,7 @@ const Basket = () => {
                   :
                 </p>
                 <p className="text-[16px] font-medium text-black-secondary">
-                  +25 TMT
+                  +{delivery} TMT
                 </p>
               </div>
               <div className="w-full flex justify-between py-2">
@@ -96,7 +124,9 @@ const Basket = () => {
                     : en.Arzanladyş}
                   :
                 </p>
-                <p className="text-[16px] font-medium text-red">-120 TMT</p>
+                <p className="text-[16px] font-medium text-red">
+                  -{discount} TMT
+                </p>
               </div>
             </div>
             <div className="w-full flex justify-between py-4">
@@ -104,7 +134,7 @@ const Basket = () => {
                 {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
               </p>
               <p className="text-[18px] font-semi text-black-secondary">
-                156 TMT
+                {umumy - discount + delivery} TMT
               </p>
             </div>
             <div className="w-full">

@@ -340,7 +340,7 @@ const Markets = () => {
               <div className="   ">
                 <MarketCard
                   data={item}
-                  img={BASE_URL_IMG + "/" + item.img}
+                  img={item.img}
                   is_liked={item?.is_liked}
                 />
               </div>

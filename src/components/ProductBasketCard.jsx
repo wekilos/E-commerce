@@ -22,6 +22,7 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
+import { BASE_URL_IMG } from "../utils/axiosIntance";
 
 function ProductBasketCard(props) {
   const history = useHistory();
@@ -36,28 +37,15 @@ function ProductBasketCard(props) {
     return () => clearTimeout(time);
   }, [animation]);
 
-  const kop = [
-    {
-      name: "Maýonez Nur Näzli 30% 800 g",
-      img: img6,
-    },
-    {
-      name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-      img: img7,
-    },
-    {
-      name: "Limon sousy Arslan Küpü 500 ml",
-      img: img8,
-    },
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-  ];
+  let umumy = 0;
+  let discount = 0;
+  props.data?.products?.map((pro) => {
+    umumy = umumy + pro.quantity * pro.pro.price;
+    if (pro.pro.is_discount) {
+      discount =
+        discount + (pro.pro.price - pro.pro.discount_price) * pro.quantity;
+    }
+  });
 
   return (
     <div className="w-full mb-6 p-4 rounded-[16px] border-[1px] border-neutral-300 shadow-sm">
@@ -84,15 +72,16 @@ function ProductBasketCard(props) {
               <div className="flex pl-4 items-center">
                 <img
                   className="h-[45px] w-[45px] rounded-[12px] object-cover mr-2"
-                  src={marketImg}
+                  src={BASE_URL_IMG + props?.data?.img}
                   alt="Market"
                 />
                 <h1 className="text-[18px] font-semi text-neutral-900">
-                  {props.text ? props.text : "Galam Market"}
+                  {props?.data?.name}
                 </h1>
               </div>
               <div className="text-[18px] sum relative self-center mr-4 underline font-semi text-neutral-900">
-                {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}: 242
+                {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:{" "}
+                {umumy - discount + " "}
                 TMT
                 {
                   <div className="w-[250px] z-10 detail hidden absolute top-[55px] -right-[55px] bg-white  rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">
@@ -114,7 +103,7 @@ function ProductBasketCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-black-secondary">
-                          232351 TMT
+                          {umumy} TMT
                         </p>
                       </div>
 
@@ -128,7 +117,7 @@ function ProductBasketCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-red">
-                          -120 TMT
+                          -{discount} TMT
                         </p>
                       </div>
                     </div>
@@ -142,7 +131,7 @@ function ProductBasketCard(props) {
                         :
                       </p>
                       <p className="text-[18px] font-semi text-black-secondary">
-                        156 TMT
+                        {umumy - discount} TMT
                       </p>
                     </div>
                   </div>
@@ -151,8 +140,14 @@ function ProductBasketCard(props) {
             </div>
           </AccordionSummary>
           <AccordionDetails>
-            {kop.map((item) => {
-              return <BasketCard text={item.name} img={item.img} />;
+            {props?.data?.products?.map((item, i) => {
+              return (
+                <BasketCard
+                  data={item}
+                  text={item.name}
+                  img={item?.pro?.img.length > 0 && item?.pro?.img[0]?.img}
+                />
+              );
             })}
           </AccordionDetails>
         </Accordion>

@@ -14,9 +14,7 @@ import { BASE_URL_IMG, axiosInstance } from "../utils/axiosIntance";
 function ProductCard(props) {
   const history = useHistory();
 
-  const [liked, setLiked] = useState(
-    props.data?.is_liked ? props.data?.is_loked : false
-  );
+  const [liked, setLiked] = useState(props?.is_liked ? props?.is_liked : false);
   const [animation, setAnimation] = useState(false);
   const [count, setCount] = useState(1);
   const { dil, addPro } = useContext(Context);
@@ -70,8 +68,9 @@ function ProductCard(props) {
         onClick={() =>
           history.push({ pathname: "/mrt/product/" + props.data.id })
         }
-        className="h-[236px] object-contain cursor-pointer"
-        src={props.img ? BASE_URL_IMG + props.img : card}
+        className="h-[236px] w-full object-cover rounded-[24px] cursor-pointer"
+        // src={props.img ? BASE_URL_IMG + props.img : card}
+        src={BASE_URL_IMG + props?.img}
         alt="image"
       />
       <p className="font-semi mt-2 text-[20px] text-neutral-900">

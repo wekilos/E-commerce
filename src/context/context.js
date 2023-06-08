@@ -72,59 +72,133 @@ const ContextProvider = (props) => {
     let marketIndex = -1;
     let proHave = false;
     let proIndex = -1;
+    let gobasket = [];
+    let basketCopy = basket;
     if (basket.length > 0) {
+      console.log("map bashlady:", basket);
       basket?.map((item, i) => {
-        if (item.market.id == pro.market.id) {
+        if (item.id == pro?.market.id) {
+          console.log("market bar");
           marketHave = true;
+          proHave = true;
           marketIndex = i;
           item.products?.map((item, index) => {
-            if (item.id == pro.id) {
+            if (item.pro.id == pro.id) {
+              console.log("haryt bar:", item.pro.id);
               proHave = true;
               proIndex = index;
               let array = basket;
-              marketHave &&
-                (array[marketIndex].products[index].quantity =
-                  array[marketIndex].products[index].quantity + 1);
-              setBasket([...array]);
+              incPro(pro.id);
+              // array[marketIndex].products[index].quantity++;
+              // setBasket([...array]);
             } else {
-              let array = basket;
-              marketHave &&
-                array[marketIndex].products.push({ quantity: 1, pro: pro });
-              setBasket([...array]);
+              proHave = false;
             }
           });
-        } else {
           let array = basket;
-          let market = pro.market;
-          market.products = [
-            {
+          marketHave &&
+            !proHave &&
+            array[i].products.push({
               quantity: 1,
+              product_id: pro.id,
               pro: pro,
-            },
-          ];
-          array.push(market);
+            });
+          setBasket([...array]);
+        } else {
+        }
+      });
+      if (!marketHave && !proHave) {
+        console.log("market yok : haryt bar:");
+        let array = basket;
+        let market = {
+          id: pro.market.id,
+          img: pro.market.img,
+          name: pro.market.name,
+          products: [{ quantity: 1, product_id: pro.id, pro: pro }],
+        };
+        array.push(market);
+        setBasket([...array]);
+      }
+
+      // setBasket([...gobasket]);
+    } else {
+      console.log("market yok : haryt yok:");
+      let array = [];
+      let market = {
+        id: pro.market.id,
+        img: pro.market.img,
+        name: pro.market.name,
+        products: [{ quantity: 1, product_id: pro.id, pro: pro }],
+      };
+      array.push(market);
+      setBasket([...array]);
+    }
+
+    console.log("gobasket", basket);
+    // localStorage.setItem("BasketProducts", JSON.stringify(gobasket));
+    // setBasket([...gobasket]);
+  };
+  const removePro = (proId) => {
+    console.log(proId);
+    let marketIndex;
+    let proIndex;
+    basket?.map((market, i) => {
+      market?.products?.map((item, index) => {
+        if (item.pro.id == proId) {
+          proIndex = index;
+          marketIndex = i;
+          let array = basket;
+          if (array[marketIndex].products.length == 1) {
+            array.splice(marketIndex, 1);
+          } else {
+            array[marketIndex].products.splice(proIndex, 1);
+          }
           setBasket([...array]);
         }
       });
-    } else {
-      let array = [];
-      let market = pro.market;
-      market.products = [
-        {
-          quantity: 1,
-          pro: pro,
-        },
-      ];
-
-      array.push(market);
-      console.log(array);
-      setBasket(array);
-    }
+    });
   };
-  const removePro = (pro) => {};
 
-  const incPro = (pro) => {};
-  const decPro = (pro) => {};
+  const incPro = (proId) => {
+    console.log("inc", proId);
+    let marketIndex;
+    let proIndex;
+    basket?.map((market, i) => {
+      market?.products?.map((item, index) => {
+        if (item.pro.id == proId) {
+          console.log("pro inc id", item.pro.id, index);
+          proIndex = index;
+          marketIndex = i;
+
+          console.log("proIndex", proIndex, "marketIndex", marketIndex);
+          let array = basket;
+
+          array[marketIndex].products[proIndex].quantity++;
+          // array[marketIndex].products[proIndex].quantity + 1;
+          setBasket([...array]);
+        }
+      });
+    });
+  };
+  const decPro = (proId) => {
+    let marketIndex;
+    let proIndex;
+    basket?.map((market, i) => {
+      market?.products?.map((item, index) => {
+        if (item.pro.id == proId) {
+          proIndex = index;
+          marketIndex = i;
+          let array = basket;
+          if (array[marketIndex].products[proIndex].quantity > 1) {
+            array[marketIndex].products[proIndex].quantity--;
+          } else {
+            removePro(proId);
+          }
+          setBasket([...array]);
+        }
+      });
+    });
+  };
 
   return (
     <Context.Provider

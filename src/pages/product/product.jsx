@@ -150,7 +150,11 @@ const Product = () => {
           {sameproduct?.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-4">
-                <ProductCard data={item} text={item.name} img={item.img} />
+                <ProductCard
+                  data={item}
+                  text={item.name}
+                  img={item?.img[0].img}
+                />
               </div>
             );
           })}

@@ -32,7 +32,11 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useParams } from "react-router-dom";
-import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
+import {
+  BASE_URL,
+  BASE_URL_IMG,
+  axiosInstance,
+} from "../../utils/axiosIntance";
 
 const Market = () => {
   const history = useHistory();
@@ -338,8 +342,8 @@ const Market = () => {
             )}
           </div>
           <img
-            src={marketImg}
-            className="w-full object-contain"
+            src={BASE_URL_IMG + market?.img}
+            className="w-full h-[285px] object-cover rounded-[24px]"
             alt="marketImg"
           />
           <div
@@ -462,7 +466,7 @@ const Market = () => {
                     <ProductCard
                       data={pro}
                       text={pro.name}
-                      img={BASE_URL + pro.img}
+                      img={pro?.img[0]?.img}
                     />
                   );
                 })}

@@ -22,7 +22,11 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
-import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
+import {
+  BASE_URL,
+  BASE_URL_IMG,
+  axiosInstance,
+} from "../../utils/axiosIntance";
 import { useParams } from "react-router-dom";
 
 const Brend = () => {
@@ -211,7 +215,7 @@ const Brend = () => {
         <div className="w-full mt-5 flex justify-between  items-center">
           <div className="flex justify-start">
             <img
-              src={brend.length > 0 && BASE_URL + brend[0].brands?.img}
+              src={brend.length > 0 && BASE_URL_IMG + brend[0].brands?.img}
               className="h-[48px] object-contain rounded-[8px] shadow-sm mr-4"
               alt=""
             />
@@ -306,7 +310,13 @@ const Brend = () => {
                 </div> */}
         <div className="w-full mt-7 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
           {brend?.map((item, i) => {
-            return <ProductCard data={item} text={item.name} img={item.img} />;
+            return (
+              <ProductCard
+                data={item}
+                text={item.name}
+                img={item?.img[0]?.img}
+              />
+            );
           })}
         </div>
       </div>

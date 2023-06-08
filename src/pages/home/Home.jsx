@@ -619,7 +619,7 @@ function Home(props) {
                 <ProductCard
                   data={item}
                   text={item.name}
-                  img={item.img}
+                  img={item.img[0].img}
                   key={"index"}
                 />
               </div>
@@ -693,7 +693,7 @@ function Home(props) {
                 <ProductCard
                   data={item}
                   text={item.name}
-                  img={item.img}
+                  img={item.img[0].img}
                   key={"index"}
                 />
               </div>
@@ -804,7 +804,11 @@ function Home(props) {
           {products.cake.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
-                <ProductCard text={item.name} img={item.img} key={"index"} />
+                <ProductCard
+                  text={item.name}
+                  img={item.img[0].img}
+                  key={"index"}
+                />
               </div>
             );
           })}
@@ -850,7 +854,11 @@ function Home(props) {
           {products.un.map((item, i) => {
             return (
               <div key={item.name + "un" + i} className="mr-6">
-                <ProductCard text={item.name} img={item.img} key={"index"} />
+                <ProductCard
+                  text={item.name}
+                  img={item.img[0].img}
+                  key={"index"}
+                />
               </div>
             );
           })}

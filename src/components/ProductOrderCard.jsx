@@ -29,6 +29,7 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
+import { BASE_URL_IMG } from "../utils/axiosIntance";
 
 function ProductOrderCard(props) {
   const history = useHistory();
@@ -43,28 +44,13 @@ function ProductOrderCard(props) {
     return () => clearTimeout(time);
   }, [animation]);
 
-  const kop = [
-    {
-      name: "Maýonez Nur Näzli 30% 800 g",
-      img: img6,
-    },
-    {
-      name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-      img: img7,
-    },
-    {
-      name: "Limon sousy Arslan Küpü 500 ml",
-      img: img8,
-    },
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-  ];
+  console.log(props?.data);
+  let sum = 0;
+  let discount = 0;
+  props?.data?.products?.map((item) => {
+    sum = sum + item.price * item.quantity;
+    discount = discount + item.discount_price * item.quantity;
+  });
 
   return (
     <div className="w-full p-4 rounded-[16px] border-[1px] border-neutral-300 shadow-sm">
@@ -153,11 +139,11 @@ function ProductOrderCard(props) {
               <div className="flex pl-4 items-center">
                 <img
                   className="h-[45px] w-[45px] rounded-[12px] object-cover mr-2"
-                  src={marketImg}
+                  src={BASE_URL_IMG + props?.data?.img}
                   alt="Market"
                 />
                 <h1 className="text-[18px] font-semi text-neutral-900">
-                  Galam Market
+                  {props?.data?.name}
                 </h1>
               </div>
               <div className="flex items-center">
@@ -181,7 +167,7 @@ function ProductOrderCard(props) {
                 </div>
                 <div className="text-[18px] underline sum relative self-center mr-4  font-semi text-neutral-900">
                   {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
-                  242 TMT
+                  {sum - discount} TMT
                   <div className="w-[250px] z-10 detail hidden absolute top-[55px] -right-[55px] bg-white  rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">
                     <h1 className="w-full text-[20px] font-semi text-black-secondary border-b-[1px] border-b-neutral-300 py-2">
                       {dil === "TM"
@@ -201,7 +187,7 @@ function ProductOrderCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-black-secondary">
-                          232351 TMT
+                          {sum} TMT
                         </p>
                       </div>
 
@@ -215,7 +201,7 @@ function ProductOrderCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-red">
-                          -120 TMT
+                          -{discount} TMT
                         </p>
                       </div>
                     </div>
@@ -229,7 +215,7 @@ function ProductOrderCard(props) {
                         :
                       </p>
                       <p className="text-[18px] font-semi text-black-secondary">
-                        156 TMT
+                        {sum - discount} TMT
                       </p>
                     </div>
                   </div>
@@ -238,8 +224,8 @@ function ProductOrderCard(props) {
             </div>
           </AccordionSummary>
           <AccordionDetails>
-            {kop.map((item) => {
-              return <OrderCard text={item.name} img={item.img} />;
+            {props?.data?.products.map((item) => {
+              return <OrderCard data={item} text={item.name} img={item.img} />;
             })}
           </AccordionDetails>
         </Accordion>

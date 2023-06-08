@@ -6,6 +6,7 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
+import { BASE_URL_IMG } from "../utils/axiosIntance";
 
 function BrandCard(props) {
   const history = useHistory();
@@ -18,8 +19,8 @@ function BrandCard(props) {
     >
       <div className="flex w-full py-[12px] px-[15px] ">
         <img
-          className="w-full object-contain border-b-[1px] border-b-neutral-300"
-          src={props?.img ? props?.img : brand}
+          className="w-full h-[127px] object-cover border-b-[1px] border-b-neutral-300"
+          src={BASE_URL_IMG + props?.img}
           alt="brand"
         />
       </div>

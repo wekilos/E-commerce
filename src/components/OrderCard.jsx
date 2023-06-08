@@ -8,6 +8,7 @@ import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
+import { BASE_URL_IMG } from "../utils/axiosIntance";
 
 const OrderCard = (props) => {
   const [count, setCount] = useState(1);
@@ -18,7 +19,7 @@ const OrderCard = (props) => {
       <div className="flex items-center">
         <img
           className="h-[90px] object-contain rounded-[8px] shadow-sm mr-4"
-          src={props.img ? props.img : cardImg}
+          src={BASE_URL_IMG + props?.data?.img}
           alt="cardImg"
         />
         <div className="max-w-[300px]">
@@ -27,44 +28,28 @@ const OrderCard = (props) => {
               ? props.text
               : "Батончик Ülker Metro шоколадный с карамелью и нугой 300 г"}
           </p>
-          <p className="text-[16px] text-neutral-900 font-semi">Brendiň ady</p>
+          {/* <p className="text-[16px] text-neutral-900 font-semi">{props?.data}</p> */}
         </div>
       </div>
       <div className="max-w-[162px]">
         <h1 className="w-full text-left text-[16px] font-bold text-neutral-900">
-          22.80 TMT
+          {props?.data?.price * props?.data?.quantity} TMT
         </h1>
-        <div className="flex items-center">
-          <p className="mr-2 text-white bg-red h-[18px] px-[3px] text-[12px] font-semi rounded-[8px]">
-            -30%
-          </p>
-          <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
-            26.20 TMT
-          </p>
-        </div>
+        {props?.data?.is_discount && (
+          <div className="flex items-center">
+            <p className="mr-2 text-white bg-red h-[18px] px-[3px] text-[12px] font-semi rounded-[8px]">
+              -{100 - (props?.data?.discount_price * 100) / props?.data?.price}%
+            </p>
+            <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
+              {props?.data?.discount_price * props?.data?.quantity} TMT
+            </p>
+          </div>
+        )}
       </div>
       <div className="select-none w-[162px]   flex justify-evenly   py-[10px] rounded-[16px] text-[18px] h-[50px]">
-        <p className="text-[16px] font-semi text-neutral-900">3 sany</p>
-      </div>
-      <div className="flex cursor-pointer">
-        {/* <FavoriteBorder className="mr-4" /> */}
-        {liked ? (
-          <img
-            onClick={() => setLiked(!liked)}
-            src={heartLiked}
-            className="mr-4"
-            alt="heartLiked"
-          />
-        ) : (
-          <img
-            onClick={() => setLiked(!liked)}
-            src={heart}
-            className="mr-4"
-            alt="heart"
-          />
-        )}
-        {/* <DeleteForever className="mr-4" /> */}
-        <img src={trash} className="mr-4" alt="" />
+        <p className="text-[16px] font-semi text-neutral-900">
+          {props?.data?.quantity} sany
+        </p>
       </div>
     </div>
   );

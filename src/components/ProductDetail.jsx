@@ -15,7 +15,7 @@ import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
 import { Context } from "../context/context";
 import { useParams } from "react-router-dom";
-import { BASE_URL, axiosInstance } from "../utils/axiosIntance";
+import { BASE_URL, BASE_URL_IMG, axiosInstance } from "../utils/axiosIntance";
 
 function ProductCard(props) {
   const history = useHistory();
@@ -142,7 +142,7 @@ function ProductCard(props) {
                 <div key={item.img + i} className="w-full px-2   outline-none">
                   <img
                     className=" w-full h-[320px]  object-cover rounded-[20px]"
-                    src={BASE_URL + item.img}
+                    src={BASE_URL_IMG + item.img}
                     alt="slide"
                   />
                 </div>
@@ -169,7 +169,7 @@ function ProductCard(props) {
                 <img
                   key={"mini" + item.img}
                   className="h-[72px] cursor-pointer object-contain mr-3"
-                  src={BASE_URL + item.img}
+                  src={BASE_URL_IMG + item?.img}
                   alt="card"
                 />
               );

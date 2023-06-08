@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { West, ArrowForwardIos, FavoriteBorder } from "@mui/icons-material";
 import {
   FormControl,
@@ -21,13 +21,88 @@ import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
 import { useHistory } from "react-router-dom";
+import { axiosInstance } from "../../utils/axiosIntance";
 const Sargyt = () => {
   const [payment, setPeyment] = useState(1);
   const [plastik, setPlastik] = useState(false);
   const history = useHistory();
-  const [address, setAddress] = useState(0);
+  const [address, setAddress] = useState(-1);
+  const [address2, setAddress2] = useState("");
+  const [note, setNote] = useState("");
   const [sargyt, setSargyt] = useState(false);
-  const { dil } = useContext(Context);
+  const [addresses, setAddresses] = useState([]);
+  const { dil, basket } = useContext(Context);
+  const [orderId, setOrderId] = useState(0);
+
+  let delivery = 20;
+  let umumy = 0;
+  let discount = 0;
+  basket.map((item) => {
+    item?.products?.map((pro) => {
+      umumy = umumy + pro.quantity * pro.pro.price;
+      if (pro.pro.is_discount) {
+        discount =
+          discount + (pro.pro.price - pro.pro.discount_price) * pro.quantity;
+      }
+    });
+  });
+
+  useEffect(() => {
+    getAddress();
+  }, [dil]);
+  const getAddress = () => {
+    axiosInstance
+      .get("/api/address/all", {
+        params: {
+          UserId: 1,
+        },
+      })
+      .then((data) => {
+        console.log(data.data);
+        setAddresses(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const createOrder = () => {
+    let orderArray = [];
+    basket?.map((item, i) => {
+      orderArray.push({
+        market_id: item.id,
+        products: item.products,
+      });
+    });
+    axiosInstance
+      .post("/api/grocery_order", {
+        user_id: 1,
+        phone_number: "123456",
+        address: address != -1 ? addresses[address].address : address2,
+        price: umumy,
+        service_price: 10,
+        discount_price: discount,
+        delivery_price: delivery,
+        note: note,
+        code: "code1234",
+        status: 1,
+        type_payment:
+          payment === 1
+            ? "Nagt görnüşi"
+            : payment === 2
+            ? "Onlaýn görnüşi"
+            : "Terminal görnüşi",
+        products: orderArray,
+      })
+      .then((data) => {
+        console.log(data.data);
+        setSargyt(true);
+        setOrderId(data.data.oid);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full inline-flex pb-10 justify-between select-none">
       <Modal
@@ -37,7 +112,7 @@ const Sargyt = () => {
         onCancel={() => setSargyt(false)}
         footer={false}
       >
-        <OrderConfirm />
+        <OrderConfirm orderId={orderId} />
       </Modal>
       <div className="w-full">
         <div className="w-full flex items-center">
@@ -94,48 +169,28 @@ const Sargyt = () => {
                 : en["Siziň salgylaryñyz"]}
             </h1>
             <div className="w-full mt-4 flex justify-between flex-wrap ">
-              {address === 1 ? (
-                <div className="w-[49%]" onClick={() => setAddress(0)}>
-                  <AddressCard
-                    bg={"!bg-green "}
-                    text={"!text-white "}
-                    open={true}
-                    arrow={false}
-                  />
-                </div>
-              ) : (
-                <div className="w-[49%]" onClick={() => setAddress(1)}>
-                  <AddressCard open={true} arrow={false} />
-                </div>
-              )}
-              {address === 2 ? (
-                <div className="w-[49%]" onClick={() => setAddress(0)}>
-                  <AddressCard
-                    bg={"!bg-green "}
-                    text={"!text-white "}
-                    open={true}
-                    arrow={false}
-                  />
-                </div>
-              ) : (
-                <div className="w-[49%]" onClick={() => setAddress(2)}>
-                  <AddressCard open={true} arrow={false} />
-                </div>
-              )}
-              {address === 3 ? (
-                <div className="w-[49%]" onClick={() => setAddress(0)}>
-                  <AddressCard
-                    bg={"!bg-green "}
-                    text={"!text-white "}
-                    open={true}
-                    arrow={false}
-                  />
-                </div>
-              ) : (
-                <div className="w-[49%]" onClick={() => setAddress(3)}>
-                  <AddressCard open={true} arrow={false} />
-                </div>
-              )}
+              {addresses?.map((item, i) => {
+                return (
+                  <>
+                    {address === i ? (
+                      <div className="w-[49%]" onClick={() => setAddress(-1)}>
+                        <AddressCard
+                          data={item}
+                          bg={"!bg-green "}
+                          text={"!text-white "}
+                          open={true}
+                          arrow={false}
+                        />
+                      </div>
+                    ) : (
+                      <div className="w-[49%]" onClick={() => setAddress(i)}>
+                        <AddressCard data={item} open={true} arrow={false} />
+                      </div>
+                    )}
+                  </>
+                );
+              })}
+
               <AddressCardCreate />
             </div>
             <h1 className="w-full mt-6 text-left text-[20px] text-black-secondary font-semi">
@@ -147,6 +202,10 @@ const Sargyt = () => {
             </h1>
             <div className="w-full mt-4 flex justify-between ">
               <input
+                onChange={(e) => {
+                  address == -1 && setAddress2(e.target.value);
+                }}
+                value={address2}
                 className="w-full text-[16px]  p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
                 placeholder={
                   dil === "TM"
@@ -170,6 +229,8 @@ const Sargyt = () => {
                 : en["Gosmaça habar"]}
             </h1>
             <textarea
+              value={note}
+              onChange={(e) => setNote(e.target.value)}
               className="w-full h-[120px] text-[16px] font-regular text-neutral-600 text-left mt-4  p-4 outline-none  bg-neutral-200 rounded-[8px] "
               placeholder={
                 dil === "TM"
@@ -269,7 +330,7 @@ const Sargyt = () => {
                   :
                 </p>
                 <p className="text-[16px] font-medium text-black-secondary">
-                  232351 TMT
+                  {umumy} TMT
                 </p>
               </div>
               <div className="w-full flex justify-between py-2">
@@ -282,7 +343,7 @@ const Sargyt = () => {
                   :
                 </p>
                 <p className="text-[16px] font-medium text-black-secondary">
-                  +25 TMT
+                  +{delivery} TMT
                 </p>
               </div>
               <div className="w-full flex justify-between py-2">
@@ -294,7 +355,9 @@ const Sargyt = () => {
                     : en.Arzanladyş}
                   :
                 </p>
-                <p className="text-[16px] font-medium text-red">-120 TMT</p>
+                <p className="text-[16px] font-medium text-red">
+                  -{discount} TMT
+                </p>
               </div>
             </div>
             <div className="w-full flex justify-between py-4">
@@ -302,12 +365,12 @@ const Sargyt = () => {
                 {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
               </p>
               <p className="text-[18px] font-semi text-black-secondary">
-                156 TMT
+                {umumy - discount + delivery} TMT
               </p>
             </div>
             <div className="w-full">
               <button
-                onClick={() => setSargyt(true)}
+                onClick={() => createOrder()}
                 className="h-[43px] rounded-[8px] w-full bg-green text-[16px] font-semi text-white "
               >
                 {dil === "TM"

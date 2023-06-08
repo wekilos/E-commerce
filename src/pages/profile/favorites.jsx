@@ -215,9 +215,10 @@ const Favorites = () => {
               {favPro?.map((item) => {
                 return (
                   <ProductCard
+                    is_liked={true}
                     data={item}
                     text={item.name}
-                    img={BASE_URL + item.img}
+                    img={item?.img[0]?.img}
                   />
                 );
               })}
@@ -227,7 +228,7 @@ const Favorites = () => {
               {favMar?.map((item) => {
                 return (
                   <div className="   ">
-                    <MarketCard data={item} img={BASE_URL + item} />
+                    <MarketCard is_liked={true} data={item} img={item?.img} />
                   </div>
                 );
               })}
