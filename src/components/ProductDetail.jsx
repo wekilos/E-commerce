@@ -25,7 +25,7 @@ function ProductCard(props) {
   const [product, setProduct] = useState({});
   const { id } = useParams();
 
-  const { dil } = useContext(Context);
+  const { dil, decPro, addPro } = useContext(Context);
 
   useEffect(() => {
     const time = setTimeout(() => {
@@ -321,7 +321,7 @@ function ProductCard(props) {
               >
                 <button
                   onClick={() => {
-                    setCount(count - 1);
+                    decPro(product);
                     setAnimation(true);
                   }}
                   className="text-green bg-green-200 h-[30px] w-[30px] leading-[9px] rounded-[100%] p-2"
@@ -331,7 +331,7 @@ function ProductCard(props) {
                 <p className="text-[16px] text-green">{count}</p>
                 <button
                   onClick={() => {
-                    setCount(count + 1);
+                    addPro(product);
                     setAnimation(true);
                   }}
                   className="text-green bg-green-200 h-[30px] w-[30px] leading-[9px] rounded-[100%] p-2"

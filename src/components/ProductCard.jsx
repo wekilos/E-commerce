@@ -17,7 +17,7 @@ function ProductCard(props) {
   const [liked, setLiked] = useState(props?.is_liked ? props?.is_liked : false);
   const [animation, setAnimation] = useState(false);
   const [count, setCount] = useState(1);
-  const { dil, addPro } = useContext(Context);
+  const { dil, addPro, decPro } = useContext(Context);
 
   useEffect(() => {
     const time = setTimeout(() => {
@@ -106,6 +106,7 @@ function ProductCard(props) {
           onClick={() => {
             setAnimation(true);
             addPro(props?.data);
+            // setCount(count - 1);
           }}
           className="custom-button mt-2  select-none bg-green text-white rounded-[16px] text-[18px] h-[50px]"
         >
@@ -124,6 +125,7 @@ function ProductCard(props) {
           <button
             onClick={() => {
               setCount(count - 1);
+              decPro(props?.data);
               setAnimation(true);
             }}
             className="text-green bg-green-200 h-[30px] w-[30px] leading-[9px] rounded-[100%] p-2"
