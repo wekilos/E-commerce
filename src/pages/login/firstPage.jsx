@@ -34,7 +34,7 @@ const FirstPage = () => {
                   : dil === "RU"
                   ? ru["Gök bakja önümlerini"]
                   : en["Gök bakja önümlerini"]}
-                <br />{" "}
+                <br />
                 {dil === "TM"
                   ? tm["eltip bermek hyzmaty"]
                   : dil === "RU"
@@ -66,6 +66,7 @@ const FirstPage = () => {
                   ? ru["Nahar eltip bermek"]
                   : en["Nahar eltip bermek"]}
                 <br />
+
                 {dil === "TM"
                   ? tm.hyzmaty
                   : dil === "RU"
@@ -86,7 +87,7 @@ const FirstPage = () => {
 
         <div className="w-full flex  justify-center text-[18px] my-6 text-neutral-900 font-semi">
           © 2023
-          <span className="font-bold mx-1">Söwda onlaýn. </span>
+          <span className="font-bold mx-1">Günlük söwda onlaýn. </span>
           {dil === "TM"
             ? "Ähli Hukuklar goralan"
             : dil === "RU"

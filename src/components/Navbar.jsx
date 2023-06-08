@@ -7,6 +7,7 @@ import russia from "../images/russia.svg";
 import user from "../images/user.svg";
 import arrowDown from "../images/arrowDown.svg";
 import logo from "../images/logo.svg";
+import navLogo from "../images/navLogo.png";
 import catalog from "../images/catalog.svg";
 import search from "../images/search.svg";
 import heart from "../images/heart-circle-green.svg";
@@ -468,10 +469,13 @@ function Navbar(props) {
         <div className="flex pt-[16px] justify-between">
           <div
             onClick={() => history.push({ pathname: "/mrt/home" })}
-            className="cursor-pointer h-[50px] whitespace-nowrap mr-2 text-green text-[28px] select-none"
+            className="cursor-pointer flex items-center h-[50px] whitespace-nowrap mr-2 text-green text-[28px] select-none"
           >
             {/* Söwda onlaýn */}
-            <img src={logo} alt="" />
+            <img src={navLogo} alt="" />
+            <p className="text-neutral-900 font-semi text-[22px] ml-2">
+              Günlük söwda
+            </p>
           </div>
 
           <div
