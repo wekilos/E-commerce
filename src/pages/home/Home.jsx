@@ -48,7 +48,8 @@ import ru from "../../lang/ru/home.json";
 import dukan from "../../images/dukan.png";
 import halanlarym from "../../images/halanlarym.png";
 import kategoriya from "../../images/kategoriya.png";
-import { axiosInstance } from "../../utils/axiosIntance";
+import { BASE_URL, axiosInstance } from "../../utils/axiosIntance";
+import { unstable_getUnit } from "@mui/material";
 
 function Home(props) {
   const history = useHistory();
@@ -59,6 +60,9 @@ function Home(props) {
   const [brands, setBrands] = useState([]);
   const [discountPro, setDiscountPro] = useState([]);
   const [moreSalePro, setMoreSalePro] = useState([]);
+  const [carusels, setCarusels] = useState([]);
+  const [un, setUn] = useState([]);
+  const [cake, setCake] = useState([]);
   const testSettings = {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     outline: "0",
@@ -88,7 +92,7 @@ function Home(props) {
       return (
         <div className="mt-4">
           <ul>
-            {dots.map((item, index) => {
+            {dots?.map((item, index) => {
               return (
                 <li
                   className={
@@ -146,7 +150,7 @@ function Home(props) {
         },
       },
       {
-        breakpoint: 900,
+        breakpoint: 910,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -162,15 +166,15 @@ function Home(props) {
         },
       },
       {
-        breakpoint: 1300,
+        breakpoint: 1400,
         settings: {
-          slidesToShow: 5,
+          slidesToShow: 4,
           slidesToScroll: 1,
           infinite: true,
         },
       },
       {
-        breakpoint: 1500,
+        breakpoint: 1600,
         settings: {
           slidesToShow: 6,
           slidesToScroll: 1,
@@ -179,55 +183,6 @@ function Home(props) {
       },
     ],
   };
-
-  const brends = [
-    {
-      name: "Nescafe",
-    },
-    {
-      name: "Her gün",
-      img: brend1,
-    },
-    {
-      name: "Elwan",
-      img: brend2,
-    },
-    {
-      name: "Şuwat",
-      img: brend3,
-    },
-    {
-      name: "7 gün",
-      img: brend4,
-    },
-    {
-      name: "Eçil",
-      img: brend5,
-    },
-    {
-      name: "Nescafe",
-    },
-    {
-      name: "Her gün",
-      img: brend1,
-    },
-    {
-      name: "Elwan",
-      img: brend2,
-    },
-    {
-      name: "Şuwat",
-      img: brend3,
-    },
-    {
-      name: "7 gün",
-      img: brend4,
-    },
-    {
-      name: "Eçil",
-      img: brend5,
-    },
-  ];
 
   const products = {
     un: [
@@ -400,12 +355,6 @@ function Home(props) {
     ],
   };
 
-  const images = [
-    "https://images.unsplash.com/photo-1542838132-92c53300491e?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8Nnx8Z3JvY2VyeSUyMHNob3BwaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1607349913338-fca6f7fc42d0?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MjB8fGdyb2NlcnklMjBzaG9wcGluZ3xlbnwwfHwwfHw%3D&auto=format&fit=crop&w=800&q=60",
-    "https://images.unsplash.com/photo-1516594798947-e65505dbb29d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8OXx8Z3JvY2VyeSUyMHNob3BwaW5nfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=800&q=60",
-  ];
-
   // const images = [longBanner, longBanner, longBanner];
 
   useEffect(() => {
@@ -413,6 +362,9 @@ function Home(props) {
     getdiscounts();
     getmoreSale();
     getbrands();
+    getCarusels();
+    getCategoryProCake();
+    getCategoryPro();
   }, [dil]);
 
   const getcategories = async () => {
@@ -484,16 +436,62 @@ function Home(props) {
         console.log(err);
       });
   };
+
+  const getCarusels = () => {
+    axiosInstance
+      .get("/api/e-carousel/all")
+      .then((data) => {
+        console.log("carousel", data.data);
+        setCarusels(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getCategoryPro = () => {
+    axiosInstance
+      .get("/api/grocery_category_products", {
+        params: {
+          lang: dil,
+          category_id: 50,
+        },
+      })
+      .then((data) => {
+        console.log("un", data.data.body);
+        setUn(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const getCategoryProCake = () => {
+    axiosInstance
+      .get("/api/grocery_category_products", {
+        params: {
+          lang: dil,
+          category_id: 51,
+        },
+      })
+      .then((data) => {
+        console.log("un", data.data.body);
+        setCake(data.data.body);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-full pb-10   select-none">
       <div className="w-full h-[160px] md2:h-[320px] relative rounded-[20px] md2:mt-[25px] mt-[16px] mb-[50px]">
         <Slider ref={slider} {...settings}>
-          {images.map((item, i) => {
+          {carusels?.map((item, i) => {
             return (
               <div key={"img" + i} className="w-full px-2   outline-none">
                 <img
                   className=" w-full h-[160px] md2:h-[320px] mb-3  object-cover rounded-[20px]"
-                  src={item}
+                  src={BASE_URL + item?.img}
                   alt="slide"
                 />
               </div>
@@ -613,7 +611,7 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {discountPro.map((item, i) => {
+          {discountPro?.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
                 <ProductCard
@@ -687,7 +685,7 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {moreSalePro.map((item, i) => {
+          {moreSalePro?.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
                 <ProductCard
@@ -750,7 +748,7 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {brands.map((item, i) => {
+          {brands?.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
                 <BrandCard
@@ -787,7 +785,7 @@ function Home(props) {
       <div className="md2:my-10 my-6">
         <div className="flex items-center justify-between">
           <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
-            Şokolad we süýji önümleri
+            {cake.length > 0 && cake[0]?.categories.name}
           </h2>
           <div
             onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
@@ -801,10 +799,11 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {products.cake.map((item, i) => {
+          {cake?.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">
                 <ProductCard
+                  data={item}
                   text={item.name}
                   img={item.img[0].img}
                   key={"index"}
@@ -837,7 +836,7 @@ function Home(props) {
       <div className="md2:mt-10 mt-6">
         <div className="flex items-center justify-between">
           <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
-            Unaş, däneler we unlar
+            {un.length > 0 && un[0]?.categories.name}
           </h2>
           <div
             onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
@@ -851,10 +850,11 @@ function Home(props) {
           </div>
         </div>
         <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {products.un.map((item, i) => {
+          {un?.map((item, i) => {
             return (
               <div key={item.name + "un" + i} className="mr-6">
                 <ProductCard
+                  data={item}
                   text={item.name}
                   img={item.img[0].img}
                   key={"index"}

@@ -33,15 +33,21 @@ const OrderCard = (props) => {
       </div>
       <div className="max-w-[162px]">
         <h1 className="w-full text-left text-[16px] font-bold text-neutral-900">
-          {props?.data?.price * props?.data?.quantity} TMT
+          {(props?.data?.price * props?.data?.quantity).toFixed(2)} TMT
         </h1>
-        {props?.data?.is_discount && (
+        {!props?.data?.is_discount && (
           <div className="flex items-center">
             <p className="mr-2 text-white bg-red h-[18px] px-[3px] text-[12px] font-semi rounded-[8px]">
-              -{100 - (props?.data?.discount_price * 100) / props?.data?.price}%
+              -
+              {(
+                100 -
+                (props?.data?.discount_price * 100) / props?.data?.price
+              ).toFixed(2)}
+              %
             </p>
             <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
-              {props?.data?.discount_price * props?.data?.quantity} TMT
+              {(props?.data?.discount_price * props?.data?.quantity).toFixed(2)}{" "}
+              TMT
             </p>
           </div>
         )}

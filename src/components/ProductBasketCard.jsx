@@ -41,7 +41,7 @@ function ProductBasketCard(props) {
   let discount = 0;
   props.data?.products?.map((pro) => {
     umumy = umumy + pro.quantity * pro.pro.price;
-    if (pro.pro.is_discount) {
+    if (!pro.pro.is_discount) {
       discount =
         discount + (pro.pro.price - pro.pro.discount_price) * pro.quantity;
     }
@@ -81,7 +81,7 @@ function ProductBasketCard(props) {
               </div>
               <div className="text-[18px] sum relative self-center mr-4 underline font-semi text-neutral-900">
                 {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:{" "}
-                {umumy - discount + " "}
+                {(umumy - discount).toFixed(2) + " "}
                 TMT
                 {
                   <div className="w-[250px] z-10 detail hidden absolute top-[55px] -right-[55px] bg-white  rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">
@@ -103,7 +103,7 @@ function ProductBasketCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-black-secondary">
-                          {umumy} TMT
+                          {umumy.toFixed(2)} TMT
                         </p>
                       </div>
 
@@ -117,7 +117,7 @@ function ProductBasketCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-red">
-                          -{discount} TMT
+                          -{discount.toFixed(2)} TMT
                         </p>
                       </div>
                     </div>
@@ -131,7 +131,7 @@ function ProductBasketCard(props) {
                         :
                       </p>
                       <p className="text-[18px] font-semi text-black-secondary">
-                        {umumy - discount} TMT
+                        {(umumy - discount).toFixed(2)} TMT
                       </p>
                     </div>
                   </div>

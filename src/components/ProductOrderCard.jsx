@@ -49,7 +49,9 @@ function ProductOrderCard(props) {
   let discount = 0;
   props?.data?.products?.map((item) => {
     sum = sum + item.price * item.quantity;
-    discount = discount + item.discount_price * item.quantity;
+    if (!item?.is_discount) {
+      discount = discount + item.discount_price * item.quantity;
+    }
   });
 
   return (
@@ -167,7 +169,7 @@ function ProductOrderCard(props) {
                 </div>
                 <div className="text-[18px] underline sum relative self-center mr-4  font-semi text-neutral-900">
                   {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
-                  {sum - discount} TMT
+                  {(sum - discount).toFixed(2)} TMT
                   <div className="w-[250px] z-10 detail hidden absolute top-[55px] -right-[55px] bg-white  rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">
                     <h1 className="w-full text-[20px] font-semi text-black-secondary border-b-[1px] border-b-neutral-300 py-2">
                       {dil === "TM"
@@ -187,7 +189,7 @@ function ProductOrderCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-black-secondary">
-                          {sum} TMT
+                          {sum.toFixed(2)} TMT
                         </p>
                       </div>
 
@@ -201,7 +203,7 @@ function ProductOrderCard(props) {
                           :
                         </p>
                         <p className="text-[16px] font-medium text-red">
-                          -{discount} TMT
+                          -{discount.toFixed(2)} TMT
                         </p>
                       </div>
                     </div>
@@ -215,7 +217,7 @@ function ProductOrderCard(props) {
                         :
                       </p>
                       <p className="text-[18px] font-semi text-black-secondary">
-                        {sum - discount} TMT
+                        {(sum - discount).toFixed(2)} TMT
                       </p>
                     </div>
                   </div>

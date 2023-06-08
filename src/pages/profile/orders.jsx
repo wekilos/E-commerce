@@ -60,7 +60,7 @@ const Orders = () => {
     orders?.order?.map((item) => {
       item?.products?.map((order) => {
         console.log(order);
-        order?.is_discount
+        !order?.is_discount
           ? (sum = sum + order?.quantity * order.discount_price)
           : (sum = sum + order?.quantity * order.price);
       });
@@ -176,10 +176,12 @@ const Orders = () => {
                       <div className="w-fit flex">
                         <p className="mr-6 ">
                           {/* {returnPrice(item)} */}
-                          {item?.price +
+                          {(
+                            item?.price +
                             item?.delivery_price +
                             item?.service_price -
-                            item.discount_price}
+                            item.discount_price
+                          ).toFixed(2)}
                           TMT
                         </p>
                         <ul>

@@ -285,16 +285,18 @@ function ProductCard(props) {
         </div>
         <div className="w-full">
           <h1 className="w-full text-left text-[24px] font-bold text-neutral-900">
-            {product?.is_discount ? product?.discount_price : product?.price}
+            {!product?.is_discount
+              ? product?.discount_price.toFixed(2)
+              : product?.price.toFixed(2)}
             TMT
           </h1>
-          {product?.is_discount && (
+          {!product?.is_discount && (
             <div className="flex items-center">
               <p className="mr-2 text-white bg-red h-[22px] px-[3px] text-[14px] font-semi rounded-[8px]">
-                -{product?.discount_percentage}%
+                -{product?.discount_percentage.toFixed(2)}%
               </p>
               <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
-                {product?.price} TMT
+                {product?.price.toFixed(2)} TMT
               </p>
             </div>
           )}

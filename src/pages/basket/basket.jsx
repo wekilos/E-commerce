@@ -44,7 +44,7 @@ const Basket = () => {
   basket.map((item) => {
     item?.products?.map((pro) => {
       umumy = umumy + pro.quantity * pro.pro.price;
-      if (pro.pro.is_discount) {
+      if (!pro.pro.is_discount) {
         discount =
           discount + (pro.pro.price - pro.pro.discount_price) * pro.quantity;
       }
@@ -99,7 +99,7 @@ const Basket = () => {
                   :
                 </p>
                 <p className="text-[16px] font-medium text-black-secondary">
-                  {umumy} TMT
+                  {umumy.toFixed(2)} TMT
                 </p>
               </div>
               <div className="w-full flex justify-between py-2">
@@ -112,7 +112,7 @@ const Basket = () => {
                   :
                 </p>
                 <p className="text-[16px] font-medium text-black-secondary">
-                  +{delivery} TMT
+                  +{delivery.toFixed(2)} TMT
                 </p>
               </div>
               <div className="w-full flex justify-between py-2">
@@ -125,7 +125,7 @@ const Basket = () => {
                   :
                 </p>
                 <p className="text-[16px] font-medium text-red">
-                  -{discount} TMT
+                  -{discount.toFixed(2)} TMT
                 </p>
               </div>
             </div>
@@ -134,7 +134,7 @@ const Basket = () => {
                 {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
               </p>
               <p className="text-[18px] font-semi text-black-secondary">
-                {umumy - discount + delivery} TMT
+                {(umumy - discount + delivery).toFixed(2)} TMT
               </p>
             </div>
             <div className="w-full">
