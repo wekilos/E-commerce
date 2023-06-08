@@ -200,6 +200,10 @@ const ContextProvider = (props) => {
     });
   };
 
+  const removeAll = () => {
+    setBasket([]);
+  };
+
   return (
     <Context.Provider
       value={{
@@ -212,6 +216,7 @@ const ContextProvider = (props) => {
         incPro,
         decPro,
         basket,
+        removeAll,
       }}
     >
       {props.children}

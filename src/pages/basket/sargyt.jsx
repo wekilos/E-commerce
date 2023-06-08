@@ -31,7 +31,7 @@ const Sargyt = () => {
   const [note, setNote] = useState("");
   const [sargyt, setSargyt] = useState(false);
   const [addresses, setAddresses] = useState([]);
-  const { dil, basket } = useContext(Context);
+  const { dil, basket, removeAll } = useContext(Context);
   const [orderId, setOrderId] = useState(0);
 
   let delivery = 20;
@@ -92,12 +92,13 @@ const Sargyt = () => {
             : payment === 2
             ? "Onlaýn görnüşi"
             : "Terminal görnüşi",
-        products: orderArray,
+        order: orderArray,
       })
       .then((data) => {
         console.log(data.data);
         setSargyt(true);
         setOrderId(data.data.oid);
+        removeAll();
       })
       .catch((err) => {
         console.log(err);
