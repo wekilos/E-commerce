@@ -48,6 +48,7 @@ const Orders = () => {
         params: {
           user_id: 1,
           lang: dil,
+          order: "DESC",
         },
       })
       .then((data) => {
