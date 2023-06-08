@@ -285,8 +285,8 @@ const Order = () => {
                       : en.Arzanladyş}
                     (-
                     {100 -
-                      +((order?.price - order?.discount_price) * 100) /
-                        +order?.price}
+                      ((order?.price - order?.discount_price) * 100) /
+                        order?.price}
                     %)
                   </p>
                   <p className="text-[16px] text-red font-medium">

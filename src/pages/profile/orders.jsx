@@ -44,13 +44,7 @@ const Orders = () => {
   }, [dil]);
   const getOrders = () => {
     axiosInstance
-      .get("/api/grocery_orders", {
-        params: {
-          user_id: 1,
-          lang: dil,
-          order: "DESC",
-        },
-      })
+      .get("/api/grocery_orders?lang=" + dil + "&user_id=" + 1 + "&order=DESC")
       .then((data) => {
         console.log(data.data.body);
         setOrders(data.data.body);
