@@ -50,7 +50,7 @@ function ProductOrderCard(props) {
   props?.data?.products?.map((item) => {
     sum = sum + item.price * item.quantity;
     if (!item?.is_discount) {
-      discount = discount + item.discount_price * item.quantity;
+      discount = discount + (item.price - item.discount_price) * item.quantity;
     }
   });
 

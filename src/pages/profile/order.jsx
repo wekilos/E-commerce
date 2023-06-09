@@ -259,7 +259,7 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-medium">
-                    {order?.price}
+                    {order?.price?.toFixed(2)}
                     TMT
                   </p>
                 </div>
@@ -273,7 +273,7 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-medium">
-                    +{order?.service_price} TMT
+                    +{order?.service_price?.toFixed(2)} TMT
                   </p>
                 </div>
                 <div className="flex pb-2 justify-between">
@@ -284,13 +284,15 @@ const Order = () => {
                       ? ru.Arzanladyş
                       : en.Arzanladyş}
                     (-
-                    {100 -
+                    {(
+                      100 -
                       ((order?.price - order?.discount_price) * 100) /
-                        order?.price}
+                        order?.price
+                    )?.toFixed(2)}
                     %)
                   </p>
                   <p className="text-[16px] text-red font-medium">
-                    -{order?.discount_price} TMT
+                    -{order?.discount_price?.toFixed(2)} TMT
                   </p>
                 </div>
                 <div className="flex pb-2 border-b-[1px] border-b-neutral-300 justify-between">
@@ -303,7 +305,7 @@ const Order = () => {
                     :
                   </p>
                   <p className="text-[16px] text-neutral-900 font-medium">
-                    +{order.delivery_price} TMT
+                    +{order.delivery_price?.toFixed(2)} TMT
                   </p>
                 </div>
                 <div className="flex pt-4 justify-between">
@@ -311,10 +313,12 @@ const Order = () => {
                     {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
                   </p>
                   <p className="text-[16px] text-neutral-900 font-semi">
-                    {+order.price +
+                    {(
+                      +order.price +
                       +order.service_price +
                       +order.delivery_price -
-                      +order.discount_price}{" "}
+                      +order.discount_price
+                    )?.toFixed(2)}{" "}
                     TMT
                   </p>
                 </div>

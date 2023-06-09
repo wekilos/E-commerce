@@ -74,7 +74,7 @@ function ProductCard(props) {
         alt="image"
       />
       <p className="font-semi mt-2 text-[20px] text-neutral-900">
-        {props.data?.is_discount
+        {!props.data?.is_discount
           ? props.data?.discount_price.toFixed(2)
           : props.data?.price.toFixed(2)}{" "}
         TMT
@@ -83,15 +83,11 @@ function ProductCard(props) {
         <div className="flex gap-[8px] my-[8px]">
           <div className="bg-red px-[3px] py-[3px] rounded-[8px]">
             <p className="text-white m-0 font-semi">
-              -
-              {!props.data?.is_discount &&
-                props.data?.discount_percentage.toFixed(2)}
-              %
+              -{props.data?.discount_percentage.toFixed(2)}%
             </p>
           </div>
           <p className="text-passive font-regular text-[16px] line-through decoration-red">
-            {!props.data?.is_discount && props.data?.discount_price.toFixed(2)}{" "}
-            TMT
+            {props.data?.price.toFixed(2)} TMT
           </p>
         </div>
       )}
