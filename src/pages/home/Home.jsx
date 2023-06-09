@@ -788,7 +788,7 @@ function Home(props) {
             {cake.length > 0 && cake[0]?.categories.name}
           </h2>
           <div
-            onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
+            onClick={() => history.push({ pathname: "/mrt/kategory/51" })}
             className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
           >
             {dil === "TM"
@@ -822,7 +822,7 @@ function Home(props) {
           })}
         </div> */}
         <div
-          onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
+          onClick={() => history.push({ pathname: "/mrt/kategory/51" })}
           className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
         >
           {dil === "TM"
@@ -839,7 +839,7 @@ function Home(props) {
             {un.length > 0 && un[0]?.categories.name}
           </h2>
           <div
-            onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
+            onClick={() => history.push({ pathname: "/mrt/kategory/50" })}
             className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
           >
             {dil === "TM"
@@ -873,7 +873,7 @@ function Home(props) {
           })}
         </div> */}
         <div
-          onClick={() => history.push({ pathname: "/mrt/kategory/1" })}
+          onClick={() => history.push({ pathname: "/mrt/kategory/50" })}
           className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
         >
           {dil === "TM"
