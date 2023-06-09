@@ -324,7 +324,7 @@ function ProductCard(props) {
                 <button
                   onClick={() => {
                     decPro(product);
-                    setCount(count - 1);
+                    count > 1 && setCount(count - 1);
                     setAnimation(true);
                   }}
                   className="text-green bg-green-200 h-[30px] w-[30px] leading-[9px] rounded-[100%] p-2"

@@ -49,7 +49,7 @@ function Navbar(props) {
   basket.map((item) => {
     item?.products?.map((pro) => {
       umumy = umumy + pro.quantity * pro.pro.price;
-      if (pro.pro.is_discount) {
+      if (!pro.pro.is_discount) {
         discount =
           discount + (pro.pro.price - pro.pro.discount_price) * pro.quantity;
       }
@@ -609,7 +609,7 @@ function Navbar(props) {
                 alt="shoppingCart"
               />
               <p className="text-[16px] whitespace-nowrap font-semi m-0">
-                {umumy - discount} TMT
+                {(umumy - discount).toFixed(2)} TMT
               </p>
             </div>
           </div>

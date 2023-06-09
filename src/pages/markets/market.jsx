@@ -112,6 +112,7 @@ const Market = () => {
         params: {
           market_id: id,
           lang: dil,
+          limit: 9999,
         },
       })
       .then((data) => {

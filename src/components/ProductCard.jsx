@@ -126,7 +126,7 @@ function ProductCard(props) {
         >
           <button
             onClick={() => {
-              setCount(count - 1);
+              count > 1 && setCount(count - 1);
               decPro(props?.data);
               setAnimation(true);
             }}
