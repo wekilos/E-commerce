@@ -8,11 +8,13 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Login = () => {
   const [passType, setPassType] = useState("password");
   const history = useHistory();
   const { dil } = useContext(Context);
+  const [phone_number, setPhone_number] = useState("");
   const [number, setNumber] = useState(993);
   const goRegstr = (id) => {
     history.push({ pathname: "/signup" });
@@ -24,6 +26,21 @@ const Login = () => {
     } else if (value.length < 12) {
       setNumber(value);
     }
+  };
+
+  const login = () => {
+    console.log("cv");
+    axiosInstance
+      .post("/api/user/login", {
+        phone_number: number,
+      })
+      .then((data) => {
+        setNumber(993);
+        history.push({ pathname: "/verification/" + number });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className="max-h-[100vh]">
@@ -53,6 +70,11 @@ const Login = () => {
               max={11}
               min={3}
               onChange={(e) => inputHandler(e.target.value)}
+              onKeyPress={(event) => {
+                if (event.key === "Enter") {
+                  login();
+                }
+              }}
             />
             {/* <br />
                         <input
@@ -73,7 +95,7 @@ const Login = () => {
                             />
                         )} */}
             {/* <p className="p-2">Açar sözümi unutdym</p> */}
-            <button className="button-1">
+            <button onClick={() => login()} className="button-1">
               {dil === "TM"
                 ? tm["Ulgama girmek"]
                 : dil === "RU"

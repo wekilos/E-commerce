@@ -40,50 +40,8 @@ const Favorites = () => {
   const history = useHistory();
   const [favPro, setFavPro] = useState([]);
   const [favMar, setFavMar] = useState([]);
-  const markets = [img1, img2, img3, img4, img5, img1, img2, img3, img4, img5];
 
-  const kop = [
-    {
-      name: "Maýonez Nur Näzli 30% 800 g",
-      img: img6,
-    },
-    {
-      name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-      img: img7,
-    },
-    {
-      name: "Limon sousy Arslan Küpü 500 ml",
-      img: img8,
-    },
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-    {
-      name: "Maýonez Nur Näzli 30% 800 g",
-      img: img6,
-    },
-    {
-      name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-      img: img7,
-    },
-    {
-      name: "Limon sousy Arslan Küpü 500 ml",
-      img: img8,
-    },
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-  ];
+  var data = JSON.parse(localStorage.getItem("userData"));
 
   useEffect(() => {
     getFavPro();
@@ -95,7 +53,7 @@ const Favorites = () => {
       .get("/api/grocery_favourite_products", {
         params: {
           lang: dil,
-          user_id: 1,
+          user_id: data?.id ? data?.id : 1,
         },
       })
       .then((data) => {
@@ -112,7 +70,7 @@ const Favorites = () => {
       .get("/api/grocery_favourite_markets", {
         params: {
           lang: dil,
-          user_id: 1,
+          user_id: data?.id ? data?.id : 1,
         },
       })
       .then((data) => {

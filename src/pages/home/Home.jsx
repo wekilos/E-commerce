@@ -61,8 +61,10 @@ function Home(props) {
   const [discountPro, setDiscountPro] = useState([]);
   const [moreSalePro, setMoreSalePro] = useState([]);
   const [carusels, setCarusels] = useState([]);
+  const [bannerCards, setBannerCards] = useState([]);
   const [un, setUn] = useState([]);
   const [cake, setCake] = useState([]);
+  const [allCatPro, setAllCatPro] = useState([]);
   const testSettings = {
     backgroundColor: "rgba(255, 255, 255, 0.8)",
     outline: "0",
@@ -184,177 +186,6 @@ function Home(props) {
     ],
   };
 
-  const products = {
-    un: [
-      {
-        name: "Patraklar Агро-Альянс 4 däneli 400 g",
-        img: img9,
-      },
-      {
-        name: "Greçka Агро-Альянс ýaşyl 450 g",
-        img: img10,
-      },
-      {
-        name: "Patraklar Агро-Альянс süle 400 g",
-        img: img11,
-      },
-      {
-        name: "Un Beles 5 kg",
-        img: img12,
-      },
-      {
-        name: "Nohut iri 1kg",
-        img: img13,
-      },
-      {
-        name: "Patraklar Агро-Альянс 4 däneli 400 g Patraklar Агро-Альянс 4 däneli 400 g",
-        img: img9,
-      },
-      {
-        name: "Greçka Агро-Альянс ýaşyl 450 g",
-        img: img10,
-      },
-      {
-        name: "Patraklar Агро-Альянс süle 400 g",
-        img: img11,
-      },
-      {
-        name: "Un Beles 5 kg",
-        img: img12,
-      },
-      {
-        name: "Nohut iri 1kg",
-        img: img13,
-      },
-    ],
-    cake: [
-      {
-        name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-        img: img14,
-      },
-      {
-        name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-        img: img15,
-      },
-      {
-        name: "Mini wafli Kinder Bueno 18 sany 108 g",
-        img: img16,
-      },
-      {
-        name: "Süýjüler Коркунов şokoladlaryň ýygyndysy gara",
-        img: img17,
-      },
-      {
-        name: "Süýji sowgat Snickers Twix MilkyWay 81 g",
-        img: img18,
-      },
-      {
-        name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-        img: img14,
-      },
-      {
-        name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-        img: img15,
-      },
-      {
-        name: "Mini wafli Kinder Bueno 18 sany 108 g",
-        img: img16,
-      },
-      {
-        name: "Süýjüler Коркунов şokoladlaryň ýygyndysy gara",
-        img: img17,
-      },
-      {
-        name: "Süýji sowgat Snickers Twix MilkyWay 81 g",
-        img: img18,
-      },
-    ],
-    arzan: [
-      {
-        name: "Gök bulgar Obam parnikden 1 kg",
-        img: img1,
-      },
-      {
-        name: "Sogan Obam 1 kg",
-        img: img2,
-      },
-      {
-        name: "Badamjan parnik Obam 1 kg",
-        img: img3,
-      },
-      {
-        name: "Doňdurylan ýertudana Мираторг 300 g",
-        img: img4,
-      },
-      {
-        name: "Göle gapyrgasy Emin Et 1 kg",
-        img: img5,
-      },
-      {
-        name: "Gök bulgar Obam parnikden 1 kg",
-        img: img1,
-      },
-      {
-        name: "Sogan Obam 1 kg",
-        img: img2,
-      },
-      {
-        name: "Badamjan parnik Obam 1 kg",
-        img: img3,
-      },
-      {
-        name: "Doňdurylan ýertudana Мираторг 300 g",
-        img: img4,
-      },
-      {
-        name: "Göle gapyrgasy Emin Et 1 kg",
-        img: img5,
-      },
-    ],
-    kop: [
-      {
-        name: "Maýonez Nur Näzli 30% 800 g",
-        img: img6,
-      },
-      {
-        name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-        img: img7,
-      },
-      {
-        name: "Limon sousy Arslan Küpü 500 ml",
-        img: img8,
-      },
-      {
-        name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-        img: img14,
-      },
-      {
-        name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-        img: img15,
-      },
-      {
-        name: "Maýonez Nur Näzli 30% 800 g",
-        img: img6,
-      },
-      {
-        name: "Ketçup Mr.Ricco Grill Menu Towuk karri üçin 350 gr",
-        img: img7,
-      },
-      {
-        name: "Limon sousy Arslan Küpü 500 ml",
-        img: img8,
-      },
-      {
-        name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-        img: img14,
-      },
-      {
-        name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-        img: img15,
-      },
-    ],
-  };
-
   // const images = [longBanner, longBanner, longBanner];
 
   useEffect(() => {
@@ -363,8 +194,10 @@ function Home(props) {
     getmoreSale();
     getbrands();
     getCarusels();
-    getCategoryProCake();
-    getCategoryPro();
+    // getCategoryProCake();
+    // getCategoryPro();
+    getCategoriesPros();
+    getBannerCards();
   }, [dil]);
 
   const getcategories = async () => {
@@ -449,6 +282,18 @@ function Home(props) {
       });
   };
 
+  const getBannerCards = () => {
+    axiosInstance
+      .get("/api/e-banner-card/all")
+      .then((data) => {
+        console.log("carousel", data.data);
+        setBannerCards(data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   const getCategoryPro = () => {
     axiosInstance
       .get("/api/grocery_category_products", {
@@ -481,6 +326,27 @@ function Home(props) {
       .catch((err) => {
         console.log(err);
       });
+  };
+
+  const getCategoriesPros = () => {
+    let array = [];
+    categories?.map((item) => {
+      axiosInstance
+        .get("/api/grocery_category_products", {
+          params: {
+            lang: dil,
+            category_id: item?.id,
+          },
+        })
+        .then((data) => {
+          console.log("un", data.data.body);
+          array.push(data.data.body);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
+    setAllCatPro([...array]);
   };
   return (
     <div className="w-full pb-10   select-none">
@@ -646,21 +512,15 @@ function Home(props) {
       </div>
 
       <div className="inline-flex md2:mt-12 mt-8 w-full justify-between scrollbar-hide overflow-y-auto">
-        <img
-          className="rounded-[32px] md2:w-[400px] w-[370px] md2:h-[220px] h-[160px] object-cover mr-2"
-          src={add1}
-          alt="slide"
-        />
-        <img
-          className="rounded-[32px] md2:w-[400px] w-[370px] md2:h-[220px] h-[160px] object-cover mr-2"
-          src={add2}
-          alt="slide"
-        />
-        <img
-          className="rounded-[32px] md2:w-[400px] w-[370px] md2:h-[220px] h-[160px] object-cover mr-2"
-          src={add3}
-          alt="slide"
-        />
+        {bannerCards?.map((item) => {
+          return (
+            <img
+              className="rounded-[32px] md2:w-[400px] w-[370px] md2:h-[220px] h-[160px] object-cover mr-2"
+              src={BASE_URL + item?.img}
+              alt="slide"
+            />
+          );
+        })}
       </div>
       {/* <ProductGroup name={"Maýonez,üwmeçler we souslar"} /> */}
 
@@ -782,7 +642,7 @@ function Home(props) {
         </div>
       </div>
 
-      <div className="md2:my-10 my-6">
+      {/* <div className="md2:my-10 my-6">
         <div className="flex items-center justify-between">
           <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
             {cake.length > 0 && cake[0]?.categories.name}
@@ -812,15 +672,7 @@ function Home(props) {
             );
           })}
         </div>
-        {/* <div className="w-full mt-6 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {products.cake.map((item) => {
-            return (
-              <div key={item.name} className="mr-6">
-                <ProductCard text={item.name} img={item.img} key={"index"} />
-              </div>
-            );
-          })}
-        </div> */}
+    
         <div
           onClick={() => history.push({ pathname: "/mrt/kategory/51" })}
           className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
@@ -831,9 +683,9 @@ function Home(props) {
             ? ru["Hemmesini görkez"]
             : en["Hemmesini görkez"]}
         </div>
-      </div>
+      </div> */}
 
-      <div className="md2:mt-10 mt-6">
+      {/* <div className="md2:mt-10 mt-6">
         <div className="flex items-center justify-between">
           <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
             {un.length > 0 && un[0]?.categories.name}
@@ -863,15 +715,7 @@ function Home(props) {
             );
           })}
         </div>
-        {/* <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-          {products.un.map((item) => {
-            return (
-              <div key={item.name} className="mr-6">
-                <ProductCard text={item.name} img={item.img} key={"index"} />
-              </div>
-            );
-          })}
-        </div> */}
+
         <div
           onClick={() => history.push({ pathname: "/mrt/kategory/50" })}
           className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
@@ -882,7 +726,66 @@ function Home(props) {
             ? ru["Hemmesini görkez"]
             : en["Hemmesini görkez"]}
         </div>
-      </div>
+      </div> */}
+
+      {allCatPro?.map((item, i) => {
+        return (
+          <div key={"allca" + i} className="md2:mt-10 mt-6">
+            <div className="flex items-center justify-between">
+              <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
+                {item.length > 0 && item[0]?.categories.name}
+              </h2>
+              <div
+                onClick={() =>
+                  history.push({
+                    pathname:
+                      "/mrt/kategory/" + item.length > 0 &&
+                      item[0]?.categories?.id,
+                  })
+                }
+                className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+              >
+                {dil === "TM"
+                  ? tm["Hemmesini görkez"]
+                  : dil === "RU"
+                  ? ru["Hemmesini görkez"]
+                  : en["Hemmesini görkez"]}
+              </div>
+            </div>
+            <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+              {item?.map((item, i) => {
+                return (
+                  <div key={item.name + "un" + i} className="mr-6">
+                    <ProductCard
+                      data={item}
+                      text={item.name}
+                      img={item.img[0].img}
+                      key={"index"}
+                    />
+                  </div>
+                );
+              })}
+            </div>
+
+            <div
+              onClick={() =>
+                history.push({
+                  pathname:
+                    "/mrt/kategory/" + item.length > 0 &&
+                    item[0]?.categories?.id,
+                })
+              }
+              className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
+            >
+              {dil === "TM"
+                ? tm["Hemmesini görkez"]
+                : dil === "RU"
+                ? ru["Hemmesini görkez"]
+                : en["Hemmesini görkez"]}
+            </div>
+          </div>
+        );
+      })}
     </div>
   );
 }

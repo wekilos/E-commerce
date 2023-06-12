@@ -21,12 +21,14 @@ const AddressCardCreate = (props) => {
   const { dil } = useContext(Context);
   const [address, setAddress] = useState({ title: "", address: "" });
 
+  var data = JSON.parse(localStorage.getItem("userData"));
+
   const createUserAddress = () => {
     axiosInstance
       .post("/api/address/create", {
         address: address.address,
         title: address.title,
-        UserId: 1,
+        UserId: data?.id ? data?.id : 1,
       })
       .then((data) => {
         console.log(data.data);

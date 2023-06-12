@@ -179,7 +179,7 @@ function ProductCard(props) {
       </div>
       <div className="w-2/3 px-8 flex flex-wrap justify-between flex-row">
         <div className="w-full">
-          {product?.is_discount && (
+          {!product?.is_discount && (
             <div className="h-[41px] mb-4 w-fit rounded-[32px] px-4 py-2 bg-red text-white font-semi text[20px]">
               -{product?.discount_percentage}%
               {dil === "TM"

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import "./signup.css";
 import { useHistory } from "react-router-dom";
 import Header from "./header/header";
@@ -7,15 +7,40 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Signup = () => {
   const history = useHistory();
   const { dil } = useContext(Context);
+  const [data, setData] = useState({
+    name: "",
+    lastname: "",
+    phone_number: "",
+    birthday: "",
+  });
   const goLogin = (id) => {
     history.push({ pathname: "/login" });
   };
   const goVerification = () => {
     history.push({ pathname: "/verification" });
+  };
+
+  const signup = () => {
+    axiosInstance
+      .post("/api/user/create", data)
+      .then((data) => {
+        console.log(data);
+        setData({
+          name: "",
+          lastname: "",
+          phone_number: "",
+          birthday: "",
+        });
+        history.push({ pathname: "/verification/" + data?.phone_number });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <div className="max-h-[100vh]">
@@ -39,6 +64,8 @@ const Signup = () => {
             </p>
             <div id="name-input-container">
               <input
+                value={data?.name}
+                onChange={(e) => setData({ ...data, name: e.target.value })}
                 className="r-input-box-1"
                 type="text"
                 placeholder={
@@ -50,6 +77,8 @@ const Signup = () => {
                 }
               />
               <input
+                value={data?.lastname}
+                onChange={(e) => setData({ ...data, lastname: e.target.value })}
                 className="r-input-box-2"
                 type="text"
                 placeholder={
@@ -62,12 +91,17 @@ const Signup = () => {
               />
             </div>
             <input
+              onChange={(e) => setData({ ...data, birthday: e.target.value })}
               className="r-input-box-3"
               type="date"
               placeholder="Doglan wagtyňyz"
             />
             {/* <input className="r-input-box-4" placeholder="email hasabyňyz" type="text" /> */}
             <input
+              value={data?.phone_number}
+              onChange={(e) =>
+                setData({ ...data, phone_number: e.target.value })
+              }
               className="r-input-box-5"
               placeholder={
                 dil === "TM"
@@ -78,7 +112,7 @@ const Signup = () => {
               }
               type="number"
             />
-            <button className="button-1" onClick={() => goVerification()}>
+            <button className="button-1" onClick={() => signup()}>
               {dil === "TM"
                 ? tm["Dowam et"]
                 : dil === "RU"

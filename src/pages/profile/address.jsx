@@ -35,13 +35,14 @@ const Address = () => {
   const [add, setAdd] = useState(false);
   const [addresses, setAddresses] = useState([]);
 
+  var data = JSON.parse(localStorage.getItem("userData"));
   useEffect(() => {
     getAddress();
   }, []);
   const getAddress = () => {
     axiosInstance
       .get("/api/address/all", {
-        params: { UserId: 1 },
+        params: { UserId: data?.id ? data?.id : 1 },
       })
       .then((data) => {
         console.log("adddress", data.data);

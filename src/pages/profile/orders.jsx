@@ -39,12 +39,19 @@ const Orders = () => {
     dil === "TM" ? tm.Noyabr : dil === "RU" ? ru.Noyabr : en.Noyabr,
     dil === "TM" ? tm.Dekabr : dil === "RU" ? ru.Dekabr : en.Dekabr,
   ];
+
+  var data = JSON.parse(localStorage.getItem("userData"));
+
   useEffect(() => {
     getOrders();
   }, [dil]);
   const getOrders = () => {
     axiosInstance
-      .get("/api/grocery_orders?lang=" + dil + "&user_id=" + 1 + "&order=DESC")
+      .get(
+        "/api/grocery_orders?lang=" + dil + "&user_id=" + data?.id
+          ? data?.id
+          : 1 + "&order=DESC"
+      )
       .then((data) => {
         console.log(data.data.body);
         setOrders(data.data.body);

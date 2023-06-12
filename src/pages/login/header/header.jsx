@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect, useContext } from "react";
 import logo from "../../../images/firstPageLogo.svg";
 import turkmenistan from "../../../images/turkmenistan.svg";
+import russia from "../../../images/russia.svg";
+import usa from "../../../images/united-states.svg";
 import arrowDown from "../../../images/arrowDown.svg";
 import { useHistory } from "react-router-dom";
 import LanguageOutlinedIcon from "@mui/icons-material/LanguageOutlined";
@@ -88,7 +90,12 @@ const Header = (props) => {
                                 src={turkmenistan}
                                 alt="Turkmenistan"
                             /> */}
-          <LanguageOutlinedIcon className=" text-[16px] font-semi" />
+          <img
+            className="w-[24px] h-[24px] mr-2"
+            src={dil === "TM" ? turkmenistan : dil === "RU" ? russia : usa}
+            alt="Turkmenistan"
+          />
+          {/* <LanguageOutlinedIcon className=" text-[16px] font-semi" /> */}
           <p className="text-[16px] font-semi m-0">
             {dil === "TM" ? "Türkmen" : dil === "RU" ? "Русский" : "English"}
           </p>
@@ -105,6 +112,11 @@ const Header = (props) => {
                   onClick={() => ChangeDil("TM")}
                   className="flex items-center py-[10px] px-[14px] border-b-neutral-300 border-b-[1px]"
                 >
+                  <img
+                    className="w-[24px] h-[24px] mr-2"
+                    src={turkmenistan}
+                    alt="Turkmenistan"
+                  />
                   <p className="text-[16px] whitespace-nowrap m-0">Turkmen</p>
                 </div>
               )}
@@ -113,6 +125,11 @@ const Header = (props) => {
                   onClick={() => ChangeDil("RU")}
                   className="flex items-center py-[10px] px-[14px] border-b-neutral-300 border-b-[1px]"
                 >
+                  <img
+                    className="w-[24px] h-[24px] mr-2"
+                    src={russia}
+                    alt="Turkmenistan"
+                  />
                   <p className="text-[16px] whitespace-nowrap m-0">Русский</p>
                 </div>
               )}
@@ -121,6 +138,11 @@ const Header = (props) => {
                   onClick={() => ChangeDil("EN")}
                   className="flex items-center py-[10px] px-[14px] "
                 >
+                  <img
+                    className="w-[24px] h-[24px] mr-2"
+                    src={usa}
+                    alt="Turkmenistan"
+                  />
                   <p className="text-[16px] whitespace-nowrap m-0">English</p>
                 </div>
               )}

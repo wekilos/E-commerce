@@ -32,8 +32,10 @@ const Info = () => {
     getData();
   }, []);
   const getData = () => {
+    var data = JSON.parse(localStorage.getItem("userData"));
+    // setUser(data);
     axiosInstance
-      .get("/api/user/" + 1)
+      .get("/api/user/" + data?.id ? data?.id : 1)
       .then((data) => {
         console.log(data.data);
         setUser(data.data);

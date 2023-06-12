@@ -1,5 +1,5 @@
-import React, { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import React, { useContext, useRef, useState, useEffect } from "react";
+import { useHistory, useParams } from "react-router-dom";
 import "./verification.css";
 import Header from "./header/header";
 
@@ -7,16 +7,57 @@ import { Context } from "../../context/context";
 import tm from "../../lang/tm/home.json";
 import en from "../../lang/en/home.json";
 import ru from "../../lang/ru/home.json";
+import { axiosInstance } from "../../utils/axiosIntance";
 
 const Verification = () => {
   const history = useHistory();
+  const { phone } = useParams();
   const { dil } = useContext(Context);
+  const ref1 = useRef();
+  const ref2 = useRef();
+  const ref3 = useRef();
+  const ref4 = useRef();
+  const ref5 = useRef();
+  const [foc, setFoc] = useState(2);
+  // const [code, setCode] = useState({ a: "", b: "", c: "", d: "", e: "" });
+  const [code, setCode] = useState("");
   const goBack = () => {
     history.goBack();
   };
   const goVerificationFilled = () => {
     // history.push({pathname:"/verification_filled"})
   };
+  // useEffect(() => {
+  //   console.log(foc, code.a.length);
+  //   if (code.a.length > 0) {
+  //     setFoc(2);
+  //   } else if (code.b.length > 0) {
+  //     setFoc(3);
+  //   } else if (code.c.length > 0) {
+  //     setFoc(4);
+  //   } else if (code.d.length > 0) {
+  //     setFoc(5);
+  //   }
+  // }, [code, foc]);
+
+  const verify = () => {
+    axiosInstance
+      .post("/api/user/check", {
+        code: code,
+        phone_number: phone,
+      })
+      .then((data) => {
+        if (data.data?.token) {
+          localStorage.setItem("userData", JSON.stringify(data.data));
+          history.push({ pathname: "/mrt/profile/info" });
+        }
+        console.log(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="max-h-[100vh]">
       <Header />
@@ -38,14 +79,80 @@ const Verification = () => {
                 : en["Telefon belgiñize tassyklaýjy kody iberdik"]}
             </p>
             <div className="v-input-box">
-              <input className="v-input" required type="number" disabled />
-              <input className="v-input" required type="number" disabled />
-              <input className="v-input" required type="number" disabled />
-              <input className="v-input" required type="number" disabled />
-              <input className="v-input" required type="number" disabled />
+              <input
+                autoFocus={true}
+                onChange={(e) => {
+                  setCode(e.target.value);
+                }}
+                onKeyPress={(event) => {
+                  if (event.key === "Enter") {
+                    verify();
+                  }
+                }}
+                className="v-input !w-full text-center text-[22px] outline-none"
+                maxLength={5}
+                required
+                type="text"
+              />
+              {/* <input
+                autoFocus={foc === 1}
+                onChange={(e) => {
+                  setCode({ ...code, a: e.target.value });
+                }}
+                onKeyPress={(event) => {
+                  if (event.key === "Enter") {
+                    setFoc(2);
+                    console.log("s");
+                  }
+                }}
+                className="v-input text-center text-[22px] outline-none"
+                maxLength={1}
+                required
+                type="text"
+              />
+              <input
+                autoFocus={foc == 2}
+                onChange={(e) => {
+                  setCode({ ...code, b: e.target.value });
+                }}
+                className="v-input text-center text-[22px] outline-none"
+                maxLength={1}
+                required
+                type="text"
+              />
+              <input
+                autoFocus={foc == 3}
+                onChange={(e) => {
+                  setCode({ ...code, c: e.target.value });
+                }}
+                className="v-input text-center text-[22px] outline-none"
+                maxLength={1}
+                required
+                type="text"
+              />
+              <input
+                autoFocus={foc == 4}
+                onChange={(e) => {
+                  setCode({ ...code, d: e.target.value });
+                }}
+                className="v-input text-center text-[22px] outline-none"
+                maxLength={1}
+                required
+                type="text"
+              />
+              <input
+                autoFocus={foc == 5}
+                onChange={(e) => {
+                  setCode({ ...code, e: e.target.value });
+                }}
+                className="v-input text-center text-[22px] outline-none"
+                maxLength={1}
+                required
+                type="text"
+              /> */}
             </div>
-            <p style={{ marginTop: "24px", marginBottom: "18px" }}>0:35</p>
-            <button className="button-1" onClick={() => goVerificationFilled()}>
+            {/* <p style={{ marginTop: "24px", marginBottom: "18px" }}>0:35</p> */}
+            <button className="button-1" onClick={() => verify()}>
               {dil === "TM"
                 ? tm["Dowam etmek"]
                 : dil === "RU"

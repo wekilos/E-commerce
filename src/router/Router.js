@@ -291,7 +291,7 @@ const App = () => {
             <Route
               restricted={true}
               component={Verification}
-              path="/verification"
+              path="/verification/:phone"
               exact
             />
             <PublicRoute component={Home} path="*" />
