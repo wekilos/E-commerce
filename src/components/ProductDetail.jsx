@@ -284,14 +284,7 @@ function ProductCard(props) {
                   : "Made place"}
                 :
               </p>
-              <div
-                onClick={() =>
-                  history.push({
-                    pathname: "/mrt/market/" + product?.market?.id,
-                  })
-                }
-                className="flex cursor-pointer items-center"
-              >
+              <div className="flex cursor-pointer items-center">
                 <p className="text-[16px] mr-2 font-medium text-green">
                   {product?.country}
                 </p>

@@ -39,10 +39,13 @@ function Navbar(props) {
   const [open, setOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [feedBack, setFeedBack] = useState(false);
+  const [feed, setFeed] = useState({ fullname: "", email: "", text: "" });
   const [kategory, setKategory] = useState(false);
   const [categories, setCategories] = useState([]);
   const [selected, setSelected] = useState({});
   const [productName, setProductName] = useState("");
+
+  var data = JSON.parse(localStorage.getItem("userData"));
 
   let umumy = 0;
   let discount = 0;
@@ -122,6 +125,17 @@ function Navbar(props) {
       });
   };
 
+  const sendFeed = () => {
+    axiosInstance
+      .post("/api/feedBack/create", feed)
+      .then((data) => {
+        setFeedBack(false);
+        setFeed({ fullname: "", email: "", text: "" });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
   return (
     <div className="w-[95%] mx-auto mb-10">
       <Modal
@@ -154,6 +168,8 @@ function Navbar(props) {
 
         <div className="w-full flex justify-between flex-wrap">
           <input
+            value={feed.fullname}
+            onChange={(e) => setFeed({ ...feed, fullname: e.target.value })}
             className="w-[49%] text-[16px] mb-4 p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
             placeholder={
               dil === "TM"
@@ -165,6 +181,8 @@ function Navbar(props) {
             type="text"
           />
           <input
+            value={feed.email}
+            onChange={(e) => setFeed({ ...feed, email: e.target.value })}
             className="w-[49%] text-[16px] mb-4 p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
             placeholder={
               dil === "TM"
@@ -176,6 +194,8 @@ function Navbar(props) {
             type="text"
           />
           <textarea
+            value={feed.text}
+            onChange={(e) => setFeed({ ...feed, text: e.target.value })}
             className="w-full min-h-[180px] text-[16px] mb-4 p-4 outline-none font-regular bg-neutral-200 rounded-[8px] text-neutral-600 text-left"
             placeholder={
               dil === "TM" ? tm.Hatyñyz : dil === "RU" ? ru.Hatyñyz : en.Hatyñyz
@@ -184,7 +204,7 @@ function Navbar(props) {
           />
         </div>
         <button
-          onClick={() => setFeedBack(false)}
+          onClick={() => sendFeed()}
           className="h-[50px] w-full bg-green rounded-[9px] text-white text-[16px] font-semi"
         >
           {dil === "TM"
@@ -463,7 +483,11 @@ function Navbar(props) {
               )}
             </div>
             <div
-              onClick={() => history.push({ pathname: "/login" })}
+              onClick={() => {
+                data?.token
+                  ? history.push({ pathname: "/mrt/profile/info" })
+                  : history.push({ pathname: "/login" });
+              }}
               className="custom-border flex h-[50px] items-center gap-[10px]   px-[24px] cursor-pointer"
             >
               <img
@@ -472,7 +496,9 @@ function Navbar(props) {
                 alt="Turkmenistan"
               />
               <p className="text-[16px] whitespace-nowrap font-semi m-0">
-                {dil === "TM"
+                {data?.token
+                  ? data?.name
+                  : dil === "TM"
                   ? tm["Ulgama girmek"]
                   : dil === "RU"
                   ? ru["Ulgama girmek"]
