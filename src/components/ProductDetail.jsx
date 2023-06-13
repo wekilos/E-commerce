@@ -27,13 +27,6 @@ function ProductCard(props) {
 
   const { dil, decPro, addPro } = useContext(Context);
 
-  useEffect(() => {
-    const time = setTimeout(() => {
-      setAnimation(false);
-    }, 2000);
-    return () => clearTimeout(time);
-  }, [animation]);
-
   const slider = useRef(null);
   const [current, setCurrent] = useState({ currentSlide: 0 });
   const testSettings = {
@@ -98,6 +91,7 @@ function ProductCard(props) {
 
   useEffect(() => {
     getProduct();
+    setCount(0);
   }, [id, dil]);
 
   const getProduct = () => {
@@ -281,28 +275,68 @@ function ProductCard(props) {
                 </p>
               </div>
             </div>
+            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+              <p className="text-[16px] font-medium text-neutral-800">
+                {dil === "TM"
+                  ? "Öndürilen ýeri"
+                  : dil === "RU"
+                  ? "Сделано место"
+                  : "Made place"}
+                :
+              </p>
+              <div
+                onClick={() =>
+                  history.push({
+                    pathname: "/mrt/market/" + product?.market?.id,
+                  })
+                }
+                className="flex cursor-pointer items-center"
+              >
+                <p className="text-[16px] mr-2 font-medium text-green">
+                  {product?.country}
+                </p>
+              </div>
+            </div>
+            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+              <p className="text-[16px] font-medium text-neutral-800">
+                {dil === "TM"
+                  ? "Ýarowlylyk möhleti"
+                  : dil === "RU"
+                  ? "Дата окончания срока"
+                  : "Expiration date"}
+                :
+              </p>
+              <div className="flex cursor-pointer items-center">
+                <p className="text-[16px] mr-2 font-medium text-green">
+                  {product?.expiredate?.slice(0, 10)}
+                </p>
+              </div>
+            </div>
           </div>
         </div>
-        <div className="w-full">
-          <h1 className="w-full text-left text-[24px] font-bold text-neutral-900">
-            {!product?.is_discount
-              ? product?.discount_price?.toFixed(2)
-              : product?.price?.toFixed(2)}
-            TMT
-          </h1>
-          {!product?.is_discount && (
-            <div className="flex items-center">
-              <p className="mr-2 text-white bg-red h-[22px] px-[3px] text-[14px] font-semi rounded-[8px]">
-                -{product?.discount_percentage?.toFixed(2)}%
-              </p>
-              <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
-                {product?.price?.toFixed(2)} TMT
-              </p>
-            </div>
-          )}
+        <div className="w-full text-[18px] font-medium text-black-secondary">
+          {product?.note}
         </div>
 
         <div className="w-full mt-4 flex justify-between">
+          <div className="w-1/2">
+            <h1 className="w-full text-left text-[24px] font-bold text-neutral-900">
+              {!product?.is_discount
+                ? product?.discount_price?.toFixed(2)
+                : product?.price?.toFixed(2)}
+              TMT
+            </h1>
+            {!product?.is_discount && (
+              <div className="flex items-center">
+                <p className="mr-2 text-white bg-red h-[22px] px-[3px] text-[14px] font-semi rounded-[8px]">
+                  -{product?.discount_percentage?.toFixed(2)}%
+                </p>
+                <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
+                  {product?.price?.toFixed(2)} TMT
+                </p>
+              </div>
+            )}
+          </div>
           <div className="flex items-center w-1/2">
             {!animation && (
               <div
@@ -360,21 +394,6 @@ function ProductCard(props) {
               </div>
             )}
           </div>
-          {/* <div className="flex items-center h-[50px] rounded-[16px] bg-neutral-200 p-4">
-                        <img
-                            className="h-[35px] object-contain mr-2"
-                            src={brend}
-                            alt=""
-                        />
-                        <div className="w-full text-left">
-                            <h1 className="text-[14px] w-full text-left font-semi text-neutral-900">
-                                Ter önümler
-                            </h1>
-                            <p className="text-[14px] w-full text-left font-medium text-neutral-700">
-                                Brend
-                            </p>
-                        </div>
-                    </div> */}
         </div>
       </div>
     </div>

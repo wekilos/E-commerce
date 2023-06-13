@@ -152,7 +152,7 @@ function Home(props) {
         },
       },
       {
-        breakpoint: 910,
+        breakpoint: 920,
         settings: {
           slidesToShow: 3,
           slidesToScroll: 1,
@@ -160,7 +160,7 @@ function Home(props) {
         },
       },
       {
-        breakpoint: 1100,
+        breakpoint: 1200,
         settings: {
           slidesToShow: 4,
           slidesToScroll: 1,
@@ -170,7 +170,7 @@ function Home(props) {
       {
         breakpoint: 1400,
         settings: {
-          slidesToShow: 4,
+          slidesToShow: 5,
           slidesToScroll: 1,
           infinite: true,
         },
@@ -196,7 +196,7 @@ function Home(props) {
     getCarusels();
     // getCategoryProCake();
     // getCategoryPro();
-    getCategoriesPros();
+    // getCategoriesPros();
     getBannerCards();
   }, [dil]);
 
@@ -209,6 +209,7 @@ function Home(props) {
       })
       .then((data) => {
         setCategories(data.data.body);
+        getCategoriesPros(data.data.body);
         console.log(data.data);
       })
       .catch((err) => {
@@ -328,9 +329,9 @@ function Home(props) {
       });
   };
 
-  const getCategoriesPros = () => {
+  const getCategoriesPros = async (cats) => {
     let array = [];
-    categories?.map((item) => {
+    await cats?.map((item) => {
       axiosInstance
         .get("/api/grocery_category_products", {
           params: {
@@ -339,14 +340,15 @@ function Home(props) {
           },
         })
         .then((data) => {
-          console.log("un", data.data.body);
-          array.push(data.data.body);
+          console.log("all pro", data.data.body);
+          // array.push({ cat: data.data.body });
+          setAllCatPro((oldArray) => [...oldArray, { cat: data.data.body }]);
+          // setAllCatPro([...array]);
         })
         .catch((err) => {
           console.log(err);
         });
     });
-    setAllCatPro([...array]);
   };
   return (
     <div className="w-full pb-10   select-none">
@@ -730,20 +732,49 @@ function Home(props) {
 
       {allCatPro?.map((item, i) => {
         return (
-          <div key={"allca" + i} className="md2:mt-10 mt-6">
-            <div className="flex items-center justify-between">
-              <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
-                {item.length > 0 && item[0]?.categories.name}
-              </h2>
+          item?.cat?.length > 0 && (
+            <div key={"allca" + i} className="md2:mt-10 mt-6">
+              <div className="flex items-center justify-between">
+                <h2 className="md2:text-[28px] text-[24px] font-bold text-[#2F313F]">
+                  {item?.cat?.length > 0 && item?.cat[0]?.categories.name}
+                </h2>
+                <div
+                  onClick={() =>
+                    history.push({
+                      pathname: "/mrt/kategory/" + item?.cat[0]?.categories?.id,
+                    })
+                  }
+                  className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+                >
+                  {dil === "TM"
+                    ? tm["Hemmesini görkez"]
+                    : dil === "RU"
+                    ? ru["Hemmesini görkez"]
+                    : en["Hemmesini görkez"]}
+                </div>
+              </div>
+              <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+                {item?.cat?.map((item, i) => {
+                  return (
+                    <div key={item.name + "un" + i} className="mr-6">
+                      <ProductCard
+                        data={item}
+                        text={item.name}
+                        img={item.img[0].img}
+                        key={"index"}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
               <div
                 onClick={() =>
                   history.push({
-                    pathname:
-                      "/mrt/kategory/" + item.length > 0 &&
-                      item[0]?.categories?.id,
+                    pathname: "/mrt/kategory/" + item?.cat[0]?.categories.id,
                   })
                 }
-                className="border-[1px] md2:block hidden hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi"
+                className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
               >
                 {dil === "TM"
                   ? tm["Hemmesini görkez"]
@@ -752,38 +783,7 @@ function Home(props) {
                   : en["Hemmesini görkez"]}
               </div>
             </div>
-            <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
-              {item?.map((item, i) => {
-                return (
-                  <div key={item.name + "un" + i} className="mr-6">
-                    <ProductCard
-                      data={item}
-                      text={item.name}
-                      img={item.img[0].img}
-                      key={"index"}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-
-            <div
-              onClick={() =>
-                history.push({
-                  pathname:
-                    "/mrt/kategory/" + item.length > 0 &&
-                    item[0]?.categories?.id,
-                })
-              }
-              className="border-[1px] w-full text-center md2:hidden block mt-6  hover:bg-green-200 border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[14px] font-semi"
-            >
-              {dil === "TM"
-                ? tm["Hemmesini görkez"]
-                : dil === "RU"
-                ? ru["Hemmesini görkez"]
-                : en["Hemmesini görkez"]}
-            </div>
-          </div>
+          )
         );
       })}
     </div>

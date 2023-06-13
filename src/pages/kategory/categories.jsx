@@ -70,7 +70,7 @@ const Categories = () => {
           </div>
         </div>
 
-        <div className="w-full grid place-items-center gap-6 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 md2:grid-cols-4 lg:grid-cols-5  xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 6xl:grid-cols-9">
+        <div className="w-full grid place-items-center gap-6 xs:grid-cols-2 sm:grid-cols-2 md:grid-cols-3 md2:grid-cols-3 lg:grid-cols-4  xl:grid-cols-5 2xl:grid-cols-5 3xl:grid-cols-6 4xl:grid-cols-7 6xl:grid-cols-9">
           {categories?.map((item, i) => {
             return (
               <div key={"cats" + i} className="pr-5">

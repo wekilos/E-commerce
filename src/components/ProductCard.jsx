@@ -19,13 +19,6 @@ function ProductCard(props) {
   const [count, setCount] = useState(1);
   const { dil, addPro, decPro } = useContext(Context);
 
-  useEffect(() => {
-    const time = setTimeout(() => {
-      setAnimation(false);
-    }, 2000);
-    return () => clearTimeout(time);
-  }, [animation]);
-
   const addFav = () => {
     axiosInstance
       .post("/api/grocery_favourite_product", {
