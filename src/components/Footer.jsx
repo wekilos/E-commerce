@@ -20,7 +20,10 @@ function Footer(props) {
     <div className="w-full bg-neutral-200">
       <div className="hidden xl:flex select-none bg-neutral-200 justify-center w-full  py-6 text-[18px]">
         <p className="text-neutral-700 w-full text-center whitespace-nowrap font-medium">
-          <b> © 2023 Günlük söwda onlaýn. </b>
+          <b>
+            © 2023 {/* Günlük söwda  */}
+            Söwda müdürligi onlaýn.{" "}
+          </b>
           {dil === "TM"
             ? "Ähli Hukuklar goralan"
             : dil === "RU"

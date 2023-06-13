@@ -515,7 +515,8 @@ function Navbar(props) {
             {/* Söwda onlaýn */}
             <img src={navLogo} alt="" />
             <p className="text-neutral-900 font-semi text-[22px] ml-2">
-              Günlük söwda
+              {/* Günlük söwda */}
+              Söwda müdürligi
             </p>
           </div>
 

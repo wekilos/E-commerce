@@ -87,7 +87,10 @@ const FirstPage = () => {
 
         <div className="w-full flex  justify-center text-[18px] my-6 text-neutral-900 font-semi">
           © 2023
-          <span className="font-bold mx-1">Günlük söwda onlaýn. </span>
+          <span className="font-bold mx-1">
+            {/* Günlük söwda  */}
+            Söwda müdürligi onlaýn.
+          </span>
           {dil === "TM"
             ? "Ähli Hukuklar goralan"
             : dil === "RU"
