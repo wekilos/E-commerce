@@ -109,7 +109,7 @@ const Markets = () => {
 
   return (
     <div className="w-full pb-10 inline-flex justify-between select-none">
-      <div className="min-w-[245px] w-[245px]">
+      <div className="min-w-[245px] md2:block hidden w-[245px]">
         {/* <button className="w-full h-[50px]  bg-green-100 text-green text-[18px] font-semi rounded-[8px]">
                     <West /> Ähli dükanlar
                 </button> */}
@@ -227,8 +227,8 @@ const Markets = () => {
           </div>
         </div>
       </div>
-      <div className="w-full pl-8">
-        <div className="w-full flex items-center">
+      <div className="w-full md2:pl-8">
+        <div className="w-full md2:flex hidden items-center">
           <p
             onClick={() => history.push({ pathname: "/mrt/home" })}
             className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
@@ -248,8 +248,37 @@ const Markets = () => {
               : en.Dükanlar}
           </p>
         </div>
+        <div className="w-full md2:hidden flex justify-between bg-neutral-200 p-1 rounded-[8px]">
+          <p
+            onClick={() => history.push({ pathname: "/mrt/kategories" })}
+            className="text-[18px] h-[40px] leading-[40px] text-center w-1/3 font-semi text-neutral-600 mr-2"
+          >
+            {dil === "TM"
+              ? tm.Görnüşler
+              : dil === "RU"
+              ? ru.Görnüşler
+              : en.Görnüşler}
+          </p>
 
-        <div className="w-full mt-4 flex justify-between  items-center">
+          <p className="text-[18px] bg-white rounded-[8px] h-[40px] leading-[40px] text-center w-1/3 font-semi text-neutral-900 mr-2">
+            {dil === "TM"
+              ? tm.Dükanlar
+              : dil === "RU"
+              ? ru.Dükanlar
+              : en.Dükanlar}
+          </p>
+          <p
+            onClick={() => history.push({ pathname: "/mrt/brends" })}
+            className="text-[18px] h-[40px] leading-[40px] text-center w-1/3 font-semi text-neutral-600 mr-2"
+          >
+            {dil === "TM"
+              ? tm.Brendler
+              : dil === "RU"
+              ? ru.Brendler
+              : en.Brendler}
+          </p>
+        </div>
+        <div className="w-full mt-4 md2:flex hidden justify-between  items-center">
           <p className="text-[32px] font-semi text-neutral-900 mr-2">
             {dil === "TM"
               ? tm.Dükanlar
@@ -318,7 +347,7 @@ const Markets = () => {
             </FormControl>
           </div>
         </div>
-        <div className="w-full  mt-5 flex justify-start items-center">
+        <div className="w-full  mt-5 md2:flex hidden justify-start items-center">
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
@@ -334,7 +363,7 @@ const Markets = () => {
               : en["Filtrleri arassalamak"]}
           </div>
         </div>
-        <div className="w-full mt-8 grid gap-4 place-items-center lg:grid-cols-2  2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 6xl:grid-cols-5 ">
+        <div className="w-full mt-8 grid gap-4 place-items-center grid-cols-2 lg:grid-cols-2  2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 6xl:grid-cols-5 ">
           {markets.map((item) => {
             return (
               <div className="   ">

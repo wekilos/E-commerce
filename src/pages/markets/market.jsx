@@ -462,7 +462,7 @@ const Market = () => {
                 <p className="font-medium text-[16px] text-neutral-600"></p>
               </div>
               <div className="w-full mt-4 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
-                {item?.products.map((pro) => {
+                {item?.products?.map((pro) => {
                   return (
                     <ProductCard
                       data={pro}

@@ -32,6 +32,7 @@ import {
 const Brends = () => {
   const { dil } = useContext(Context);
   const [brends, setBrends] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     getBrends();
@@ -54,7 +55,7 @@ const Brends = () => {
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="w-full">
-        <div className="w-full flex items-center">
+        <div className="w-full md2:flex hidden items-center">
           <p className="text-[16px] font-regular text-black-secondary mr-2">
             {dil === "TM"
               ? tm["Baş sahypa"]
@@ -72,9 +73,40 @@ const Brends = () => {
           </p>
         </div>
 
+        <div className="w-full md2:hidden flex justify-between bg-neutral-200 p-1 rounded-[8px]">
+          <p
+            onClick={() => history.push({ pathname: "/mrt/kategories" })}
+            className="text-[18px] h-[40px] leading-[40px] text-center w-1/3 font-semi text-neutral-600 mr-2"
+          >
+            {dil === "TM"
+              ? tm.Görnüşler
+              : dil === "RU"
+              ? ru.Görnüşler
+              : en.Görnüşler}
+          </p>
+          <p
+            onClick={() => history.push({ pathname: "/mrt/markets" })}
+            className="text-[18px] h-[40px] leading-[40px] text-center w-1/3 font-semi text-neutral-600 mr-2"
+          >
+            {dil === "TM"
+              ? tm.Dükanlar
+              : dil === "RU"
+              ? ru.Dükanlar
+              : en.Dükanlar}
+          </p>
+
+          <p className="text-[18px] bg-white rounded-[8px] h-[40px] leading-[40px] text-center w-1/3 font-semi text-neutral-900 mr-2">
+            {dil === "TM"
+              ? tm.Brendler
+              : dil === "RU"
+              ? ru.Brendler
+              : en.Brendler}
+          </p>
+        </div>
+
         <div className="w-full my-6 flex justify-between  items-center">
           <div className="flex justify-start">
-            <p className="text-[32px] font-semi text-neutral-900 mr-2">
+            <p className="md2:text-[32px] text-[24px] font-semi text-neutral-900 mr-2">
               {dil === "TM"
                 ? tm.Brendler
                 : dil === "RU"
@@ -84,7 +116,7 @@ const Brends = () => {
           </div>
         </div>
 
-        <div className="w-full grid place-items-center gap-6 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 md2:grid-cols-4 lg:grid-cols-5  xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 6xl:grid-cols-9">
+        <div className="w-full grid place-items-center grid-cols-2 gap-6 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-3 md2:grid-cols-4 lg:grid-cols-5  xl:grid-cols-6 3xl:grid-cols-7 4xl:grid-cols-8 6xl:grid-cols-9">
           {brends.map((item) => {
             return <BrandCard data={item} text={item.name} img={item?.img} />;
           })}

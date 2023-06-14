@@ -33,7 +33,7 @@ function MarketCard(props) {
       });
   };
   return (
-    <div className="border flex justify-center items-start min-w-[324px] w-[324px] border-[#E9EBED] relative  h-[160px] rounded-[12px]">
+    <div className="border flex justify-center items-start md2:min-w-[324px] min-w-[175px] w-[175px] md2:w-[324px] border-[#E9EBED] relative  h-[160px] rounded-[12px]">
       {!is_like ? (
         <div
           onClick={() => {

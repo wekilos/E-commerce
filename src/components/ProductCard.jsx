@@ -33,7 +33,7 @@ function ProductCard(props) {
       });
   };
   return (
-    <div className="w-[236px] min-h-[460px] flex flex-col justify-between flex-wrap relative">
+    <div className="w-[236px] md2:min-h-[460px] min-h-[375px] flex flex-col justify-between flex-wrap relative">
       {!liked ? (
         // <FavoriteBorder className="absolute top-4 right-4 text-neutral-300" />
         <img
@@ -61,12 +61,12 @@ function ProductCard(props) {
         onClick={() =>
           history.push({ pathname: "/mrt/product/" + props.data.id })
         }
-        className="h-[236px] w-full object-contain rounded-[24px] cursor-pointer"
+        className="md2:h-[236px] h-[175px] w-full object-contain rounded-[24px] cursor-pointer"
         // src={props.img ? BASE_URL_IMG + props.img : card}
         src={BASE_URL_IMG + props?.img}
         alt="image"
       />
-      <p className="font-semi mt-2 text-[20px] text-neutral-900">
+      <p className="font-semi mt-2 md2:text-[20px] text-[16px] text-neutral-900">
         {!props.data?.is_discount
           ? props.data?.discount_price.toFixed(2)
           : props.data?.price.toFixed(2)}{" "}
@@ -75,11 +75,11 @@ function ProductCard(props) {
       {!props.data?.is_discount && (
         <div className="flex gap-[8px] my-[8px]">
           <div className="bg-red px-[3px] py-[3px] rounded-[8px]">
-            <p className="text-white m-0 font-semi">
+            <p className="text-white md2:text-[15px] text-[12px] m-0 font-semi">
               -{props.data?.discount_percentage.toFixed(2)}%
             </p>
           </div>
-          <p className="text-passive font-regular text-[16px] line-through decoration-red">
+          <p className="text-passive font-regular md2:text-[16px] text-[14px] line-through decoration-red">
             {props.data?.price.toFixed(2)} TMT
           </p>
         </div>
@@ -88,7 +88,7 @@ function ProductCard(props) {
         onClick={() =>
           history.push({ pathname: "/mrt/product/" + props.data.id })
         }
-        className="line-clamp-2 cursor-pointer text-neutral-900 font-regular text-[18px] h-[52px] leading-6 mt-3"
+        className="line-clamp-2 cursor-pointer text-neutral-900 font-regular md2:text-[18px] text-[16px] md2:h-[52px] h-[45px] leading-6 mt-3"
       >
         {props.text ? props.text : "Üwmeç 3 желания klassyk 250 g"}
       </p>

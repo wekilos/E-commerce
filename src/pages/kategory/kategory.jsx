@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import { Cancel } from "@mui/icons-material";
 import ProductCard from "../../components/ProductCard";
+import { BeatLoader } from "react-spinners";
 
 import img14 from "../../images/Image14.svg";
 import img15 from "../../images/Image15.svg";
@@ -29,6 +30,7 @@ const Kategory = () => {
   const { dil } = useContext(Context);
   const { id } = useParams();
   const history = useHistory();
+  const [loading, setLoading] = useState(false);
 
   const [categories, setCategories] = useState([]);
   const [category, setCategory] = useState([]);
@@ -148,6 +150,7 @@ const Kategory = () => {
   };
 
   const getCategory = () => {
+    setLoading(true);
     axiosInstance
       .get("/api/grocery_category_products", {
         params: {
@@ -158,9 +161,11 @@ const Kategory = () => {
       .then((data) => {
         console.log("category page:" + data.data);
         setCategory(data.data.body);
+        setLoading(false);
       })
       .catch((err) => {
         console.log(err);
+        setLoading(false);
       });
   };
 
@@ -474,15 +479,26 @@ const Kategory = () => {
           </div>
         </div>
         <div className="w-full mt-7 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
-          {category?.map((item) => {
-            return (
-              <ProductCard
-                data={item}
-                text={item.name}
-                img={item?.img[0]?.img}
+          {loading ? (
+            <div className="flex w-full justify-center flex-col items-center mx-auto     md:w-[50vw] sm:w-[60vw] lg:w-[40vw] xl:w-[30vw]">
+              <BeatLoader
+                size={"20px"}
+                color={"#32BB78"}
+                loading={true}
+                width={"100%"}
               />
-            );
-          })}
+            </div>
+          ) : (
+            category?.map((item) => {
+              return (
+                <ProductCard
+                  data={item}
+                  text={item.name}
+                  img={item?.img[0]?.img}
+                />
+              );
+            })
+          )}
         </div>
       </div>
     </div>

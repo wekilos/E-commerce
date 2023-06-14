@@ -34,7 +34,7 @@ function Footer(props) {
         </p>
       </div>
 
-      <div className="flex fixed bottom-0 z-10 xl:hidden select-none bg-neutral-200 justify-around w-[95%] mx-auto  py-6 text-[18px]">
+      <div className="flex w-full  bottom-0 z-10 xl:hidden select-none bg-neutral-200 justify-around mx-auto  py-6 text-[18px]">
         <div
           onClick={() => history.push({ pathname: "/mrt/home" })}
           className="flex w-[30px] items-center flex-wrap justify-center"
@@ -62,7 +62,7 @@ function Footer(props) {
         </div>
 
         <div
-          onClick={() => history.push({ pathname: "/mrt/home" })}
+          onClick={() => history.push({ pathname: "/mrt/profile/info" })}
           className="flex w-[30px] items-center flex-wrap justify-center"
         >
           <img src={profileGreen} alt="" />

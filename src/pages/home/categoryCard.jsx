@@ -17,16 +17,16 @@ const CategoryCard = (props) => {
           pathname: "/mrt/kategory/" + props.data.id,
         })
       }
-      className="  hover:bg-green-200  mr-2 text-[18px] max-w-[300px] w-[200px] h-[120px] bg-[#F4F4F6] rounded-[24px]"
+      className="  hover:bg-green-200  md2:mr-2 text-[18px] md2:max-w-[300px] md2:w-[200px] max-w-[170px] w-[170px] h-[120px] bg-[#F4F4F6] rounded-[24px]"
     >
-      <div className="absolute z-10 max-w-[300px] w-[200px]   h-[120px] bg-black-100  rounded-[24px]"></div>
+      <div className="absolute z-10 md2:max-w-[300px] md2:w-[200px] max-w-[170px] w-[170px]   h-[120px] bg-black-100  rounded-[24px]"></div>
       <img
-        className="absolute max-w-[300px] w-[200px] h-[120px] z-0  rounded-[24px]"
+        className="absolute md2:max-w-[300px] md2:w-[200px] max-w-[170px] w-[170px] h-[120px] z-0  rounded-[24px]"
         src={BASE_URL_IMG + props?.data?.img}
         alt="category_surat"
       />
 
-      <div className="absolute p-[20px] !z-20 max-w-[300px] w-[200px] text-white font-semi  text-[18px]    ">
+      <div className="absolute p-[20px] !z-20 md2:max-w-[300px] md2:w-[200px] max-w-[170px] w-[170px] text-white font-semi  text-[18px]    ">
         {props.title}
       </div>
     </div>
