@@ -19,7 +19,7 @@ function BrandCard(props) {
     >
       <div className="flex w-full py-[12px] px-[15px] ">
         <img
-          className="w-full h-[127px] object-cover border-b-[1px] border-b-neutral-300"
+          className="w-full h-[127px] object-contain border-b-[1px] border-b-neutral-300"
           src={BASE_URL_IMG + props?.img}
           alt="brand"
         />

@@ -135,7 +135,7 @@ function ProductCard(props) {
               return (
                 <div key={item.img + i} className="w-full px-2   outline-none">
                   <img
-                    className=" w-full h-[320px]  object-cover rounded-[20px]"
+                    className=" w-full h-[320px]  object-contain rounded-[20px]"
                     src={BASE_URL_IMG + item.img}
                     alt="slide"
                   />

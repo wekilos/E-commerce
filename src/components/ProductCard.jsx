@@ -61,7 +61,7 @@ function ProductCard(props) {
         onClick={() =>
           history.push({ pathname: "/mrt/product/" + props.data.id })
         }
-        className="h-[236px] w-full object-cover rounded-[24px] cursor-pointer"
+        className="h-[236px] w-full object-contain rounded-[24px] cursor-pointer"
         // src={props.img ? BASE_URL_IMG + props.img : card}
         src={BASE_URL_IMG + props?.img}
         alt="image"

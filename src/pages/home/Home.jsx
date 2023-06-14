@@ -416,7 +416,14 @@ function Home(props) {
       </div>
 
       <div className="w-full md2:hidden flex justify-between mt-14 select-none ">
-        <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
+        <div
+          onClick={() =>
+            history.push({
+              pathname: "/mrt/profile/markets",
+            })
+          }
+          className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative"
+        >
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
             {dil === "TM"
               ? tm.Dükanlar
@@ -427,7 +434,14 @@ function Home(props) {
           <img className="absolute bottom-0 right-0" src={dukan} alt="dukan" />
         </div>
 
-        <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
+        <div
+          onClick={() =>
+            history.push({
+              pathname: "/mrt/kategories",
+            })
+          }
+          className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative"
+        >
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
             {dil === "TM"
               ? tm.Kategoriýa
@@ -442,7 +456,14 @@ function Home(props) {
           />
         </div>
 
-        <div className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative">
+        <div
+          onClick={() =>
+            history.push({
+              pathname: "/mrt/profile/favorites",
+            })
+          }
+          className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative"
+        >
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
             {dil === "TM"
               ? tm.Halanlarym

@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 
+import { useHistory } from "react-router-dom";
 import en from "../lang/en/home.json";
 import tm from "../lang/tm/home.json";
 import ru from "../lang/ru/home.json";
@@ -16,6 +17,7 @@ import profileGrey from "../images/profileGrey.svg";
 
 function Footer(props) {
   const { dil } = useContext(Context);
+  const history = useHistory();
   return (
     <div className="w-full bg-neutral-200">
       <div className="hidden xl:flex select-none bg-neutral-200 justify-center w-full  py-6 text-[18px]">
@@ -32,25 +34,37 @@ function Footer(props) {
         </p>
       </div>
 
-      <div className="flex xl:hidden select-none bg-neutral-200 justify-around w-[95%] mx-auto  py-6 text-[18px]">
-        <div className="flex w-[30px] items-center flex-wrap justify-center">
+      <div className="flex fixed bottom-0 z-10 xl:hidden select-none bg-neutral-200 justify-around w-[95%] mx-auto  py-6 text-[18px]">
+        <div
+          onClick={() => history.push({ pathname: "/mrt/home" })}
+          className="flex w-[30px] items-center flex-wrap justify-center"
+        >
           <img src={homeGreen} alt="" />
           <p className="mt-[3px] text-green text-[10px] font-regular">Home</p>
         </div>
 
-        <div className="flex w-[30px] items-center flex-wrap justify-center">
+        <div
+          onClick={() => history.push({ pathname: "/mrt/kategories" })}
+          className="flex w-[30px] items-center flex-wrap justify-center"
+        >
           <img src={categoryGreen} alt="" />
           <p className="mt-[3px] text-green text-[10px] font-regular">
             Category
           </p>
         </div>
 
-        <div className="flex w-[30px] items-center flex-wrap justify-center">
+        <div
+          onClick={() => history.push({ pathname: "/mrt/basket" })}
+          className="flex w-[30px] items-center flex-wrap justify-center"
+        >
           <img src={shopGreen} alt="" />
           <p className="mt-[3px] text-green text-[10px] font-regular">Basket</p>
         </div>
 
-        <div className="flex w-[30px] items-center flex-wrap justify-center">
+        <div
+          onClick={() => history.push({ pathname: "/mrt/home" })}
+          className="flex w-[30px] items-center flex-wrap justify-center"
+        >
           <img src={profileGreen} alt="" />
           <p className="mt-[3px] text-green text-[10px] font-regular">
             Profile

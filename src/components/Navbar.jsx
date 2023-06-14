@@ -137,7 +137,7 @@ function Navbar(props) {
       });
   };
   return (
-    <div className="w-[95%] mx-auto mb-10">
+    <div className="w-[95%]  mx-auto mb-10">
       <Modal
         className=" p-8"
         width={650}
@@ -658,10 +658,11 @@ function Navbar(props) {
         </div>
       </div>
 
-      <div className="w-[95%] mx-auto  xl:hidden block text-[#2F313F] pt-4">
+      <div className="w-[95%] mx-auto     xl:hidden block text-[#2F313F] pt-4">
         <div className="w-full flex justify-between">
           <div
-            onClick={() => setMenuOpen(true)}
+            // onClick={() => setMenuOpen(true)}
+            onClick={() => history.push({ pathname: "/first" })}
             className="h-[56px] w-[58px] rounded-[9px] flex justify-center items-center bg-neutral-200"
           >
             <img src={menu} alt="menu" />
@@ -669,6 +670,15 @@ function Navbar(props) {
           <div className="h-[56px] w-full ml-2 pl-3 rounded-[9px] flex justify-start items-center bg-neutral-200 ">
             <img src={search} alt="search" />
             <input
+              onKeyPress={(e) => {
+                if (e.key == "Enter") {
+                  history.push({ pathname: "/mrt/search/" + productName });
+                }
+              }}
+              onChange={(e) => setProductName(e.target.value)}
+              onClick={() =>
+                history.push({ pathname: "/mrt/search/" + productName })
+              }
               className="h-full w-full leading-[25px] ml-[10px] bg-neutral-200 rounded-[9px] outline-none font-[20px] text-neutral-800 font-semi"
               type="text"
               placeholder={
