@@ -28,7 +28,7 @@ const BasketCard = (props) => {
         />
         <div className="max-w-[300px]">
           <p className="text-[18px] min-w-[300px]  text-neutral-900 font-regular">
-            {props?.data?.pro?.name + " id: " + props?.data?.pro?.id}
+            {props?.data?.pro?.name}
           </p>
           <p className="text-[16px] text-neutral-900 font-semi">
             {props?.data?.pro?.brands?.name}

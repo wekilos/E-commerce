@@ -26,6 +26,7 @@ const Order = () => {
   const { id } = useParams();
   const [order, setOrder] = useState([]);
 
+  var data = JSON.parse(localStorage.getItem("userData"));
   useEffect(() => {
     getOrder();
   }, [dil, id]);
@@ -39,6 +40,22 @@ const Order = () => {
       .then((data) => {
         console.log(data.data.body[0]);
         setOrder(data.data.body[0]);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const cancelOrder = (id) => {
+    let user_id = data?.id ? data?.id : 1;
+    axiosInstance
+      .post("/api/grocery_rejected_order", {
+        user_id: user_id,
+        order_id: id,
+      })
+      .then((data) => {
+        console.log(data.data);
+        getOrder();
       })
       .catch((err) => {
         console.log(err);
@@ -115,7 +132,10 @@ const Order = () => {
                       : en.Garaşylyar)}
                 </p>
               </div>
-              <div className="w-fit flex">
+              <div
+                onClick={() => cancelOrder(order?.id)}
+                className="w-fit flex"
+              >
                 <button className="text-white h-[42px] rounded-[9px] whitespace-nowrap px-6 bg-red text-[16px] font-semi ">
                   <DoNotDisturbOnOutlined />{" "}
                   {dil === "TM"
