@@ -109,10 +109,15 @@ function Navbar(props) {
 
   useEffect(() => {
     getCategories();
-  }, []);
+  }, [dil]);
   const getCategories = () => {
     axiosInstance
-      .get("/api/grocery_categories")
+      .get("/api/grocery_categories", {
+        params: {
+          lang: dil,
+          limit: 9999,
+        },
+      })
       .then((data) => {
         console.log("Category", data.data);
         setCategories(data.data.body);

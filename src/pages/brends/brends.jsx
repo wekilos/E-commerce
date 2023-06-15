@@ -42,6 +42,7 @@ const Brends = () => {
       .get("/api/grocery_brands", {
         params: {
           lang: dil,
+          limit: 9999,
         },
       })
       .then((data) => {

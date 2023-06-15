@@ -47,6 +47,7 @@ const MoreSaleProducts = () => {
       .get("/api/grocery_categories", {
         params: {
           lang: dil,
+          limit: 9999,
         },
       })
       .then((data) => {
@@ -63,6 +64,7 @@ const MoreSaleProducts = () => {
       .get("/api/grocery_more_sale_products", {
         params: {
           lang: dil,
+          limit: 9999,
         },
       })
       .then((data) => {

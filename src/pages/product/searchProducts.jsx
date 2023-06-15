@@ -47,6 +47,7 @@ const SearchProducts = () => {
       .get("/api/grocery_categories", {
         params: {
           lang: dil,
+          limit: 9999,
         },
       })
       .then((data) => {
@@ -64,6 +65,7 @@ const SearchProducts = () => {
         params: {
           lang: dil,
           product_name: product_name,
+          limit: 9999,
         },
       })
       .then((data) => {

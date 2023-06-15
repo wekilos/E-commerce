@@ -78,6 +78,7 @@ const Markets = () => {
       .get("/api/grocery_brands", {
         params: {
           lang: dil,
+          limit: 9999,
         },
       })
       .then((data) => {
@@ -96,6 +97,7 @@ const Markets = () => {
         params: {
           lang: dil,
           user_id: 1,
+          limit: 9999,
         },
       })
       .then((data) => {

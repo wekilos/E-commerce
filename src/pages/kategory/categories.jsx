@@ -23,6 +23,7 @@ const Categories = () => {
       .get("/api/grocery_categories", {
         params: {
           lang: dil,
+          limit: 9999,
         },
       })
       .then((data) => {

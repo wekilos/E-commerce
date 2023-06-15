@@ -83,6 +83,7 @@ const Product = () => {
         params: {
           lang: dil,
           product_id: id,
+          limit: 9999,
         },
       })
       .then((data) => {
