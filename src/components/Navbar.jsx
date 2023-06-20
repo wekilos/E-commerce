@@ -142,7 +142,7 @@ function Navbar(props) {
       });
   };
   return (
-    <div className="w-[95%]  mx-auto mb-10">
+    <div className="w-[95%]  mx-auto md2:mb-10 mb-6">
       <Modal
         className=" p-8"
         width={650}

@@ -48,7 +48,7 @@ const Orders = () => {
   const getOrders = () => {
     let id = data?.id ? data?.id : 1;
     axiosInstance
-      .get("/api/grocery_orders?lang=" + dil + "&user_id=" + id + "&order=DESC")
+      .get("/api/grocery_orders?lang=" + dil + "&user_id=" + 1 + "&order=DESC")
       .then((data) => {
         console.log(data.data.body);
         setOrders(data.data.body);
@@ -96,7 +96,7 @@ const Orders = () => {
       </div>
       <div className="w-full my-4 flex justify-between  items-center">
         <div className="flex justify-start">
-          <p className="text-[28px] font-bold text-neutral-900 mr-2">
+          <p className="md2:text-[28px] text-[20px] font-bold text-neutral-900 mr-2">
             {dil === "TM"
               ? tm.Sargytlarym
               : dil === "RU"
@@ -106,10 +106,10 @@ const Orders = () => {
         </div>
       </div>
       <div className="w-full flex justify-between">
-        <div className="min-w-[246px] w-[246px] h-fit">
+        <div className="min-w-[246px] lg:block hidden w-[246px] h-fit">
           <Sidebar />
         </div>
-        <div className="w-full px-6">
+        <div className="w-full lg:px-6">
           <div className="w-full mb-4 ">
             <h1 className="w-full mb-1 text-[20px] font-semi text-neutral-900 text-left">
               {month[5]}
@@ -123,7 +123,7 @@ const Orders = () => {
                         pathname: "/mrt/profile/orders/" + item.id,
                       })
                     }
-                    className="w-[48%] mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch"
+                    className="md2:w-[48%] w-full mb-4 h-[98px] flex bg-neutral-200 rounded-[8px] p-2 items-stretch"
                   >
                     <div className="w-[83px] flex justify-between flex-wrap mr-4 ">
                       {item?.order?.map((pro) => {

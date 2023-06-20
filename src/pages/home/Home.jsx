@@ -419,10 +419,10 @@ function Home(props) {
         <div
           onClick={() =>
             history.push({
-              pathname: "/mrt/profile/markets",
+              pathname: "/mrt/markets",
             })
           }
-          className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative"
+          className="w-[105px] h-[114px] bg-neutral-200 rounded-[8px] relative"
         >
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
             {dil === "TM"
@@ -440,7 +440,7 @@ function Home(props) {
               pathname: "/mrt/kategories",
             })
           }
-          className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative"
+          className="w-[105px] h-[114px] bg-neutral-200 rounded-[8px] relative"
         >
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
             {dil === "TM"
@@ -462,7 +462,7 @@ function Home(props) {
               pathname: "/mrt/profile/favorites",
             })
           }
-          className="w-[114px] h-[114px] bg-neutral-200 rounded-[8px] relative"
+          className="w-[105px] h-[114px] bg-neutral-200 rounded-[8px] relative"
         >
           <h1 className="absolute top-[12px] left-[12px] text-black text-[16px] font-bold">
             {dil === "TM"
@@ -499,7 +499,7 @@ function Home(props) {
               : en["Hemmesini görkez"]}
           </div>
         </div>
-        <div className="w-full md2:mt-6 mt-4 inline-flex scrollbar-hide justify-between overflow-y-auto">
+        <div className="w-full md2:mt-6 mt-4 inline-flex  justify-between overflow-y-auto scrollbar-hide">
           {discountPro?.map((item, i) => {
             return (
               <div key={item.name + i} className="mr-6">

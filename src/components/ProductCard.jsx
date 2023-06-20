@@ -33,7 +33,7 @@ function ProductCard(props) {
       });
   };
   return (
-    <div className="w-[236px] md2:min-h-[460px] min-h-[375px] flex flex-col justify-between flex-wrap relative">
+    <div className="sm:w-[236px] w-[165px] sm:mr-0 mr-1 md2:min-h-[460px] min-h-[375px] flex flex-col justify-between flex-wrap relative">
       {!liked ? (
         // <FavoriteBorder className="absolute top-4 right-4 text-neutral-300" />
         <img
@@ -72,18 +72,22 @@ function ProductCard(props) {
           : props.data?.price.toFixed(2)}{" "}
         TMT
       </p>
-      {!props.data?.is_discount && (
-        <div className="flex gap-[8px] my-[8px]">
+
+      <div className="flex gap-[8px] h-[24px] my-[8px]">
+        {!props.data?.is_discount && (
           <div className="bg-red px-[3px] py-[3px] rounded-[8px]">
             <p className="text-white md2:text-[15px] text-[12px] m-0 font-semi">
               -{props.data?.discount_percentage.toFixed(2)}%
             </p>
           </div>
+        )}
+        {!props.data?.is_discount && (
           <p className="text-passive font-regular md2:text-[16px] text-[14px] line-through decoration-red">
             {props.data?.price.toFixed(2)} TMT
           </p>
-        </div>
-      )}
+        )}
+      </div>
+
       <p
         onClick={() =>
           history.push({ pathname: "/mrt/product/" + props.data.id })

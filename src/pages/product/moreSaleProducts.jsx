@@ -78,7 +78,7 @@ const MoreSaleProducts = () => {
 
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
-      <div className="min-w-[245px] w-[245px]">
+      <div className="min-w-[245px] md2:block hidden w-[245px]">
         <div className="w-full px-4 mt-0 rounded-[8px] border-[1px] border-neutral-300">
           <h1 className="py-3 text-[20px] text-neutral-900 font-semi text-left">
             {dil === "TM"
@@ -153,7 +153,7 @@ const MoreSaleProducts = () => {
           </div>
         </div>
       </div>
-      <div className="w-full pl-8">
+      <div className="w-full md2:pl-8">
         <div className="w-full flex items-center">
           <p
             onClick={() => history.push({ pathname: "/mrt/home" })}
@@ -175,7 +175,7 @@ const MoreSaleProducts = () => {
           </p>
         </div>
 
-        <div className="w-full mt-6 flex justify-between  items-center">
+        <div className="w-full mt-6 md2:flex hidden justify-between  items-center">
           <p className="text-[32px] font-semi text-neutral-900 mr-2">
             {dil === "TM"
               ? tm["Köp satylanlar"]
@@ -245,7 +245,7 @@ const MoreSaleProducts = () => {
           </div>
         </div>
 
-        <div className="w-full  mt-5 flex justify-start items-center">
+        <div className="w-full  mt-5 md2:flex hidden justify-start items-center">
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
@@ -263,7 +263,7 @@ const MoreSaleProducts = () => {
         </div>
 
         <div className="w-full">
-          <div className="w-full flex items-center justify-start mt-8">
+          <div className="w-full flex items-center justify-start md2:mt-8 mt-4">
             <h1 className="font-bold text-[20px] text-neutral-900 mr-2">
               {dil === "TM"
                 ? tm["Köp satylanlar"]
@@ -273,7 +273,7 @@ const MoreSaleProducts = () => {
             </h1>
             <p className="font-medium text-[16px] text-neutral-600"></p>
           </div>
-          <div className="w-full mt-4 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
+          <div className="w-full mt-4 grid gap-8 place-items-center grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
             {moreSale?.map((item) => {
               return (
                 <ProductCard

@@ -79,7 +79,7 @@ function ProductBasketCard(props) {
                   {props?.data?.name}
                 </h1>
               </div>
-              <div className="text-[18px] sum relative self-center mr-4 underline font-semi text-neutral-900">
+              <div className="text-[18px] hidden  md2:block sum relative self-center mr-4 underline font-semi text-neutral-900">
                 {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:{" "}
                 {(umumy - discount).toFixed(2) + " "}
                 TMT

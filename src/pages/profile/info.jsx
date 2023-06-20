@@ -82,10 +82,10 @@ const Info = () => {
         </div>
       </div>
       <div className="w-full flex justify-between">
-        <div className="min-w-[246px] w-[246px] h-fit">
+        <div className="min-w-[246px]  lg:block hidden w-[246px] h-fit">
           <Sidebar />
         </div>
-        <div className="w-full px-6">
+        <div className="w-full lg:px-6">
           <div className="w-full text-left  text-black text-[18px] font-semi">
             {dil === "TM"
               ? tm["Esasy maglumatlar"]

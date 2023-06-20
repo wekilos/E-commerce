@@ -39,9 +39,13 @@ const Header = (props) => {
   useOutsideAlerter(wrapperRef);
 
   return (
-    <div className="w-[85%] mx-auto h-[116px] flex items-center justify-between">
-      <div className="logo-div flex items-center">
-        <img className="h-[70px] object-contain mr-2" src={logo} alt="" />
+    <div className="w-[85%] mx-auto md2:h-[116px] h-[200px] flex items-center md2:justify-between justify-center">
+      <div className="logo-div block md2:flex   items-center">
+        <img
+          className="h-[70px] object-contain md2:mr-2 mx-auto"
+          src={logo}
+          alt=""
+        />
         <h1 className="w-fit text-center leading-[27px] text-neutral-900 font-bold text-[22px]">
           {dil === "TM"
             ? tm["Arkadag şäheriniň"]
@@ -56,7 +60,7 @@ const Header = (props) => {
             : en["Söwda onlaýn platformasy"]}
         </h1>
       </div>
-      <div className="w-fit flex items-center">
+      <div className="w-fit md2:flex hidden items-center">
         {props.first === true ? (
           <button
             onClick={() => history.push({ pathname: "/login" })}

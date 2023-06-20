@@ -40,7 +40,7 @@ const AddressCardCreate = (props) => {
       });
   };
   return (
-    <div className="w-[49%]">
+    <div className="md2:w-[49%] w-full">
       <Modal
         className="font-roboto p-8"
         width={650}

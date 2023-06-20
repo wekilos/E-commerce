@@ -63,7 +63,7 @@ const Order = () => {
   };
   return (
     <div className="w-full pb-10">
-      <div className="w-full flex items-center">
+      <div className="w-full md2:flex hidden items-center">
         <p
           onClick={() => history.push({ pathname: "/mrt/home" })}
           className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
@@ -96,7 +96,7 @@ const Order = () => {
       </div>
       <div className="w-full my-4 flex justify-between  items-center">
         <div className="flex justify-start">
-          <p className="text-[28px] font-bold text-neutral-900 mr-2">
+          <p className="md2:text-[28px] text-[20px] font-bold text-neutral-900 mr-2">
             {dil === "TM"
               ? tm["Sargyt barada maglumatlar"]
               : dil === "RU"
@@ -106,13 +106,13 @@ const Order = () => {
         </div>
       </div>
       <div className="w-full flex justify-between">
-        <div className="min-w-[246px] w-[246px] h-fit">
+        <div className="min-w-[246px] lg:block hidden w-[246px] h-fit">
           <Sidebar />
         </div>
-        <div className="w-full px-6">
+        <div className="w-full lg:px-6">
           {order?.status === 1 && (
-            <div className="w-full flex justify-between rounded-[16px] p-6 border-[1px] border-neutral-300">
-              <div className="w-full flex items-center">
+            <div className="w-full flex flex-wrap md2:justify-between justify-center rounded-[16px] p-6 border-[1px] border-neutral-300">
+              <div className="w-fit flex md2:mb-0 mb-1  items-center">
                 <img
                   src={
                     (order?.status === 1 && timer1) ||
@@ -148,8 +148,8 @@ const Order = () => {
             </div>
           )}
           {order?.status === 3 && (
-            <div className="w-full flex justify-between rounded-[16px] p-6 border-[1px] border-neutral-300">
-              <div className="w-full flex items-center">
+            <div className="w-full flex flex-wrap  md2:justify-between justify-center rounded-[16px] p-6 border-[1px] border-neutral-300">
+              <div className="w-fit flex items-center">
                 <img
                   src={
                     (order?.status === 1 && timer1) ||
@@ -258,8 +258,8 @@ const Order = () => {
               return <ProductOrderCard data={item} />;
             })}
           </div>
-          <div className="w-full flex justify-between mt-4">
-            <div className="w-[49%]">
+          <div className="w-full flex flex-wrap justify-between mt-4">
+            <div className="md2:w-[49%] w-full">
               <h1 className="w-full text-left text-[18px] text-neutral-900 font-semi">
                 {dil === "TM"
                   ? tm["Sargytyň bahasy"]
@@ -344,7 +344,7 @@ const Order = () => {
                 </div>
               </div>
             </div>
-            <div className="w-[49%]">
+            <div className="md2:w-[49%] w-full md2:mt-0 mt-4">
               <h1 className="w-full text-left text-[18px] text-neutral-900 font-semi">
                 {dil === "TM"
                   ? tm["Sargyt barada maglumat"]

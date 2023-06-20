@@ -26,6 +26,7 @@ import {
   MoreSaleProduct,
   Kategories,
   SearchProducts,
+  Profile,
 } from "../pages/index";
 import {
   HomeFood,
@@ -66,14 +67,12 @@ const App = () => {
               path="/mrt/home"
               exact
             />
-
             <PublicRoute
               restricted={true}
               component={Kategories}
               path="/mrt/kategories"
               exact
             />
-
             <PublicRoute
               restricted={true}
               component={Kategory}
@@ -163,6 +162,12 @@ const App = () => {
               component={Info}
               path="/mrt/profile/info"
               exact
+            />{" "}
+            <PrivateRoute
+              restricted={true}
+              component={Profile}
+              path="/mrt/profile"
+              exact
             />
             <PrivateRoute
               restricted={true}
@@ -170,16 +175,13 @@ const App = () => {
               path="/mrt/profile/address"
               exact
             />
-
             {/* Food Routes */}
-
             <PublicRouteFood
               restricted={true}
               component={HomeFood}
               path="/rtn/home"
               exact
             />
-
             <PublicRouteFood
               restricted={true}
               component={KategoryFood}
@@ -276,9 +278,7 @@ const App = () => {
               path="/rtn/profile/address"
               exact
             />
-
             {/* Global Pages Routes */}
-
             <Route
               restricted={true}
               component={FirstPage}

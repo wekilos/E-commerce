@@ -127,13 +127,16 @@ function ProductCard(props) {
   };
 
   return (
-    <div className="w-full flex justify-between rounded-[24px] border-[1px] border-neutral-300 shadow-sm p-6">
-      <div className="w-1/3 border-r-[1px] border-r-neutral-300 p-8">
-        <div className="w-full h-[320px] relative rounded-[20px] my-[25px] mb-[50px]">
+    <div className="w-full flex  flex-wrap justify-between rounded-[24px] border-[1px] border-neutral-300 shadow-sm md2:p-6 p-2">
+      <div className="lg:w-1/3 w-full border-r-[1px] border-r-neutral-300 md2:p-8">
+        <div className="w-full h-[320px]  relative rounded-[20px] md2:my-[25px] mb-[50px]">
           <Slider ref={slider} {...settings}>
             {product?.img?.map((item, i) => {
               return (
-                <div key={item.img + i} className="w-full px-2   outline-none">
+                <div
+                  key={item.img + i}
+                  className="w-full md2:px-2   outline-none"
+                >
                   <img
                     className=" w-full h-[320px]  object-contain rounded-[20px]"
                     src={BASE_URL_IMG + item.img}
@@ -157,7 +160,7 @@ function ProductCard(props) {
               <ArrowForwardIos className="text-neutral-400 font-bold" />
             </div>
           </div>
-          <div className="w-full mt-[10px] flex justify-center">
+          <div className="w-full  mt-[10px] md2:flex hidden justify-center">
             {product?.img?.map((item) => {
               return (
                 <img
@@ -171,10 +174,88 @@ function ProductCard(props) {
           </div>
         </div>
       </div>
-      <div className="w-2/3 px-8 flex flex-wrap justify-between flex-row">
-        <div className="w-full">
+      <div className="lg:w-2/3 w-full md2:px-8 flex flex-wrap justify-between flex-row">
+        <div className="w-full mb-4 flex md2:hidden justify-between">
+          <div className="w-1/2">
+            <h1 className="w-full text-left text-[24px] font-bold text-neutral-900">
+              {!product?.is_discount
+                ? product?.discount_price?.toFixed(2)
+                : product?.price?.toFixed(2)}
+              TMT
+            </h1>
+            {!product?.is_discount && (
+              <div className="flex items-center">
+                <p className="mr-2 text-white bg-red h-[22px] px-[3px] text-[14px] font-semi rounded-[8px]">
+                  -{product?.discount_percentage?.toFixed(2)}%
+                </p>
+                <p className="mr-2 text-passive  text-[14px] font-semi line-through decoration-red">
+                  {product?.price?.toFixed(2)} TMT
+                </p>
+              </div>
+            )}
+          </div>
+          <div className="flex items-center w-1/2">
+            {!animation && (
+              <div
+                onClick={() => setAnimation(true)}
+                className="custom-button w-[180px] mr-2 select-none bg-green text-white rounded-[16px] text-[18px] h-[50px]"
+              >
+                {dil === "TM"
+                  ? tm["Sebede goş"]
+                  : dil === "RU"
+                  ? ru["Sebede goş"]
+                  : en["Sebede goş"]}
+              </div>
+            )}
+            {animation && (
+              <div
+                onClick={() => setAnimation(true)}
+                className="select-none mr-2 w-[180px] bg-green-100 flex justify-evenly text-green py-[10px] rounded-[16px] text-[18px] h-[50px]"
+              >
+                <button
+                  onClick={() => {
+                    decPro(product);
+                    count > 1 && setCount(count - 1);
+                    setAnimation(true);
+                  }}
+                  className="text-green bg-green-200 h-[30px] w-[30px] leading-[9px] rounded-[100%] p-2"
+                >
+                  -
+                </button>
+                <p className="text-[16px] text-green">{count}</p>
+                <button
+                  onClick={() => {
+                    addPro(product);
+                    setCount(count + 1);
+                    setAnimation(true);
+                  }}
+                  className="text-green bg-green-200 h-[30px] w-[30px] leading-[9px] rounded-[100%] p-2"
+                >
+                  +
+                </button>
+              </div>
+            )}
+            {product?.is_liked ? (
+              <div
+                onClick={() => addToFav()}
+                className="h-[50px] cursor-pointer !w-[50px] flex items-center justify-center rounded-[16px] bg-neutral-300  "
+              >
+                <FavoriteBorder className="text-neutral-900" />
+              </div>
+            ) : (
+              <div
+                onClick={() => addToFav()}
+                className="h-[50px] cursor-pointer !w-[50px] flex items-center justify-center rounded-[16px] bg-neutral-300  "
+              >
+                <Favorite className=" text-red" />
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="md2:mb-0 mb-2  w-full">
           {!product?.is_discount && (
-            <div className="h-[41px] mb-4 w-fit rounded-[32px] px-4 py-2 bg-red text-white font-semi text[20px]">
+            <div className="h-[41px] mb-4 w-fit md2:block hidden rounded-[32px] px-4 py-2 bg-red text-white font-semi text[20px]">
               -{product?.discount_percentage}%
               {dil === "TM"
                 ? tm.Arzanladyş
@@ -183,11 +264,12 @@ function ProductCard(props) {
                 : en.Arzanladyş}
             </div>
           )}
-          <div className="text-[24px] font-medium text-black-secondary ">
+          <div className="md2:text-[24px] text-[18px] md2:border-none border-t-[1px] border-b-[1px] md2:pt-0 pt-2 md2:pb-0 pb-1 font-medium text-black-secondary ">
             {product?.name}
           </div>
         </div>
-        <div className="w-full mt-4">
+
+        <div className="w-full md2:mt-4">
           <h1 className="text-[16px] mb-3 font-semi text-neutral-900">
             {dil === "TM"
               ? tm["Esasy maglumatlar"]
@@ -197,7 +279,7 @@ function ProductCard(props) {
             :
           </h1>
           <div className="w-full flex justify-between flex-wrap">
-            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+            <div className="md2:w-[48%] w-full md2:mb-4 mb-2 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
               <p className="text-[16px] font-medium text-neutral-800">
                 {dil === "TM"
                   ? tm["Önümiň kody"]
@@ -210,7 +292,7 @@ function ProductCard(props) {
                 {product?.code}
               </p>
             </div>
-            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+            <div className="md2:w-[48%] w-full md2:mb-4 mb-2 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
               <p className="text-[16px] font-medium text-neutral-800">
                 {dil === "TM" ? tm.Brend : dil === "RU" ? ru.Brend : en.Brend}:
               </p>
@@ -230,7 +312,7 @@ function ProductCard(props) {
                 </p>
               </div>
             </div>
-            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+            <div className="md2:w-[48%] w-full md2:mb-4 mb-2 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
               <p className="text-[16px] font-medium text-neutral-800">
                 {dil === "TM"
                   ? tm.Kategoriýa
@@ -255,7 +337,7 @@ function ProductCard(props) {
                 </p>
               </div>
             </div>
-            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+            <div className="md2:w-[48%] w-full md2:mb-4 mb-2 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
               <p className="text-[16px] font-medium text-neutral-800">
                 {dil === "TM" ? tm.Dükan : dil === "RU" ? ru.Dükan : en.Dükan}:
               </p>
@@ -275,7 +357,7 @@ function ProductCard(props) {
                 </p>
               </div>
             </div>
-            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+            <div className="md2:w-[48%] w-full md2:mb-4 mb-2 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
               <p className="text-[16px] font-medium text-neutral-800">
                 {dil === "TM"
                   ? "Öndürilen ýeri"
@@ -290,7 +372,7 @@ function ProductCard(props) {
                 </p>
               </div>
             </div>
-            <div className="w-[48%] mb-4 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
+            <div className="md2:w-[48%] w-full md2:mb-4 mb-2 bg-neutral-200 rounded-[8px] p-[15px] flex items-center justify-between">
               <p className="text-[16px] font-medium text-neutral-800">
                 {dil === "TM"
                   ? "Ýarowlylyk möhleti"
@@ -311,7 +393,7 @@ function ProductCard(props) {
           {product?.note}
         </div>
 
-        <div className="w-full mt-4 flex justify-between">
+        <div className="w-full mt-4 md2:flex hidden justify-between">
           <div className="w-1/2">
             <h1 className="w-full text-left text-[24px] font-bold text-neutral-900">
               {!product?.is_discount

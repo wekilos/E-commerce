@@ -62,7 +62,7 @@ function Footer(props) {
         </div>
 
         <div
-          onClick={() => history.push({ pathname: "/mrt/profile/info" })}
+          onClick={() => history.push({ pathname: "/mrt/profile" })}
           className="flex w-[30px] items-center flex-wrap justify-center"
         >
           <img src={profileGreen} alt="" />

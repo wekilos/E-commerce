@@ -153,7 +153,7 @@ const Sargyt = () => {
         </div>
 
         <div className="w-full mt-6 inline-flex justify-between flex-wrap">
-          <div className="w-[75%]">
+          <div className="lg:w-[75%] w-full">
             {/* <h1 className="w-full text-left text-[20px] text-black-secondary font-semi">
               Eltip bermeli ýeriňiz
             </h1>
@@ -316,7 +316,7 @@ const Sargyt = () => {
               </div>
             </div>
           </div>
-          <div className="w-[20%] h-fit rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">
+          <div className="xl:w-[20%] lg:w-[24%] w-full h-fit rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">
             <h1 className="w-full text-[20px] font-semi text-black-secondary border-b-[1px] border-b-neutral-300 py-2">
               {dil === "TM"
                 ? tm["Sargyt barada"]

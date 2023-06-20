@@ -97,7 +97,7 @@ const Product = () => {
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
       <div className="w-full ">
-        <div className="w-full flex items-center">
+        <div className="w-full md2:flex hidden items-center">
           <p
             onClick={() => history.push({ pathname: "/mrt/home" })}
             className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
@@ -125,7 +125,7 @@ const Product = () => {
             Haryt ady
           </p>
         </div>
-        <div className="w-full my-8">
+        <div className="w-full md2:my-8">
           <ProductDetail />
         </div>
         <div className="w-full mt-10 mb-6 flex justify-between  items-center">
@@ -138,7 +138,7 @@ const Product = () => {
                 : en["Meňzeş harytlar"]}
             </p>
           </div>
-          <div className="border-[1px] border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi">
+          <div className="border-[1px] md2:block hidden border-[#E9EAEE] text-[#1D965C] cursor-pointer py-[5px] px-[12px] rounded-[24px] text-[16px] font-semi">
             {dil === "TM"
               ? tm["Hemmesini görkez"]
               : dil === "RU"

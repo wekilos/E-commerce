@@ -135,13 +135,13 @@ const Address = () => {
         </div>
       </div>
       <div className="w-full flex justify-between">
-        <div className="min-w-[246px] w-[246px] h-fit">
+        <div className="min-w-[246px] lg:block hidden w-[246px] h-fit">
           <Sidebar />
         </div>
-        <div className="w-full flex justify-between flex-wrap h-fit px-6">
+        <div className="w-full flex justify-between flex-wrap h-fit lg:px-6">
           {addresses?.map((item, i) => {
             return (
-              <div key={"add" + i} className="w-[49%]">
+              <div key={"add" + i} className="md2:w-[49%] w-full">
                 <AddressCard getData={getAddress} data={item} />
               </div>
             );
@@ -153,7 +153,9 @@ const Address = () => {
                         <AddOutlined className="mr-2 rounded-[8px] bg-green-200 text-[14px]" />
                         Täze adres goşmak
                     </div> */}
-          <AddressCardCreate getData={getAddress} />
+          <div className="md2:w-[49%] w-full">
+            <AddressCardCreate getData={getAddress} />
+          </div>
         </div>
       </div>
     </div>

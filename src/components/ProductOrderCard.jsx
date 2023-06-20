@@ -155,11 +155,11 @@ function ProductOrderCard(props) {
                 >
                   {/* <StarOutlineOutlinedIcon className="text-[16px] mr-2 no-underline text-yellow-700 font-semi" /> */}
                   <img
-                    className="h-5 mr-2 object-contain"
+                    className="h-5 mr-2 md2:block hidden object-contain"
                     src={star}
                     alt="star"
                   />
-                  <span className="text-[16px] mr-6 no-underline text-yellow-700 font-semi">
+                  <span className="text-[16px] md2:block hidden mr-6 no-underline text-yellow-700 font-semi">
                     {dil === "TM"
                       ? tm["Baha bermek"]
                       : dil === "RU"
@@ -167,7 +167,7 @@ function ProductOrderCard(props) {
                       : en["Baha bermek"]}
                   </span>
                 </div>
-                <div className="text-[18px] underline sum relative self-center mr-4  font-semi text-neutral-900">
+                <div className="text-[18px] md2:block hidden underline sum relative self-center mr-4  font-semi text-neutral-900">
                   {dil === "TM" ? tm.Jemi : dil === "RU" ? ru.Jemi : en.Jemi}:
                   {(sum - discount).toFixed(2)} TMT
                   <div className="w-[250px] z-10 detail hidden absolute top-[55px] -right-[55px] bg-white  rounded-[16px] border-[1px] border-neutral-300 p-4 shadow-sm">

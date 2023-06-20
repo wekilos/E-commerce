@@ -53,7 +53,8 @@ const Favorites = () => {
       .get("/api/grocery_favourite_products", {
         params: {
           lang: dil,
-          user_id: data?.id ? data?.id : 1,
+          // user_id: data?.id ? data?.id : 1,
+          user_id: 1,
         },
       })
       .then((data) => {
@@ -70,7 +71,7 @@ const Favorites = () => {
       .get("/api/grocery_favourite_markets", {
         params: {
           lang: dil,
-          user_id: data?.id ? data?.id : 1,
+          user_id: 1,
         },
       })
       .then((data) => {
@@ -115,10 +116,10 @@ const Favorites = () => {
         </div>
       </div>
       <div className="w-full flex justify-between">
-        <div className="min-w-[246px] w-[246px] h-fit">
+        <div className="min-w-[246px] lg:block hidden w-[246px] h-fit">
           <Sidebar />
         </div>
-        <div className="w-full px-6">
+        <div className="w-full lg:px-6">
           <div className="w-full flex justify-between bg-neutral-200 rounded-[8px] p-1 border-[1px] border-neutral-300">
             {wich ? (
               <button
@@ -169,7 +170,7 @@ const Favorites = () => {
           </div>
 
           {wich ? (
-            <div className="w-full mt-6 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
+            <div className="w-full mt-6 grid gap-8 place-items-center grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
               {favPro?.map((item) => {
                 return (
                   <ProductCard
@@ -182,7 +183,7 @@ const Favorites = () => {
               })}
             </div>
           ) : (
-            <div className="w-full mt-6 grid gap-4 place-items-center lg:grid-cols-2  2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 6xl:grid-cols-5 ">
+            <div className="w-full mt-6 grid gap-4 place-items-center grid-cols-2  2xl:grid-cols-3 3xl:grid-cols-3 4xl:grid-cols-4 6xl:grid-cols-5 ">
               {favMar?.map((item) => {
                 return (
                   <div className="   ">

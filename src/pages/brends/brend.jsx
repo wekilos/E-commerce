@@ -119,7 +119,7 @@ const Brend = () => {
 
   return (
     <div className="w-full inline-flex justify-between pb-10 select-none">
-      <div className="min-w-[245px] w-[245px]">
+      <div className="min-w-[245px] md2:block hidden w-[245px]">
         {/* <button className="w-full h-[50px]  bg-green-100 text-green text-[18px] font-semi rounded-[8px]">
                     <West /> Ähli dükanlar
                 </button> */}
@@ -194,8 +194,8 @@ const Brend = () => {
           </div>
         </div>
       </div>
-      <div className="w-full pl-8">
-        <div className="w-full flex items-center">
+      <div className="w-full md2:pl-8">
+        <div className="w-full md2:flex hidden items-center">
           <p
             onClick={() => history.push({ pathname: "/mrt/home" })}
             className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
@@ -219,11 +219,11 @@ const Brend = () => {
               className="h-[48px] object-contain rounded-[8px] shadow-sm mr-4"
               alt=""
             />
-            <p className="text-[32px] font-semi text-neutral-900 mr-2">
+            <p className="md2:text-[32px] whitespace-nowrap text-[20px] font-semi text-neutral-900 mr-2">
               {brend.length > 0 && brend[0].brands?.name}
             </p>
           </div>
-          <div className="w-[200px]">
+          <div className="w-[200px] md2:block hidden">
             <FormControl size="small" fullWidth>
               <InputLabel
                 style={{ color: "#32BB78" }}
@@ -284,7 +284,7 @@ const Brend = () => {
             </FormControl>
           </div>
         </div>
-        <div className="w-full  mt-6 flex justify-start items-center">
+        <div className="w-full  mt-6 md2:flex hidden justify-start items-center">
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
@@ -308,7 +308,7 @@ const Brend = () => {
                         (sany 8)
                     </p>
                 </div> */}
-        <div className="w-full mt-7 grid gap-8 place-items-center md:grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
+        <div className="w-full mt-7 grid gap-8 place-items-center grid-cols-2  lg:grid-cols-3  2xl:grid-cols-4  4xl:grid-cols-5 5xl:grid-cols-6">
           {brend?.map((item, i) => {
             return (
               <ProductCard

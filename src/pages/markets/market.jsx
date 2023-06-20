@@ -46,61 +46,7 @@ const Market = () => {
   const [starOpen, setStarOpen] = useState(false);
   const [priceRange, setPriceRange] = useState([0, 1000]);
   const [market, setMarket] = useState({});
-
-  const [markets, setMarkets] = useState([
-    { id: 1, name: "Mars" },
-    { id: 1, name: "Pepsi" },
-    { id: 1, name: "Colo" },
-    { id: 1, name: "Snicers" },
-    { id: 1, name: "Turan" },
-    { id: 1, name: "Apple" },
-    { id: 1, name: "Fanta" },
-    { id: 1, name: "Sprite" },
-  ]);
-  const [filterMarkets, setFilterMarkets] = useState(markets);
-
-  const cake = [
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-    {
-      name: "Mini wafli Kinder Bueno 18 sany 108 g",
-      img: img16,
-    },
-    {
-      name: "Süýjüler Коркунов şokoladlaryň ýygyndysy gara",
-      img: img17,
-    },
-    {
-      name: "Süýji sowgat Snickers Twix MilkyWay 81 g",
-      img: img18,
-    },
-    {
-      name: "Batonçiik şokoladly Twix Extra kökeler we karamel bilen 82 gr",
-      img: img14,
-    },
-    {
-      name: "Şokoladly batonçik Bounty Trio süýt şokolady bilen örtülen",
-      img: img15,
-    },
-    {
-      name: "Mini wafli Kinder Bueno 18 sany 108 g",
-      img: img16,
-    },
-    {
-      name: "Süýjüler Коркунов şokoladlaryň ýygyndysy gara",
-      img: img17,
-    },
-    {
-      name: "Süýji sowgat Snickers Twix MilkyWay 81 g",
-      img: img18,
-    },
-  ];
+  const [wichCat, setWichCat] = useState(0);
 
   useEffect(() => {
     getmarket();
@@ -208,7 +154,7 @@ const Market = () => {
           })}
         </div>
       </Modal>
-      <div className="min-w-[245px] w-[245px]">
+      <div className="min-w-[245px] md2:block hidden w-[245px]">
         <button
           onClick={() => history.push({ pathname: "/mrt/markets" })}
           className="w-full h-[50px]  bg-green-100 text-green text-[18px] font-semi rounded-[8px]"
@@ -291,8 +237,8 @@ const Market = () => {
           </div>
         </div>
       </div>
-      <div className="w-full pl-8">
-        <div className="w-full flex items-center">
+      <div className="w-full md2:pl-8">
+        <div className="w-full md2:flex hidden items-center">
           <p
             onClick={() => history.push({ pathname: "/mrt/home" })}
             className="text-[16px] cursor-pointer font-regular text-black-secondary mr-2"
@@ -320,7 +266,7 @@ const Market = () => {
           </p>
         </div>
 
-        <div className="w-full relative mt-6">
+        <div className="w-full relative md2:mt-6 mt-2">
           <div className="absolute top-[20px] cursor-pointer right-[20px] h-[50px] w-[50px] rounded-[100%] bg-neutral-900-50 opacity-100 flex justify-center items-center">
             {/* <FavoriteBorder className="text-white font-semi opacity-100 " /> */}
             {liked ? (
@@ -369,11 +315,11 @@ const Market = () => {
           </div>
         </div>
 
-        <div className="w-full mt-6 flex justify-between  items-center">
-          <p className="text-[32px] font-semi text-neutral-900 mr-2">
+        <div className="w-full md2:mt-6 mt-2 flex justify-between  items-center">
+          <p className="md2:text-[32px] text-[20px] font-semi text-neutral-900 mr-2">
             {market?.name}
           </p>
-          <div className="w-[200px]">
+          <div className="md2:w-[200px] w-[150px]">
             <FormControl size="small" fullWidth>
               <InputLabel
                 style={{ color: "#32BB78" }}
@@ -435,7 +381,7 @@ const Market = () => {
           </div>
         </div>
 
-        <div className="w-full  mt-5 flex justify-start items-center">
+        <div className="w-full  mt-5 md2:flex hidden justify-start items-center">
           <div className="flex justify-between overflow-x-auto items-center mr-2 rounded-[32px] h-[30px] p-[5px] pl-[10px] bg-green text-white text-[16px] font-medium">
             <p className="mr-2">
               {dil === "TM" ? tm.Bahasy : dil === "RU" ? ru.Bahasy : en.Bahasy}:
@@ -450,6 +396,22 @@ const Market = () => {
               ? ru["Filtrleri arassalamak"]
               : en["Filtrleri arassalamak"]}
           </div>
+        </div>
+
+        <div className="w-full overflow-y-scroll scrollbar-hide h-[50px]  mt-5 md2:hidden inline-flex justify-start items-center">
+          {market?.categories?.map((item, i) => {
+            return (
+              <div
+                onClick={() => setWichCat(i)}
+                className={
+                  `${i == wichCat && "bg-neutral-300 "}` +
+                  "block w-fit whitespace-nowrap mr-2 cursor-pointer items-center rounded-[12px] h-[40px] p-[10px] px-[15px]  text-black-secondary text-[16px] font-medium"
+                }
+              >
+                {item?.name}
+              </div>
+            );
+          })}
         </div>
 
         {market?.categories?.map((item) => {
