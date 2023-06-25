@@ -77,5 +77,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ssh wekil@119.235.116.228
 Salam123
 
-// 955914 mahri telekom
-// 481504 muhamet telekom
+1. front => pm2 serve ./build --spa --port 80 --name front
+2. backend => pm2 start app.js --name backend
+3. admin => pm2 serve ./build --spa --port 3333 --name admin
+4. otp => pm2 start index.mjs --name otp-sms
