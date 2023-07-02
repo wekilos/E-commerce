@@ -115,7 +115,7 @@ const Sargyt = () => {
 					}
 				});
 
-				// setSargyt(true);
+				setSargyt(true);
 				removeAll();
 			})
 			.catch((err) => {
