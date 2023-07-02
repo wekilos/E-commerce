@@ -124,15 +124,17 @@ const Sargyt = () => {
 	};
 	return (
 		<div className="inline-flex justify-between w-full pb-10 select-none">
-			<Modal
-				className="p-8 font-roboto"
-				width={450}
-				open={sargyt}
-				onCancel={() => setSargyt(false)}
-				footer={false}
-			>
-				<OrderConfirm orderId={orderId} />
-			</Modal>
+			{payment !== 2 && (
+				<Modal
+					className="p-8 font-roboto"
+					width={450}
+					open={sargyt}
+					onCancel={() => setSargyt(false)}
+					footer={false}
+				>
+					<OrderConfirm orderId={orderId} />
+				</Modal>
+			)}
 			<div className="w-full">
 				<div className="flex items-center w-full">
 					<p

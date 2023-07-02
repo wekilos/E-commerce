@@ -27,7 +27,6 @@ import {
 	Kategories,
 	SearchProducts,
 	Profile,
-	CheckoutResultPage,
 } from "../pages/index";
 import {
 	HomeFood,
@@ -293,12 +292,6 @@ const App = () => {
 							restricted={true}
 							component={Verification}
 							path="/verification/:phone"
-							exact
-						/>
-						<Route
-							restricted={true}
-							component={CheckoutResultPage}
-							path="/checkout-result"
 							exact
 						/>
 						<PublicRoute component={Home} path="*" />
