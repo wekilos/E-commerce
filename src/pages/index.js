@@ -23,3 +23,7 @@ export const Info = lazy(() => import("./profile/info"));
 export const Profile = lazy(() => import("./profile/profile"));
 export const Address = lazy(() => import("./profile/address"));
 export const Sargyt = lazy(() => import("./basket/sargyt"));
+
+export const CheckoutResultPage = lazy(() =>
+	import("./CheckoutResultPage/CheckoutResultPage")
+);
