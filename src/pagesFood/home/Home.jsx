@@ -333,6 +333,7 @@ function Home(props) {
                   is_discount={item.is_discount}
                   close={item.close}
                   img={item.img}
+                  name={item.name}
                   text={item.text}
                   key={"index"}
                 />
@@ -370,6 +371,7 @@ function Home(props) {
                   is_discount={item.is_discount}
                   close={item.close}
                   img={item.img}
+                  name={item.name}
                   text={item.text}
                   key={"index"}
                 />
@@ -407,6 +409,7 @@ function Home(props) {
                   is_discount={item.is_discount}
                   close={item.close}
                   img={item.img}
+                  name={item.name}
                   text={item.text}
                   key={"index"}
                 />
@@ -437,6 +440,7 @@ function Home(props) {
                   is_discount={item.is_discount}
                   close={item.close}
                   img={item.img}
+                  name={item.name}
                   text={item.text}
                   key={"index"}
                 />

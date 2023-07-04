@@ -514,7 +514,7 @@ function Navbar(props) {
 				</div>
 				<div className="flex pt-[16px] justify-between">
 					<div
-						onClick={() => history.push({ pathname: "/mrt/home" })}
+						onClick={() => history.push({ pathname: "/first" })}
 						className="cursor-pointer flex items-center h-[50px] whitespace-nowrap mr-2 text-green text-[28px] select-none"
 					>
 						{/* Söwda onlaýn */}
@@ -544,7 +544,7 @@ function Navbar(props) {
 						</p>
 						{kategory && (
 							<div className="absolute min-w-[1000px] shadow-sm left-0 z-50 top-[65px] text-black bg-white rounded-[24px] inline-flex p-5">
-								<div className="min-w-[250px] border-r-[1px] border-r-neutral-300 pr-2 ">
+								<div className="min-w-[270px] border-r-[1px] border-r-neutral-300 pr-2 ">
 									{categories?.map((item) => {
 										return (
 											<p
@@ -614,6 +614,11 @@ function Navbar(props) {
 									? ru["Şu ýerden gözle"]
 									: en["Şu ýerden gözle"]
 							}
+							onKeyPress={(e) => {
+								if (e.key === "Enter") {
+									history.push({ pathname: "/mrt/search/" + productName });
+								}
+							}}
 						/>
 						<div
 							onClick={() =>
