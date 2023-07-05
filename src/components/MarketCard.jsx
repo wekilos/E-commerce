@@ -58,19 +58,23 @@ function MarketCard(props) {
 					<img src={heartLiked} alt="" />
 				</div>
 			)}
-			<div className="absolute z-10 md2:max-w-[320px] md2:w-[320px] max-w-[170px] w-[170px] h-[160px] bg-black-100  rounded-[12px]"></div>
-			<img
+			<div
 				onClick={() =>
 					history.push({ pathname: "/mrt/market/" + props.data.id })
 				}
-				className=" w-full object-cover h-[160px] rounded-[12px]  "
-				src={BASE_URL_IMG + props.img}
-				// src={"http://119.235.118.211:8181/itda/surat.jpg"}
-				alt="brand"
-			/>
+				className="border flex justify-center items-start md2:min-w-[324px] min-w-[175px] w-[175px] md2:w-[324px] border-[#E9EBED] relative  h-[160px] rounded-[12px] cursor-pointer"
+			>
+				<div className="absolute z-10 md2:max-w-[320px] md2:w-[320px] max-w-[170px] w-[170px] h-[160px] bg-black-100  rounded-[12px]"></div>
+				<img
+					className=" w-full object-cover h-[160px] rounded-[12px]  "
+					src={BASE_URL_IMG + props.img}
+					// src={"http://119.235.118.211:8181/itda/surat.jpg"}
+					alt="brand"
+				/>
 
-			<div className="absolute p-[20px] !z-20 md2:max-w-[300px] md2:w-[200px] max-w-[170px] w-[170px] text-white font-semi  text-[18px] left-0 bottom-0    ">
-				{props.name}
+				<div className="absolute p-[20px] !z-20 md2:max-w-[300px] md2:w-[200px] max-w-[170px] w-[170px] text-white font-semi  text-[18px] left-0 bottom-0    ">
+					{props.name}
+				</div>
 			</div>
 		</div>
 	);
